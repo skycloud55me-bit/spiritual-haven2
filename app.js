@@ -1,27 +1,118 @@
 // app.js - الكود الكامل مع الترجمة والوضع الليلي
 
-// ========== إعدادات الترجمة ==========
+// ========== الترجمة والوضع الليلي ==========
+
+// بيانات الترجمة
 const translations = {
-    ar: {
-        title: "الواحة الروحانية — النسخة الكاملة",
-        welcome: "مرحبا بكِ",
-        toggle_theme: "الوضع الليلي",
-        // يمكن إضافة المزيد من الترجمات هنا
-    },
-    en: {
-        title: "Spiritual Oasis — Complete Version",
-        welcome: "Welcome",
-        toggle_theme: "Night Mode",
-        // إضافة باقي الترجمات
-    },
-    fr: {
-        title: "Oasis Spirituelle — Version Complète",
-        welcome: "Bienvenue",
-        toggle_theme: "Mode Nuit",
-        // إضافة باقي الترجمات
-    }
+  ar: {
+    welcome: "مرحبا بكِ",
+    toggle_theme: "الوضع الليلي",
+    toggle_theme_light: "الوضع النهاري",
+    quran: "القرآن الكريم",
+    quran_garden: "بستان القرآن",
+    righteous_path: "رياض الصالحين",
+    obedience_gardens: "جنات الطاعة",
+    educational_games: "ألعاب تربوية",
+    progress_tracker: "سجل تطورك",
+    daily_duas: "الأدعية اليومية"
+  },
+  en: {
+    welcome: "Welcome",
+    toggle_theme: "Night Mode", 
+    toggle_theme_light: "Day Mode",
+    quran: "Holy Quran",
+    quran_garden: "Quran Garden",
+    righteous_path: "Righteous Path",
+    obedience_gardens: "Gardens of Obedience",
+    educational_games: "Educational Games", 
+    progress_tracker: "Progress Tracker",
+    daily_duas: "Daily Prayers"
+  },
+  fr: {
+    welcome: "Bienvenue",
+    toggle_theme: "Mode Nuit",
+    toggle_theme_light: "Mode Jour",
+    quran: "Saint Coran",
+    quran_garden: "Jardin du Coran",
+    righteous_path: "Sentier des Vertueux",
+    obedience_gardens: "Jardins de l'Obéissance",
+    educational_games: "Jeux Éducatifs",
+    progress_tracker: "Suivi de Progrès",
+    daily_duas: "Prières Quotidiennes"
+  }
 };
 
+// التهيئة
+let currentLanguage = 'ar';
+let currentTheme = 'light';
+
+// تطبيق الترجمة
+function applyTranslations(lang) {
+  currentLanguage = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  
+  // تحديث النصوص
+  document.querySelectorAll('[data-translate]').forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (translations[lang][key]) {
+      element.textContent = translations[lang][key];
+    }
+  });
+}
+
+// تبديل الوضع الليلي
+function toggleTheme() {
+  currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.body.setAttribute('data-theme', currentTheme);
+  
+  const themeIcon = document.querySelector('#themeToggle i');
+  const themeText = document.getElementById('themeText');
+  
+  if (currentTheme === 'dark') {
+    themeIcon.className = 'fas fa-sun';
+    themeText.textContent = translations[currentLanguage].toggle_theme_light;
+  } else {
+    themeIcon.className = 'fas fa-moon';
+    themeText.textContent = translations[currentLanguage].toggle_theme;
+  }
+  
+  // حفظ التفضيلات
+  localStorage.setItem('theme', currentTheme);
+  localStorage.setItem('language', currentLanguage);
+}
+
+// تحميل التفضيلات
+function loadPreferences() {
+  const savedTheme = localStorage.getItem('theme');
+  const savedLang = localStorage.getItem('language');
+  
+  if (savedTheme) {
+    currentTheme = savedTheme;
+    document.body.setAttribute('data-theme', currentTheme);
+  }
+  
+  if (savedLang) {
+    currentLanguage = savedLang;
+    document.getElementById('languageSelector').value = currentLanguage;
+    applyTranslations(currentLanguage);
+  }
+}
+
+// إضافة المستمعين في التهيئة
+document.addEventListener('DOMContentLoaded', function() {
+  // الكود الحالي الخاص بك...
+  
+  // إضافة هذا في الآخر:
+  document.getElementById('languageSelector').addEventListener('change', function(e) {
+    applyTranslations(e.target.value);
+    localStorage.setItem('language', e.target.value);
+  });
+
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+  
+  loadPreferences();
+});
 // ========== إعدادات التطبيق ==========
 const appConfig = {
     currentLanguage: 'ar',
@@ -732,4 +823,5 @@ function initializeApp() {
     updateStatsDisplay();
     loadWelcomePhrases();
     setupEventListeners();
+
 }
