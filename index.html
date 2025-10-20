@@ -3,37 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title data-translate="title">الواحة الروحانية — النسخة الكاملة</title>
+  <title>الواحة الروحانية — النسخة الكاملة</title>
   <meta name="description" content="الواحة الروحانية — واجهة متكاملة مع القرآن الصحيح، أذكار، ألعاب، وسجل تقدم.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%231a5e63'/%3E%3Cpath d='M50 18 L62 34 L62 66 L38 66 L38 34 Z' fill='%23fff'/%3E%3Ccircle cx='50' cy='78' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%231a5e63'/%3E%3Cpath d='M50 18 L62 34 L62 66 L38 66 L38 34 Z' fill='%23fff'/%3E%3Ccircle cx='50' cy='78' r='6' fill='%236abf69'/%3E%3C/svg%3E">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-theme="light">
-  <button class="open-panel-btn" id="openPanelBtn" title="فتح القائمة" style="background-color: #6abf69;">
-    <i class="fas fa-bars" style="color: white;"></i>
+<body>
+  <!-- open button -->
+  <button class="open-panel-btn" id="openPanelBtn" title="فتح القائمة">
+    <i class="fas fa-bars"></i>
   </button>
 
+  <!-- backdrop blur -->
   <div id="backdrop" class="backdrop-blur"></div>
 
+  <!-- side panel -->
   <aside class="side-panel" id="sidePanel" aria-hidden="true" role="dialog" aria-label="القائمة الجانبية">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <div class="welcome-msg" id="welcomeMsg" data-translate="welcome">مرحبا بكِ</div>
+      <div class="welcome-msg" id="welcomeMsg">مرحبا بكِ</div>
       <button id="closePanelBtn" class="close-btn" title="إغلاق"><i class="fas fa-times"></i></button>
     </div>
 
-    <div class="d-grid gap-2 mb-3">
-        <select id="languageSelector" class="form-select form-select-sm" title="اختيار اللغة">
-            <option value="ar" selected>العربية 🇸🇦</option>
-            <option value="en">English 🇬🇧</option>
-            <option value="fr">Français 🇫🇷</option>
-        </select>
-        <button id="toggleThemeBtn" class="btn btn-outline-secondary btn-sm" title="تبديل الوضع">
-            <i class="fas fa-sun" id="themeIcon"></i> <span data-translate="toggle_theme">الوضع العادي</span>
-        </button>
-    </div>
-    <hr/>
     <div id="panelNav">
       <div class="d-grid gap-2 mb-3">
         <button class="btn btn-outline-primary nav-item" data-page="quran" title="القرآن الكريم"><i class="fas fa-book-open"></i> القرآن الكريم</button>
@@ -42,7 +34,7 @@
         <button class="btn btn-outline-primary nav-item" data-page="obedience-gardens" title="جنات الطاعة"><i class="fas fa-mosque"></i> جنات الطاعة</button>
         <button class="btn btn-outline-primary nav-item" data-page="educational-games" title="ألعاب تربوية"><i class="fas fa-gamepad"></i> ألعاب تربوية</button>
         <button class="btn btn-outline-primary nav-item" data-page="progress-tracker" title="سجل تطورك"><i class="fas fa-chart-line"></i> سجل تطورك</button>
-        <button class="btn btn-outline-primary nav-item" data-page="daily-duas" title="الأدعية اليومية"><i class="fas fa-sun"></i> الأدعية اليومية</button>
+        <button class="btn btn-outline-primary nav-item" data-page="daily-duas" title="الأدعية اليومية"><i class="fas fa-hands"></i> الأدعية اليومية</button>
       </div>
     </div>
 
@@ -51,7 +43,24 @@
       <small class="text-muted">عبارات ترحيب</small>
       <ul id="phrasesList" style="list-style:none;padding:0;margin:6px 0 0 0"></ul>
     </div>
-    </aside>
+
+    <!-- إعدادات اللغة والسمة -->
+    <div class="mt-3">
+      <small class="text-muted">الإعدادات</small>
+      <div class="d-grid gap-2 mt-2">
+        <select id="languageSelect" class="form-select form-select-sm">
+          <option value="ar">العربية</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+        <select id="themeSelect" class="form-select form-select-sm">
+          <option value="light">الوضع العادي</option>
+          <option value="dark">الوضع الليلي</option>
+          <option value="royal">الوضع الملكي</option>
+        </select>
+      </div>
+    </div>
+  </aside>
 
   <div class="container-fluid">
     <div class="row">
@@ -71,7 +80,9 @@
           </div>
         </div>
 
+        <!-- Pages -->
         <main id="mainContent">
+          <!-- Quran page -->
           <section id="quran" class="page-content islamic-card">
             <h3 class="blessed-text">القرآن الكريم</h3>
             <p class="text-muted">اختر سورة من الفهرس لعرض نصها الأصلي (Uthmani).</p>
@@ -105,6 +116,7 @@
             </div>
           </section>
 
+          <!-- Quran Garden -->
           <section id="quran-garden" class="page-content islamic-card d-none">
             <h3 class="blessed-text">بستان القرآن</h3>
             <div class="row">
@@ -140,6 +152,7 @@
             </div>
           </section>
 
+          <!-- Righteous -->
           <section id="righteous-path" class="page-content islamic-card d-none">
             <h3 class="blessed-text">رياض الصالحين</h3>
             <div class="row">
@@ -174,177 +187,229 @@
             </div>
           </section>
 
+          <!-- Obedience -->
           <section id="obedience-gardens" class="page-content islamic-card d-none">
             <h3 class="blessed-text">جنات الطاعة</h3>
-            <p class="text-danger">**ملاحظة هامة:** إذا كان ظهور محتوى دعاء الخير والعبادات المستحبة لا يزال بطيئاً، فيجب عليك مراجعة ملف `app.js` وإزالة أي دوال أو مؤثرات حركية بطيئة يتم تطبيقها عند الانتقال إلى هذا القسم.</p>
             <ul class="nav nav-pills mb-3" id="obedienceTabs">
               <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#azkar">الأذكار اليومية</button></li>
-              <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#dua-khair">دعاء الخير</button></li>
-              <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#worship-sunnah">العبادات المستحبة</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#dua">دعاء الخير</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#worship">العبادات المستحبة</button></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane fade show active p-2" id="azkar">
                 <div class="row">
-                  <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار الصباح</h6><div id="countMorning" style="font-size:28px">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm inc-btn" id="incMorning" data-counter="morning">اضغط للزيادة</button><button class="btn btn-outline-secondary btn-sm reset-btn" id="resetMorning" data-counter="morning">إعادة</button></div></div></div>
-                  <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار المساء</h6><div id="countEvening" style="font-size:28px">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm inc-btn" id="incEvening" data-counter="evening">اضغط للزيادة</button><button class="btn btn-outline-secondary btn-sm reset-btn" id="resetEvening" data-counter="evening">إعادة</button></div></div></div>
-                  <div class="col-md-4"><div class="islamic-card text-center"><h6>بعد الصلاة</h6><div id="countAfter" style="font-size:28px">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm inc-btn" id="incAfter" data-counter="after">اضغط للزيادة</button><button class="btn btn-outline-secondary btn-sm reset-btn" id="resetAfter" data-counter="after">إعادة</button></div></div></div>
+                  <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار الصباح</h6><div id="countMorning" style="font-size:28px">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm" id="incMorning" data-counter="morning">اضغط للزيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetMorning" data-counter="morning">إعادة</button></div></div></div>
+                  <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار المساء</h6><div id="countEvening" style="font-size:28px">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm" id="incEvening" data-counter="evening">اضغط للزيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetEvening" data-counter="evening">إعادة</button></div></div></div>
+                  <div class="col-md-4"><div class="islamic-card text-center"><h6>بعد الصلاة</h6><div id="countAfter" style="font-size:28px">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm" id="incAfter" data-counter="after">اضغط للزيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetAfter" data-counter="after">إعادة</button></div></div></div>
                 </div>
               </div>
-              <div class="tab-pane fade p-2" id="dua-khair">
-                <h5 class="blessed-text">دعاء الخير</h5>
-                <div class="dua-card" id="duaKhairContent">
-                  <p>اللهم اغفر لنا وارحمنا، وارزقنا الهداية والتوفيق. اللهم اجعل أعمالنا خالصة لوجهك الكريم.</p>
-                  <p>اللهم إنا نسألك العفو والعافية في الدين والدنيا والآخرة، اللهم ثبت قلوبنا على طاعتك.</p>
-                  <p>اللهم نسألك التوفيق والسداد في القول والعمل. ارزقنا البركة في الوقت والجهد، واجعلنا من عبادك الصالحين.</p>
-                  <p>اللهم يا مُقلب القلوب ثبت قلوبنا على دينك وطاعتك.</p>
-                  <p>اللهم اجعلنا ممن يستمع القول فيتبع أحسنه. اغفر لنا ولجميع المسلمين والمسلمات الأحياء منهم والأموات. برحمتك يا أرحم الراحمين.</p>
-                  <p>اللهم إنا نعوذ بك من زوال نعمتك وتحوُّل عافيتك وفجاءة نقمتك وجميع سخطك.</p>
-                  <p>اللهم اجعل القرآن الكريم ربيع قلوبنا ونور صدورنا وجلاء أحزاننا.</p>
-                  <p>اللهم ارزقنا حسن الخاتمة وأدخلنا الجنة بغير حساب ولا سابقة عذاب.</p>
-                  <p>اللهم إنا نعوذ بك من الهم والحزن، ونعوذ بك من العجز والكسل، ونعوذ بك من الجبن والبخل، ونعوذ بك من غلبة الدين وقهر الرجال.</p>
-                  <p>اللهم اهدنا فيمن هديت، وعافنا فيمن عافيت، وتولنا فيمن توليت.</p>
-                  <p>اللهم اجعل عملنا هذا خالصاً لوجهك الكريم وتقبّله منا.</p>
-                  <p>اللهم إنا نسألك من الخير كله عاجله وآجله، ما علمنا منه وما لم نعلم.</p>
-                  <p>اللهم أعنا على ذكرك وشكرك وحسن عبادتك.</p>
-                  <p>اللهم بارك لنا في أهلينا وأموالنا وأوقاتنا.</p>
-                  <p>اللهم أصلح لنا شأننا كله ولا تكلنا إلى أنفسنا طرفة عين.</p>
-                  <p>اللهم تقبل صلاتنا وصيامنا وقيامنا ودعائنا.</p>
-                  <p>اللهم اجعلنا ممن يتوبون إليك ويستغفرونك.</p>
-                  <p>اللهم إنا نسألك الجنة وما قرّب إليها من قول أو عمل.</p>
-                  <p>اللهم اكفنا بحلالك عن حرامك وأغننا بفضلك عمن سواك.</p>
-                  <p>اللهم اشف مرضانا وارحم موتانا.</p>
+              <div class="tab-pane fade p-2" id="dua">
+                <h5>دعاء الخير</h5>
+                <div class="dua-card" style="max-height: 400px; overflow-y: auto;">
+                  <p>اللهم إني أسألك من خير ما سألك منه نبيك محمد صلى الله عليه وسلم، وأعوذ بك من شر ما استعاذ منه نبيك محمد صلى الله عليه وسلم</p>
+                  <p>اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً</p>
+                  <p>اللهم اغفر لي وارحمني واهدني وعافني وارزقني</p>
+                  <p>اللهم إني أعوذ بك من الهم والحزن، والعجز والكسل، والجبن والبخل، وضلع الدين وغلبة الرجال</p>
+                  <p>اللهم إني أسألك الجنة وما قرب إليها من قول أو عمل، وأعوذ بك من النار وما قرب إليها من قول أو عمل</p>
+                  <p>اللهم أصلح لي ديني الذي هو عصمة أمري، وأصلح لي دنياي التي فيها معاشي، وأصلح لي آخرتي التي فيها معادي</p>
+                  <p>اللهم إني أسألك الثبات في الأمر، والعزيمة على الرشد</p>
+                  <p>اللهم إني أسألك موجبات رحمتك، وعزائم مغفرتك، والسلامة من كل إثم، والغنيمة من كل بر، والفوز بالجنة، والنجاة من النار</p>
+                  <p>اللهم اجعلنا هادين مهتدين، غير ضالين ولا مضلين</p>
+                  <p>اللهم طهر قلوبنا من النفاق، وأعمالنا من الرياء، وألسنتنا من الكذب، وأعيننا من الخيانة</p>
+                  <p>اللهم إني أسألك خشيتك في الغيب والشهادة، وكلمة الحق في الغضب والرضا</p>
+                  <p>اللهم إني أسألك القصد في الفقر والغنى، وأسألك نعيماً لا ينفد، وقرة عين لا تنقطع</p>
+                  <p>اللهم إني أسألك الرضا بعد القضاء، وبرد العيش بعد الموت، ولذة النظر إلى وجهك الكريم</p>
+                  <p>اللهم إني أعوذ بك من علم لا ينفع، ومن قلب لا يخشع، ومن نفس لا تشبع، ومن دعوة لا يستجاب لها</p>
+                  <p>اللهم إني أسألك فعل الخيرات، وترك المنكرات، وحب المساكين</p>
+                  <p>اللهم إني أسألك من فضلك العظيم، فإنك تعلم ولا أعلم، وتقدر ولا أقدر، وأنت علام الغيوب</p>
+                  <p>اللهم إني أسألك بأن لك الحمد، لا إله إلا أنت وحدك لا شريك لك، المنان، يا بديع السماوات والأرض</p>
+                  <p>اللهم إني أسألك بأني أشهد أنك أنت الله، لا إله إلا أنت، الأحد الصمد، الذي لم يلد ولم يولد، ولم يكن له كفواً أحد</p>
+                  <p>اللهم إني أسألك من الخير كله، عاجله وآجله، ما علمت منه وما لم أعلم، وأعوذ بك من الشر كله، عاجله وآجله، ما علمت منه وما لم أعلم</p>
+                  <p>اللهم إني أسألك الجنة ونعيمها، وأعوذ بك من النار وعذابها</p>
+                  <p>اللهم إني أسألك حبك، وحب من يحبك، وحب العمل الذي يقربني إلى حبك</p>
+                  <p>اللهم إني أعوذ بك من زوال نعمتك، وتحول عافيتك، وفجاءة نقمتك، وجميع سخطك</p>
+                  <p>اللهم إني أسألك العصمة في الدنيا والآخرة</p>
+                  <p>اللهم إني أسألك أن ترزقني شكر نعمتك، وحسن عبادتك</p>
+                  <p>اللهم إني أسألك القوة في طاعتك، والغنيمة من مغفرتك</p>
+                  <p>اللهم إني أسألك الخير حيث كان، ثم ارضني به</p>
+                  <p>اللهم إني أسألك موجبات رحمتك، وعزائم مغفرتك، والغنيمة من كل بر، والسلامة من كل إثم</p>
+                  <p>اللهم لا تدع لنا ذنباً إلا غفرته، ولا هماً إلا فرجته، ولا ديناً إلا قضيته، ولا حاجة من حوائج الدنيا والآخرة إلا قضيتها يا أرحم الراحمين</p>
+                  <p>اللهم إني أسألك بأنك أنت الله الواحد الأحد الصمد، الذي لم يلد ولم يولد، ولم يكن له كفواً أحد، أن تغفر لي ذنوبي إنك أنت الغفور الرحيم</p>
                 </div>
               </div>
-              <div class="tab-pane fade p-2" id="worship-sunnah">
-                <h5 class="blessed-text">العبادات المستحبة</h5>
-                <ul id="worshipSunnahList" class="list-group">
-                  <li class="list-group-item">صيام الإثنين والخميس أو الأيام البيض (سنّة مؤكدة)</li>
-                  <li class="list-group-item">قيام الليل والوتر بانتظام (باب عظيم للقرب)</li>
-                  <li class="list-group-item">صلاة الضحى (صلاة الأوابين)</li>
-                  <li class="list-group-item">قراءة جزء أو ورد يومي من القرآن (الهدى والنور)</li>
-                  <li class="list-group-item">الإكثار من الصلاة على النبي صلى الله عليه وسلم</li>
-                  <li class="list-group-item">الصدقة السرية ولو بمبلغ يسير (تطفئ غضب الرب)</li>
-                  <li class="list-group-item">المحافظة على السنن الرواتب قبل وبعد الصلوات المفروضة (12 ركعة)</li>
-                  <li class="list-group-item">الاستغفار والتسبيح والتحميد (ذكر الله الدائم)</li>
-                  <li class="list-group-item">بر الوالدين (من أحب الأعمال إلى الله)</li>
-                  <li class="list-group-item">صلة الأرحام (تزيد في الرزق والعمر)</li>
-                  <li class="list-group-item">زيارة المريض وتعهده</li>
-                  <li class="list-group-item">إماطة الأذى عن الطريق (شعبة من شعب الإيمان)</li>
-                  <li class="list-group-item">تفطير الصائمين (أجر عظيم)</li>
-                  <li class="list-group-item">طلب العلم النافع وقراءة الكتب الدينية</li>
-                  <li class="list-group-item">نشر السلام والتبسم في وجوه الناس</li>
-                  <li class="list-group-item">حضور مجالس الذكر والعلم</li>
-                  <li class="list-group-item">الإحسان إلى الجار</li>
-                  <li class="list-group-item">كفالة اليتيم ورعايته</li>
-                  <li class="list-group-item">إدخال السرور على قلب مسلم</li>
-                  <li class="list-group-item">ذكر الله عند الغضب (مما يطفئ ناره)</li>
-                </ul>
+              <div class="tab-pane fade p-2" id="worship">
+                <h5>العبادات المستحبة</h5>
+                <div style="max-height: 400px; overflow-y: auto;">
+                  <ul>
+                    <li>التحصّن بالأذكار بعد الصلوات</li>
+                    <li>الصدقة المستمرة ولو بالقليل</li>
+                    <li>صلة الرحم وزيارة المريض</li>
+                    <li>الاستغفار والذكر اليومي</li>
+                    <li>قيام الليل ولو بركعتين</li>
+                    <li>صلاة الضحى</li>
+                    <li>قراءة القرآن بتدبر</li>
+                    <li>صيام الاثنين والخميس</li>
+                    <li>بر الوالدين والإحسان إليهما</li>
+                    <li>كفالة الأيتام والمساكين</li>
+                    <li>التسبيح والتحميد والتهليل</li>
+                    <li>الدعاء للمسلمين</li>
+                    <li>تعلم العلم الشرعي</li>
+                    <li>تعليم القرآن والعلم</li>
+                    <li>الإصلاح بين الناس</li>
+                    <li>الكلمة الطيبة</li>
+                    <li>غض البصر</li>
+                    <li>حفظ اللسان</li>
+                    <li>الرفق بالحيوان</li>
+                    <li>إماطة الأذى عن الطريق</li>
+                    <li>التبكير إلى الصلاة</li>
+                    <li>انتظار الصلاة بعد الصلاة</li>
+                    <li>صلاة السنن الرواتب</li>
+                    <li>قراءة سورة الملك قبل النوم</li>
+                    <li>المحافظة على الوضوء</li>
+                    <li>ذكر الله عند الطعام والشراب</li>
+                    <li>الشكر عند النعمة</li>
+                    <li>الصبر عند البلاء</li>
+                    <li>التوكل على الله</li>
+                    <li>الاستخارة في الأمور كلها</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </section>
 
+          <!-- Games -->
           <section id="educational-games" class="page-content islamic-card d-none">
             <h3 class="blessed-text">ألعاب تربوية</h3>
-            
-            <ul class="nav nav-pills mb-3" id="gameTabs">
-                <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#game-memory">لعبة الذاكرة</button></li>
-                <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#game-quiz">اختبار (سؤال-ثلاث خيارات)</button></li>
-                <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#game-moral-story">القصص والمواقف التربوية</button></li>
+            <ul class="nav nav-pills mb-3" id="gamesTabs">
+              <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#memoryGame">لعبة الذاكرة</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#quizGame">الاختبار التفاعلي</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#islamicPuzzle">لغز إسلامي</button></li>
             </ul>
-
             <div class="tab-content">
-                <div class="tab-pane fade show active p-2" id="game-memory">
-                    <h5>لعبة الذاكرة (مطابقة الآيات/الأحاديث)</h5>
-                    <div class="memory-game row g-2" id="memoryBoard"></div>
-                    <div class="mt-2"><button id="newGameBtn" class="btn btn-outline-primary">ابدأ لعبة ذاكرة جديدة</button></div>
+              <div class="tab-pane fade show active p-2" id="memoryGame">
+                <h5>لعبة الذاكرة الإسلامية</h5>
+                <div class="memory-game row g-2" id="memoryBoard"></div>
+                <div class="mt-2">
+                  <button id="newGameBtn" class="btn btn-outline-primary">ابدأ لعبة ذاكرة جديدة</button>
+                  <span class="mx-2">الوقت: <span id="gameTimer">0</span> ثانية</span>
                 </div>
-
-                <div class="tab-pane fade p-2" id="game-quiz">
-                    <h5>اختبار تفاعلي (9 أسئلة يومية)</h5>
-                    <div id="quizArea" class="islamic-card p-3">
-                        <div id="quizQuestion" class="mb-3">اضغطي 'ابدأ اختبارًا' لبدء الأسئلة التسعة اليومية.</div>
-                        <div id="quizOptions" class="mb-3 d-grid gap-2">
-                            <button class="btn btn-outline-info quiz-option-btn" data-option="1" style="display:none;"></button>
-                            <button class="btn btn-outline-info quiz-option-btn" data-option="2" style="display:none;"></button>
-                            <button class="btn btn-outline-info quiz-option-btn" data-option="3" style="display:none;"></button>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button id="nextQBtn" class="btn btn-primary btn-sm" disabled>السؤال التالي</button>
-                            <button id="startQuizBtn" class="btn btn-outline-success btn-sm">ابدأ اختبارًا جديدًا</button>
-                        </div>
-                        <div class="mt-2">النقاط: <span id="quizScore">0</span> | سؤال: <span id="currentQuestionNum">0</span>/9</div>
+              </div>
+              <div class="tab-pane fade p-2" id="quizGame">
+                <h5>الاختبار التفاعلي اليومي</h5>
+                <div id="quizArea">
+                  <div class="quiz-card p-3">
+                    <div id="quizQuestion" class="mb-3 fs-5"></div>
+                    <div id="quizOptions" class="mb-3"></div>
+                    <div class="d-flex gap-2">
+                      <button id="submitQuizBtn" class="btn btn-success">تحقق من الإجابة</button>
+                      <button id="nextQBtn" class="btn btn-primary d-none">السؤال التالي</button>
                     </div>
+                  </div>
+                  <div class="mt-3">
+                    <button id="startQuizBtn" class="btn btn-outline-primary">ابدأ اختبارًا جديدًا</button>
+                    <span class="mx-3">النقاط: <span id="quizScore">0</span>/9</span>
+                    <span>السؤال: <span id="currentQuestion">0</span>/9</span>
+                  </div>
+                  <div id="quizResult" class="mt-3"></div>
                 </div>
-
-                <div class="tab-pane fade p-2" id="game-moral-story">
-                    <h5>القصص والمواقف التربوية</h5>
-                    <div class="islamic-card p-3">
-                        <h6 id="storyTitle">قصة اليوم: الإخلاص في العمل</h6>
-                        <p id="storyText">في يوم من الأيام، كان هناك عامل يحرث الأرض... (هنا يوضع نص القصة أو الموقف التربوي الذي يمكن أن يتغير يومياً).</p>
-                        <button id="newStoryBtn" class="btn btn-warning mt-2">موقف تربوي جديد</button>
+              </div>
+              <div class="tab-pane fade p-2" id="islamicPuzzle">
+                <h5>لغز إسلامي</h5>
+                <div class="puzzle-card p-3">
+                  <div id="puzzleQuestion" class="mb-3"></div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <input id="puzzleAnswer" class="form-control" placeholder="اكتب إجابتك هنا"/>
+                      <button id="submitPuzzle" class="btn btn-success mt-2">تحقق من الإجابة</button>
                     </div>
+                    <div class="col-md-6">
+                      <div id="puzzleHint" class="text-muted small"></div>
+                    </div>
+                  </div>
+                  <div id="puzzleResult" class="mt-3"></div>
+                  <button id="newPuzzleBtn" class="btn btn-outline-primary mt-2">لغز جديد</button>
                 </div>
+              </div>
             </div>
           </section>
 
+          <!-- Progress -->
           <section id="progress-tracker" class="page-content islamic-card d-none">
             <h3 class="blessed-text">سجل تطورك</h3>
             <div class="row">
-              <div class="col-md-6"><h6>هدف القراءة اليومي: <span id="currentGoal">10</span> صفحة</h6><div class="progress mb-2"><div id="pagesProgress" class="progress-bar" role="progressbar" style="width:0%">0%</div></div></div>
-              <div class="col-md-6"><h6>إنجازات سريعة</h6><ul id="achievementsList" class="list-group"></ul></div>
+              <div class="col-md-8">
+                <h6>استمرارية العبادة</h6>
+                <div class="progress mb-3" style="height: 25px;">
+                  <div id="worshipProgress" class="progress-bar" role="progressbar" style="width:0%">0%</div>
+                </div>
+                
+                <div class="row text-center">
+                  <div class="col-md-3">
+                    <div class="islamic-card p-2">
+                      <div class="stat-number" id="totalPrayers">0</div>
+                      <small>الصلوات</small>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="islamic-card p-2">
+                      <div class="stat-number" id="totalQuran">0</div>
+                      <small>صفحات القرآن</small>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="islamic-card p-2">
+                      <div class="stat-number" id="totalDeeds">0</div>
+                      <small>أعمال الخير</small>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="islamic-card p-2">
+                      <div class="stat-number" id="totalPoints">0</div>
+                      <small>النقاط</small>
+                    </div>
+                  </div>
+                </div>
+
+                <h6 class="mt-4">إنجازات سريعة</h6>
+                <div id="achievementsList" class="row"></div>
+              </div>
+              <div class="col-md-4">
+                <h6>تقرير الأسبوع</h6>
+                <div class="islamic-card p-3">
+                  <canvas id="progressChart" width="200" height="200"></canvas>
+                </div>
+              </div>
             </div>
           </section>
 
+          <!-- Daily Duas -->
           <section id="daily-duas" class="page-content islamic-card d-none">
-            <h3 class="blessed-text">الأدعية اليومية (32 دعاء)</h3>
-            <p class="text-muted">مجموعة من الأدعية المختارة لحالات ومناسبات مختلفة، مقسمة لتيسير الوصول إليها.</p>
-
+            <h3 class="blessed-text">الأدعية اليومية</h3>
             <div class="row">
-                <div class="col-md-12">
-                    <select id="dailyDuaFilter" class="form-select mb-3">
-                        <option value="all">جميع الأدعية</option>
-                        <option value="morning_evening">أدعية الصباح والمساء</option>
-                        <option value="home_travel">أدعية البيت والسفر</option>
-                        <option value="nature">أدعية المطر والرياح</option>
-                        <option value="sickness_kurb">أدعية المرض والكرب</option>
-                        <option value="prayer_related">أدعية متعلقة بالصلاة</option>
-                    </select>
-
-                    <div id="dailyDuasList" class="list-group">
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>1. دعاء الاستيقاظ</h6><p>الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>2. دعاء دخول الخلاء</h6><p>اللهم إني أعوذ بك من الخبث والخبائث.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>3. دعاء الخروج من الخلاء</h6><p>غفرانك.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>4. دعاء دخول المنزل</h6><p>باسم الله ولجنا، وباسم الله خرجنا، وعلى ربنا توكلنا.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>5. دعاء الخروج من المنزل</h6><p>باسم الله، توكلت على الله، ولا حول ولا قوة إلا بالله.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="sickness_kurb"><h6>6. دعاء الكرب والهم</h6><p>لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم، لا إله إلا الله رب السماوات ورب الأرض ورب العرش الكريم.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>7. سيد الاستغفار</h6><p>اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت...</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="nature"><h6>8. دعاء نزول المطر</h6><p>اللهم صيباً نافعاً.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="nature"><h6>9. دعاء بعد المطر</h6><p>مطرنا بفضل الله ورحمته.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="nature"><h6>10. دعاء رؤية الريح</h6><p>اللهم إني أسألك خيرها وخير ما فيها، وأعوذ بك من شرها وشر ما فيها، وشر ما أرسلت به.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="prayer_related"><h6>11. الذكر بعد السلام من الصلاة</h6><p>أستغفر الله (ثلاثاً)... اللهم أنت السلام ومنك السلام، تباركت يا ذا الجلال والإكرام.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>12. دعاء ركوب السيارة</h6><p>بسم الله، سبحان الذي سخر لنا هذا وما كنا له مقرنين، وإنا إلى ربنا لمنقلبون.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="sickness_kurb"><h6>13. دعاء زيارة المريض</h6><p>أسأل الله العظيم رب العرش العظيم أن يشفيك (7 مرات).</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>14. دعاء النوم</h6><p>باسمك اللهم أموت وأحيا.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>15. دعاء دخول السوق</h6><p>لا إله إلا الله وحده لا شريك له، له الملك وله الحمد يحيي ويميت وهو حي لا يموت، بيده الخير وهو على كل شيء قدير.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="prayer_related"><h6>16. دعاء القنوت في الوتر</h6><p>اللهم اهدني فيمن هديت، وعافني فيمن عافيت، وتولني فيمن توليت...</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>17. دعاء لطلب الرزق</h6><p>اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>18. دعاء العطاس</h6><p>الحمد لله (للعاطس)، يرحمك الله (للرد)، يهديكم الله ويصلح بالكم (للرد).</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>19. دعاء العودة من السفر</h6><p>آيبون تائبون عابدون لربنا حامدون.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="prayer_related"><h6>20. دعاء سجود التلاوة</h6><p>سجد وجهي للذي خلقه وشق سمعه وبصره بحوله وقوته.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>21. دعاء بعد الأكل</h6><p>الحمد لله الذي أطعمني هذا ورزقنيه من غير حول مني ولا قوة.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="sickness_kurb"><h6>22. دعاء رؤية مبتلى</h6><p>الحمد لله الذي عافاني مما ابتلاك به وفضلني على كثير ممن خلق تفضيلاً.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>23. دعاء عقد النكاح</h6><p>بارك الله لك، وبارك عليك، وجمع بينكما في خير.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>24. دعاء رؤية الهلال</h6><p>اللهم أهله علينا بالأمن والإيمان والسلامة والإسلام، والتوفيق لما تحب وترضى.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="nature"><h6>25. دعاء سماع الرعد</h6><p>سبحان الذي يُسبح الرعد بحمده والملائكة من خيفته.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>26. دعاء لبس الثوب الجديد</h6><p>اللهم لك الحمد أنت كسوتنيه، أسألك من خيره وخير ما صنع له، وأعوذ بك من شره وشر ما صنع له.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="prayer_related"><h6>27. تسبيحات بعد الصلاة (33-33-34)</h6><p>سبحان الله (33)، الحمد لله (33)، الله أكبر (34).</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="sickness_kurb"><h6>28. دعاء الهم والحزن</h6><p>اللهم إني عبدك ابن عبدك ابن أمتك، ناصيتي بيدك...</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="prayer_related"><h6>29. دعاء الذهاب إلى المسجد</h6><p>اللهم اجعل في قلبي نورا وفي بصري نورا وفي سمعي نورا وفي لساني نورا...</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="morning_evening"><h6>30. دعاء طلب البركة في الرزق</h6><p>اللهم بارك لنا فيما رزقتنا وقنا عذاب النار.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="sickness_kurb"><h6>31. دعاء الخوف من الشرك</h6><p>اللهم إني أعوذ بك أن أشرك بك وأنا أعلم، وأستغفرك لما لا أعلم.</p></div>
-                        <div class="list-group-item daily-dua-item" data-category="home_travel"><h6>32. دعاء دخول المقبرة</h6><p>السلام عليكم أهل الديار من المؤمنين والمسلمين، وإنا إن شاء الله بكم للاحقون، أسأل الله لنا ولكم العافية.</p></div>
-                    </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label>اختر نوع الدعاء:</label>
+                  <select id="duaTypeSelect" class="form-select">
+                    <option value="all">جميع الأدعية</option>
+                    <option value="rain">أدعية المطر</option>
+                    <option value="wind">دعاء الرياح</option>
+                    <option value="fear">دعاء الخوف</option>
+                    <option value="goodness">دعاء الخير</option>
+                    <option value="morning">أدعية الصباح</option>
+                    <option value="evening">أدعية المساء</option>
+                  </select>
                 </div>
+              </div>
+              <div class="col-md-8 text-start">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="translationToggle">
+                  <label class="form-check-label" for="translationToggle">إظهار الترجمة</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="duas-container" style="max-height: 500px; overflow-y: auto;">
+              <div id="duasList" class="row"></div>
             </div>
           </section>
 
@@ -354,9 +419,10 @@
   </div>
 
   <audio id="uiClick" preload="auto"><source src="" type="audio/mpeg"></audio>
-  <audio id="uiBreeze" preload="auto"><source src="" type="audio/mpeg"></source></audio>
+  <audio id="uiBreeze" preload="auto"><source src="" type="audio/mpeg"></audio>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
