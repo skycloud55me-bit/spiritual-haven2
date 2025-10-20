@@ -617,3 +617,41 @@ body.dark-mode .open-panel-btn {
 body.dark-mode .open-panel-btn i {
     color: #1e1e1e !important;
 }
+
+/* ========== الوضع الليلي ========== */
+[data-theme="dark"] {
+  --primary-color: #2d936c;
+  --secondary-color: #1a5e63;
+  --accent-color: #6abf69;
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, #0f2e30 0%, #1a5e63 50%, #2d936c 100%);
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .islamic-card {
+  background: rgba(45, 45, 45, 0.95);
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .text-muted {
+  color: #adb5bd !important;
+}
+
+/* شريط التحكم */
+.control-bar {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.language-selector, .theme-toggle {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #D4AF37;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #1a5e63;
+  font-weight: bold;
+}
