@@ -147,87 +147,7 @@ const appData = {
             explanation: "دعاء لطلب التيسير والسداد."
         }
     ],
-let quranData = {};
 
-// تحميل القرآن من ملف محلي
-async function loadQuranFromFile() {
-    try {
-        const response = await fetch('quran.json');
-        quranData = await response.json();
-        displaySurahList();
-    } catch (error) {
-        console.error('خطأ في تحميل ملف القرآن:', error);
-    }
-}
-
-function displaySurahList() {
-    const surahList = document.getElementById('surahList');
-    surahList.innerHTML = '';
-    
-    quranData.surahs.forEach(surah => {
-        const surahItem = document.createElement('div');
-        surahItem.className = 'surah-item list-group-item';
-        surahItem.style.cursor = 'pointer';
-        surahItem.style.padding = '12px 15px';
-        surahItem.style.border = 'none';
-        surahItem.style.borderBottom = '1px solid #eee';
-        surahItem.style.transition = 'background 0.3s';
-        
-        surahItem.innerHTML = `
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <strong>${surah.id}. ${surah.name_arabic}</strong>
-                    <br>
-                    <small class="text-muted">${surah.name} - ${surah.verses_count} آية - ${surah.type}</small>
-                </div>
-                <span class="badge bg-primary">${surah.verses_count}</span>
-            </div>
-        `;
-        
-        surahItem.addEventListener('click', () => displaySurah(surah.id));
-        surahItem.addEventListener('mouseenter', () => {
-            surahItem.style.background = '#f8f9fa';
-        });
-        surahItem.addEventListener('mouseleave', () => {
-            surahItem.style.background = 'white';
-        });
-        
-        surahList.appendChild(surahItem);
-    });
-}
-
-function displaySurah(surahId) {
-    const surah = quranData.surahs.find(s => s.id === surahId);
-    if (!surah) return;
-    
-    document.getElementById('surahTitle').textContent = `سورة ${surah.name_arabic}`;
-    document.getElementById('surahMeta').textContent = 
-        `عدد الآيات: ${surah.verses_count} - ${surah.type}`;
-    
-    let versesHTML = '<div class="quran-text" style="font-family: \'Amiri\', serif; font-size: 1.4em; line-height: 2.5; text-align: right;">';
-    
-    surah.verses.forEach((verse, index) => {
-        versesHTML += `
-            <div class="verse" style="margin-bottom: 25px; padding: 10px; border-radius: 8px; transition: background 0.3s;">
-                <span class="verse-number" style="background: #1a5e63; color: white; padding: 4px 10px; border-radius: 50%; font-size: 0.9em; margin-left: 10px;">${index + 1}</span>
-                ${verse}
-            </div>
-        `;
-    });
-    
-    versesHTML += '</div>';
-    document.getElementById('surahText').innerHTML = versesHTML;
-    
-    // إضافة تأثير عند المرور على الآية
-    document.querySelectorAll('.verse').forEach(verse => {
-        verse.addEventListener('mouseenter', () => {
-            verse.style.background = '#f8fff8';
-        });
-        verse.addEventListener('mouseleave', () => {
-            verse.style.background = 'transparent';
-        });
-    });
-}
     duas: [
         {
             text: "اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً",
@@ -905,4 +825,5 @@ function initializeApp() {
     setupEventListeners();
 
 }
+
 
