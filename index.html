@@ -22,17 +22,25 @@
       <div class="welcome-msg" id="welcomeMsg" data-translate="welcome">مرحبا بكِ</div>
       <button id="closePanelBtn" class="close-btn" title="إغلاق"><i class="fas fa-times"></i></button>
     </div>
-
-    <div class="d-grid gap-2 mb-3">
-        <select id="languageSelector" class="form-select form-select-sm" title="اختيار اللغة">
-            <option value="ar" selected>العربية 🇸🇦</option>
-            <option value="en">English 🇬🇧</option>
-            <option value="fr">Français 🇫🇷</option>
-        </select>
-        <button id="toggleThemeBtn" class="btn btn-outline-secondary btn-sm" title="تبديل الوضع">
-            <i class="fas fa-moon" id="themeIcon"></i> <span data-translate="toggle_theme">الوضع الليلي</span>
-        </button>
+    
+   <!-- شريط التحكم في اللغة والوضع -->
+<div class="control-bar">
+  <div class="row g-2">
+    <div class="col-6">
+      <select id="languageSelector" class="form-select language-selector">
+        <option value="ar">العربية 🇸🇦</option>
+        <option value="en">English 🇬🇧</option>
+        <option value="fr">Français 🇫🇷</option>
+      </select>
     </div>
+    <div class="col-6">
+      <button id="themeToggle" class="btn theme-toggle w-100">
+        <i class="fas fa-moon"></i> <span id="themeText">الوضع الليلي</span>
+      </button>
+    </div>
+  </div>
+</div>
+    
     <hr/>
     <div id="panelNav">
       <div class="d-grid gap-2 mb-3">
