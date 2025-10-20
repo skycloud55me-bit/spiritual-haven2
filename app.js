@@ -287,8 +287,8 @@ function setupThemeToggle() {
             
             saveUserPreferences();
         });
-    }
-}
+    }   
+}   
 
 // ========== إدارة التنقل ==========
 function setupNavigation() {
@@ -303,7 +303,9 @@ function setupNavigation() {
     openPanelBtn.addEventListener('click', () => {
         sidePanel.classList.add('open');
         backdrop.style.display = 'block';
-    });
+        ç});
+    }
+}
 
     closePanelBtn.addEventListener('click', closePanel);
     backdrop.addEventListener('click', closePanel);
@@ -825,5 +827,6 @@ function initializeApp() {
     setupEventListeners();
 
 }
+
 
 
