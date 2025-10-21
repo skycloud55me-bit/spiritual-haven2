@@ -13,9 +13,13 @@
   <meta name="theme-color" content="#014d40">
 </head>
 <body class="theme-normal">
-  <!-- Open button -->
+  <!-- Open button - تصميم جديد -->
   <button class="open-panel-btn" id="openPanelBtn" aria-label="فتح القائمة">
-    <i class="fas fa-ellipsis-v"></i>
+    <div class="hamburger-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </button>
 
   <!-- Stars Background -->
@@ -157,10 +161,13 @@
     <!-- Quran page -->
     <section id="quran" class="page-content islamic-card d-none">
       <h3 class="blessed-text">القرآن الكريم</h3>
+      <div class="quran-header">
+        <p class="muted">كتاب الله تعالى - المصحف الشامل</p>
+      </div>
       <div class="row">
         <div class="col-md-4">
           <div class="islamic-card surah-list" id="surahListBox">
-            <h6>فهرس السور</h6>
+            <h6><i class="fas fa-list"></i> فهرس السور</h6>
             <div id="surahList" style="max-height:60vh;overflow:auto"></div>
           </div>
         </div>
@@ -168,23 +175,24 @@
           <div class="islamic-card surah-container">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <div>
-                <h5 id="surahTitle">اختر سورة</h5>
+                <h5 id="surahTitle">اختر سورة من الفهرس</h5>
                 <div class="text-muted control-small" id="surahMeta"></div>
               </div>
               <div class="d-flex gap-2">
-                <button id="increaseFont" class="btn btn-outline-light btn-sm control-small">تكبير</button>
-                <button id="decreaseFont" class="btn btn-outline-light btn-sm control-small">تصغير</button>
-                <button id="toggleReaderTheme" class="btn btn-outline-light btn-sm control-small">وضع قارئ</button>
-                <button id="showTafsir" class="btn btn-outline-light btn-sm control-small">التفسير</button>
+                <button id="increaseFont" class="btn btn-outline-light btn-sm control-small"><i class="fas fa-search-plus"></i></button>
+                <button id="decreaseFont" class="btn btn-outline-light btn-sm control-small"><i class="fas fa-search-minus"></i></button>
+                <button id="toggleReaderTheme" class="btn btn-outline-light btn-sm control-small"><i class="fas fa-eye"></i></button>
               </div>
             </div>
             <div style="margin-bottom:10px">
-              <input id="searchInSurah" class="form-control" placeholder="ابحث داخل السورة" />
+              <input id="searchInSurah" class="form-control" placeholder="🔍 ابحث في السورة (كلمة أو جزء من الآية)" />
             </div>
-            <div id="surahText" class="surah-text">سيظهر نص السورة هنا عند اختيارها.</div>
-            <div id="tafsirSection" class="mt-3 d-none">
-              <h6>التفسير المبسط</h6>
-              <div id="tafsirContent" class="tafsir-text"></div>
+            <div id="surahText" class="surah-text">
+              <div class="empty-state">
+                <div class="empty-icon">📖</div>
+                <h4>كتاب الله تعالى</h4>
+                <p>اختر سورة من الفهرس لقراءة آياتها</p>
+              </div>
             </div>
             <div id="searchResults" style="margin-top:12px"></div>
           </div>
@@ -198,32 +206,32 @@
       <div class="row">
         <div class="col-md-6">
           <div class="quran-frame">
-            <h5>آية اليوم</h5>
+            <h5>🌿 آية اليوم</h5>
             <h3 id="dailyVerse">"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"</h3>
             <p id="verseSurah">الرعد - 28</p>
             <p><strong>شرح:</strong> <span id="verseExplanation">الذكر يطمئن القلب.</span></p>
-            <button id="newVerseBtn" class="btn btn-outline-light btn-sm">آية جديدة</button>
+            <button id="newVerseBtn" class="btn btn-outline-light btn-sm">🔄 آية جديدة</button>
           </div>
           <div class="islamic-card mt-3">
-            <h6>قصص الأنبياء</h6>
+            <h6>📚 قصص الأنبياء</h6>
             <div id="prophetStory" class="story-card"></div>
-            <button id="nextStory" class="btn btn-outline-light btn-sm mt-2">قصة أخرى</button>
+            <button id="nextStory" class="btn btn-outline-light btn-sm mt-2">📖 قصة أخرى</button>
           </div>
         </div>
         <div class="col-md-6">
-          <h5 class="blessed-text">تحديك اليومي</h5>
+          <h5 class="blessed-text">🎯 تحدي القرآن اليومي</h5>
           <label>الهدف: <span id="goalValue">10</span> صفحة</label>
           <input id="pagesGoal" type="range" class="form-range" min="1" max="30" value="10">
-          <button id="recordReadingBtn" class="btn btn-success mt-2">سجّلي قراءتك</button>
+          <button id="recordReadingBtn" class="btn btn-success mt-2">✅ سجّلي قراءتك</button>
 
           <div class="islamic-card mt-4">
-            <h6>حكم اليوم</h6>
+            <h6>💭 حكمة اليوم</h6>
             <div id="dailyWisdom" class="wisdom-text"></div>
           </div>
 
           <div class="islamic-card mt-3">
-            <h6>الفتوى اليومية</h6>
-            <div id="dailyFatwa" class="fatwa-text"></div>
+            <h6>🌺 كنوز قرآنية</h6>
+            <div id="quranTreasures" class="treasures-text"></div>
           </div>
         </div>
       </div>
@@ -234,45 +242,45 @@
       <h3 class="blessed-text">رياض الصالحين</h3>
       <div class="row">
         <div class="col-md-6">
-          <h6>أعمال الخير</h6>
+          <h6>✨ أعمال الخير</h6>
           <select id="goodDeedsSelect" class="form-select mb-2"></select>
-          <button id="recordDeedBtn" class="btn btn-success">سجّلي هذا العمل</button>
+          <button id="recordDeedBtn" class="btn btn-success">✅ سجّلي هذا العمل</button>
           
           <div class="islamic-card mt-3">
-            <h6>تحدي الخير الأسبوعي</h6>
+            <h6>🏆 تحدي الخير الأسبوعي</h6>
             <div id="weeklyChallenge"></div>
-            <button id="joinChallenge" class="btn btn-outline-light btn-sm mt-2">انضم للتحدي</button>
+            <button id="joinChallenge" class="btn btn-outline-light btn-sm mt-2">🎯 انضم للتحدي</button>
           </div>
         </div>
         <div class="col-md-6">
-          <h6>متابعة الصلوات</h6>
+          <h6>🕌 متابعة الصلوات</h6>
           <div class="prayer-grid">
             <div class="prayer-time" data-prayer="fajr">
               <input type="checkbox" id="fajrPrayer" class="prayer-check">
-              <label for="fajrPrayer">الفجر</label>
+              <label for="fajrPrayer">🌄 الصبح</label>
             </div>
             <div class="prayer-time" data-prayer="dhuhr">
               <input type="checkbox" id="dhuhrPrayer" class="prayer-check">
-              <label for="dhuhrPrayer">الظهر</label>
+              <label for="dhuhrPrayer">☀️ الظهر</label>
             </div>
             <div class="prayer-time" data-prayer="asr">
               <input type="checkbox" id="asrPrayer" class="prayer-check">
-              <label for="asrPrayer">العصر</label>
+              <label for="asrPrayer">🌅 العصر</label>
             </div>
             <div class="prayer-time" data-prayer="maghrib">
               <input type="checkbox" id="maghribPrayer" class="prayer-check">
-              <label for="maghribPrayer">المغرب</label>
+              <label for="maghribPrayer">🌇 المغرب</label>
             </div>
             <div class="prayer-time" data-prayer="isha">
               <input type="checkbox" id="ishaPrayer" class="prayer-check">
-              <label for="ishaPrayer">العشاء</label>
+              <label for="ishaPrayer">🌙 العشاء</label>
             </div>
           </div>
-          <button id="calculatePrayerBtn" class="btn btn-primary mt-2">احسبي سلسلة الصلاة</button>
+          <button id="calculatePrayerBtn" class="btn btn-primary mt-2">📊 احسبي سلسلة الصلاة</button>
 
           <div class="islamic-card mt-3">
-            <h6>أوقات الصلاة</h6>
-            <div id="prayerTimes"></div>
+            <h6>⏰ تذكير الصلوات</h6>
+            <div id="prayerReminders" class="prayer-reminders"></div>
           </div>
         </div>
       </div>
@@ -282,9 +290,9 @@
     <section id="obedience-gardens" class="page-content islamic-card d-none">
       <h3 class="blessed-text">جنات الطاعة</h3>
       <ul class="nav nav-pills mb-3" id="obedienceTabs">
-        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#azkar">الأذكار</button></li>
-        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#dua">دعاء الخير</button></li>
-        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#worship">العبادات المستحبة</button></li>
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#azkar">🕌 الأذكار</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#dua">🤲 دعاء الخير</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#worship">⭐ العبادات المستحبة</button></li>
       </ul>
 
       <div class="tab-content">
@@ -292,38 +300,38 @@
           <div class="row">
             <div class="col-md-4">
               <div class="islamic-card text-center">
-                <h6>أذكار الصباح</h6>
+                <h6>🌅 أذكار الصباح</h6>
                 <div id="countMorning" class="big-count">0</div>
                 <div class="mt-2">
-                  <button class="btn btn-outline-light btn-sm" id="incMorning" data-counter="morning">زيادة</button>
-                  <button class="btn btn-outline-secondary btn-sm" id="resetMorning" data-counter="morning">إعادة</button>
+                  <button class="btn btn-outline-light btn-sm" id="incMorning" data-counter="morning">➕ زيادة</button>
+                  <button class="btn btn-outline-secondary btn-sm" id="resetMorning" data-counter="morning">🔄 إعادة</button>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="islamic-card text-center">
-                <h6>أذكار المساء</h6>
+                <h6>🌇 أذكار المساء</h6>
                 <div id="countEvening" class="big-count">0</div>
                 <div class="mt-2">
-                  <button class="btn btn-outline-light btn-sm" id="incEvening" data-counter="evening">زيادة</button>
-                  <button class="btn btn-outline-secondary btn-sm" id="resetEvening" data-counter="evening">إعادة</button>
+                  <button class="btn btn-outline-light btn-sm" id="incEvening" data-counter="evening">➕ زيادة</button>
+                  <button class="btn btn-outline-secondary btn-sm" id="resetEvening" data-counter="evening">🔄 إعادة</button>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="islamic-card text-center">
-                <h6>بعد الصلاة</h6>
+                <h6>🕌 بعد الصلاة</h6>
                 <div id="countAfter" class="big-count">0</div>
                 <div class="mt-2">
-                  <button class="btn btn-outline-light btn-sm" id="incAfter" data-counter="after">زيادة</button>
-                  <button class="btn btn-outline-secondary btn-sm" id="resetAfter" data-counter="after">إعادة</button>
+                  <button class="btn btn-outline-light btn-sm" id="incAfter" data-counter="after">➕ زيادة</button>
+                  <button class="btn btn-outline-secondary btn-sm" id="resetAfter" data-counter="after">🔄 إعادة</button>
                 </div>
               </div>
             </div>
           </div>
           
           <div class="islamic-card mt-3">
-            <h6>تذكيرات الأذكار</h6>
+            <h6>🔔 تذكيرات الأذكار</h6>
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" id="azkarReminders">
               <label class="form-check-label" for="azkarReminders">تفعيل التذكيرات</label>
@@ -332,12 +340,12 @@
         </div>
 
         <div class="tab-pane fade p-2" id="dua">
-          <h5>دعاء الخير</h5>
+          <h5>🤲 دعاء الخير</h5>
           <div id="duaGrid" class="dua-grid p-2"></div>
         </div>
 
         <div class="tab-pane fade p-2" id="worship">
-          <h5>العبادات المستحبة</h5>
+          <h5>⭐ العبادات المستحبة</h5>
           <div id="worshipGrid" class="worship-grid p-2"></div>
         </div>
       </div>
@@ -347,42 +355,54 @@
     <section id="educational-games" class="page-content islamic-card d-none">
       <h3 class="blessed-text">ألعاب تربوية</h3>
       <ul class="nav nav-pills mb-3" id="gamesTabs">
-        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#memoryGame">لعبة الذاكرة</button></li>
-        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#quizGame">الاختبار التفاعلي</button></li>
-        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#islamicPuzzle">لغز إسلامي</button></li>
-        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#knowledgeChallenge">تحدي المعرفة</button></li>
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#memoryGame">🧠 لعبة الذاكرة</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#quizGame">📝 الاختبار التفاعلي</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#islamicJourney">🕌 رحلة إسلامية</button></li>
       </ul>
 
       <div class="tab-content">
         <div class="tab-pane fade show active p-2" id="memoryGame">
-          <h5>لعبة الذاكرة الإسلامية</h5>
+          <h5>🧠 لعبة الذاكرة الإسلامية</h5>
           <div id="memoryBoard" class="memory-game row g-2"></div>
           <div class="mt-2">
-            <button id="newGameBtn" class="btn btn-outline-light">بدء جديد</button>
-            <span class="mx-3">الوقت: <span id="gameTimer">0</span> ثانية</span>
-            <span>الأزواج: <span id="pairsFound">0</span>/8</span>
+            <button id="newGameBtn" class="btn btn-outline-light">🔄 بدء جديد</button>
+            <span class="mx-3">⏱️ الوقت: <span id="gameTimer">0</span> ثانية</span>
+            <span>🎯 الأزواج: <span id="pairsFound">0</span>/8</span>
           </div>
         </div>
 
         <div class="tab-pane fade p-2" id="quizGame">
-          <h5>الاختبار التفاعلي اليومي</h5>
+          <h5>📝 الاختبار التفاعلي اليومي</h5>
           <div id="quizArea" class="quiz-container"></div>
         </div>
 
-        <div class="tab-pane fade p-2" id="islamicPuzzle">
-          <h5>لغز إسلامي</h5>
-          <div class="puzzle-container">
-            <div id="puzzleQuestion" class="puzzle-question"></div>
-            <input type="text" id="puzzleAnswer" class="form-control mt-2" placeholder="اكتب إجابتك هنا">
-            <button id="submitPuzzle" class="btn btn-success mt-2">تحقق من الإجابة</button>
-            <div id="puzzleResult" class="mt-2"></div>
-            <button id="newPuzzleBtn" class="btn btn-outline-light mt-2">لغز جديد</button>
+        <div class="tab-pane fade p-2" id="islamicJourney">
+          <h5>🕌 رحلة إسلامية</h5>
+          <div class="journey-container">
+            <div class="journey-card">
+              <h6>🚀 ابدأ رحلتك التعليمية</h6>
+              <p>اختر موضوعاً لتبدأ رحلة التعلم الممتعة:</p>
+              <div class="journey-topics">
+                <button class="journey-topic" data-topic="prophets">
+                  <span>📖</span>
+                  <span>قصص الأنبياء</span>
+                </button>
+                <button class="journey-topic" data-topic="quran">
+                  <span>🌙</span>
+                  <span>عجائب القرآن</span>
+                </button>
+                <button class="journey-topic" data-topic="islamicHistory">
+                  <span>🏛️</span>
+                  <span>التاريخ الإسلامي</span>
+                </button>
+                <button class="journey-topic" data-topic="ethics">
+                  <span>💫</span>
+                  <span>الأخلاق الإسلامية</span>
+                </button>
+              </div>
+            </div>
+            <div id="journeyContent" class="journey-content mt-3"></div>
           </div>
-        </div>
-
-        <div class="tab-pane fade p-2" id="knowledgeChallenge">
-          <h5>تحدي المعرفة الإسلامية</h5>
-          <div id="challengeArea" class="challenge-container"></div>
         </div>
       </div>
     </section>
@@ -393,20 +413,20 @@
       <div class="row">
         <div class="col-md-8">
           <div class="islamic-card">
-            <h5>إحصائياتك الشاملة</h5>
+            <h5>📊 إحصائياتك الشاملة</h5>
             <canvas id="progressChart" width="400" height="200"></canvas>
           </div>
           
           <div class="row mt-3">
             <div class="col-md-6">
               <div class="islamic-card">
-                <h6>أهداف هذا الشهر</h6>
+                <h6>🎯 أهداف هذا الشهر</h6>
                 <div id="monthlyGoals"></div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="islamic-card">
-                <h6>مقارنة مع الشهر الماضي</h6>
+                <h6>📈 مقارنة مع الشهر الماضي</h6>
                 <div id="monthComparison"></div>
               </div>
             </div>
@@ -415,12 +435,12 @@
         
         <div class="col-md-4">
           <div class="islamic-card">
-            <h6>تقرير التقدم</h6>
+            <h6>📋 تقرير التقدم</h6>
             <div id="progressReport"></div>
           </div>
           
           <div class="islamic-card mt-3">
-            <h6>التحديات النشطة</h6>
+            <h6>🏆 التحديات النشطة</h6>
             <div id="activeChallenges"></div>
           </div>
         </div>
@@ -433,16 +453,16 @@
       <div class="row">
         <div class="col-md-3">
           <div class="islamic-card">
-            <h6>فئات الأدعية</h6>
+            <h6>📂 فئات الأدعية</h6>
             <div class="dua-categories">
-              <button class="dua-category active" data-category="all">جميع الأدعية</button>
-              <button class="dua-category" data-category="morning">أدعية الصباح</button>
-              <button class="dua-category" data-category="evening">أدعية المساء</button>
-              <button class="dua-category" data-category="prayer">أدعية الصلاة</button>
-              <button class="dua-category" data-category="rain">دعاء المطر</button>
-              <button class="dua-category" data-category="fear">دعاء الخوف</button>
-              <button class="dua-category" data-category="travel">دعاء السفر</button>
-              <button class="dua-category" data-category="sickness">دعاء المرض</button>
+              <button class="dua-category active" data-category="all">🌈 جميع الأدعية</button>
+              <button class="dua-category" data-category="morning">🌅 أدعية الصباح</button>
+              <button class="dua-category" data-category="evening">🌇 أدعية المساء</button>
+              <button class="dua-category" data-category="prayer">🕌 أدعية الصلاة</button>
+              <button class="dua-category" data-category="rain">🌧️ دعاء المطر</button>
+              <button class="dua-category" data-category="fear">😨 دعاء الخوف</button>
+              <button class="dua-category" data-category="travel">✈️ دعاء السفر</button>
+              <button class="dua-category" data-category="sickness">🏥 دعاء المرض</button>
             </div>
           </div>
         </div>
@@ -461,7 +481,7 @@
         </div>
         <div class="col-md-4">
           <div class="islamic-card">
-            <h6>ملفك الشخصي</h6>
+            <h6>👤 ملفك الشخصي</h6>
             <div class="user-profile">
               <div class="level-display">
                 <div class="level-circle">
@@ -472,14 +492,14 @@
                   <div class="exp-bar">
                     <div class="exp-progress" id="expProgress"></div>
                   </div>
-                  <small>النقاط: <span id="userPoints">0</span></small>
+                  <small>🎯 النقاط: <span id="userPoints">0</span></small>
                 </div>
               </div>
             </div>
           </div>
           
           <div class="islamic-card mt-3">
-            <h6>أحدث المكافآت</h6>
+            <h6>🎁 أحدث المكافآت</h6>
             <div id="recentRewards"></div>
           </div>
         </div>
@@ -492,24 +512,24 @@
       <div class="row">
         <div class="col-md-8">
           <div class="islamic-card">
-            <h5>فعاليات الشهر الهجري</h5>
+            <h5>📅 فعاليات الشهر الهجري</h5>
             <div id="hijriEvents" class="events-calendar"></div>
           </div>
           
           <div class="islamic-card mt-3">
-            <h5>مواسم الخير</h5>
+            <h5>🌙 مواسم الخير</h5>
             <div id="seasonsOfGood" class="seasons-grid"></div>
           </div>
         </div>
         
         <div class="col-md-4">
           <div class="islamic-card">
-            <h6>التقويم الهجري</h6>
+            <h6>📆 التقويم الهجري</h6>
             <div id="hijriCalendar" class="hijri-calendar"></div>
           </div>
           
           <div class="islamic-card mt-3">
-            <h6>فعالية خاصة</h6>
+            <h6>🎉 فعالية خاصة</h6>
             <div id="specialEvent" class="special-event-card"></div>
           </div>
         </div>
