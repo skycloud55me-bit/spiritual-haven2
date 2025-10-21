@@ -178,7 +178,7 @@
       const json = await res.json();
       const ayahs = json.data.ayahs;
       currentAyahs = ayahs;
-      const html = ayahs.map(a=>`<div style="margin-bottom:10px"><span style="font-weight:700;color:var(--gold)">${a.numberInSurah}.</span> <span>${escapeHtml(a.text)}</span></div>`).join('');
+      const html = ayahs.map(a=>`<div class="ayah-block"><span class="ayah-number" style="color:var(--gold);font-weight:700">${a.numberInSurah}.</span><div class="quran-text">${escapeHtml(a.text)}</div></div>`).join('');
       if(surahText) surahText.innerHTML = html;
       if(surahTitle) surahTitle.textContent = title + ` (${ayahCount} آية)`;
       if(surahMeta) surahMeta.textContent = `السورة رقم ${num} — عدد الآيات: ${ayahCount}`;
@@ -392,3 +392,4 @@
   window.Oasis = { showPage, openPanel, closePanel, refreshStats };
 
 })();
+
