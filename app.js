@@ -76,27 +76,31 @@
   /* ---------- مفاتيح التخزين ---------- */
   const LANG_KEY = 'waha_lang', THEME_KEY = 'waha_theme';
 
-  /* ---------- تطبيق اللغة (labels بسيطة للأزرار فقط) ---------- */
-  function applyLang(l){
-    if(wahaLang) wahaLang.value = l;
-    document.querySelectorAll('[data-page]').forEach(btn=>{
-      const id = btn.getAttribute('data-page');
-      let label = '';
-      if(id === 'dashboard') label = (l==='en' ? 'Dashboard' : (l==='fr' ? 'Tableau' : 'الرئيسية'));
-      if(id === 'quran') label = (l==='en' ? 'Quran' : (l==='fr' ? 'Coran' : 'القرآن الكريم'));
-      if(id === 'quran-garden') label = (l==='en' ? 'Quran Garden' : (l==='fr' ? 'Jardin' : 'بستان القرآن'));
-      if(id === 'righteous-path') label = (l==='en' ? 'Righteous' : (l==='fr' ? 'Vertueux' : 'رياض الصالحين'));
-      if(id === 'obedience-gardens') label = (l==='en' ? 'Obedience' : (l==='fr' ? 'Obéissance' : 'جنات الطاعة'));
-      if(id === 'educational-games') label = (l==='en' ? 'Games' : (l==='fr' ? 'Jeux' : 'ألعاب تربوية'));
-      if(id === 'progress-tracker') label = (l==='en' ? 'Progress' : (l==='fr' ? 'Progrès' : 'سجل تطورك'));
-      if(id === 'daily-duas') label = (l==='en' ? 'Daily Duas' : (l==='fr' ? 'Duas' : 'الأدعية اليومية'));
-      if(label){
-        const icon = btn.querySelector('i');
-        if(icon) btn.innerHTML = icon.outerHTML + ' ' + `<span>${label}</span>`;
-        else btn.innerHTML = `<span>${label}</span>`;
-      }
-    });
-  }
+/* ---------- تطبيق اللغة (labels بسيطة للأزرار فقط) ---------- */
+function applyLang(l){
+  document.documentElement.lang = l;
+  const labels = {
+    dashboard: l === 'ar' ? 'الصفحة الرئيسية' : 'Dashboard',
+    quran: l === 'ar' ? 'القرآن الكريم' : 'Quran',
+    quran_garden: l === 'ar' ? 'بستان القرآن' : 'Quran Garden',
+    righteous: l === 'ar' ? 'رياض الصالحين' : 'Righteous Deeds',
+    taah: l === 'ar' ? 'جنات الطاعة' : 'Gardens of Obedience',
+    games: l === 'ar' ? 'الألعاب التربوية' : 'Educational Games',
+    tracker: l === 'ar' ? 'سجل التطور' : 'Progress Tracker',
+    daily_duas: l === 'ar' ? 'الأدعية اليومية' : 'Daily Duas',
+    settings: l === 'ar' ? 'الإعدادات' : 'Settings'
+  };
+
+  document.querySelectorAll('#sidebar button').forEach(btn => {
+    const key = btn.dataset.page;
+    const label = labels[key];
+    if (label && label.trim() !== '') {
+      const icon = btn.querySelector('i');
+      const existingIcon = icon ? icon.outerHTML + ' ' : '';
+      btn.innerHTML = `${existingIcon}<span>${label}</span>`;
+    }
+  });
+}
 
   /* ---------- تطبيق السمة ---------- */
   function applyTheme(t){
@@ -392,4 +396,5 @@
   window.Oasis = { showPage, openPanel, closePanel, refreshStats };
 
 })();
+
 
