@@ -1,4 +1,4 @@
-// app.js — النسخة النهائية المتكاملة مع جميع الميزات
+// app.js — النسخة النهائية مع جميع التعديلات المطلوبة
 (function(){
   "use strict";
 
@@ -239,11 +239,25 @@
         `<div class="interactive-card" style="margin-bottom:8px">${reminder}</div>`
       ).join('');
     }
+
+    // تذكيرات الصلوات
+    const prayerReminders = document.getElementById('prayerReminders');
+    if (prayerReminders) {
+      const prayerTimes = [
+        "🌄 الصبح: أفضل وقت عند الفجر",
+        "☀️ الظهر: عندما تزول الشمس",
+        "🌅 العصر: حين يصبح ظل كل شيء مثله",
+        "🌇 المغرب: بعد غروب الشمس مباشرة",
+        "🌙 العشاء: بعد مغيب الشفق الأحمر"
+      ];
+      prayerReminders.innerHTML = prayerTimes.map(time => 
+        `<div>${time}</div>`
+      ).join('');
+    }
   }
 
   /* ---------- نظام الرسوم البيانية ---------- */
   function initCharts() {
-    // بيانات أسبوعية عشوائية للعرض
     const weeklyData = {
       labels: ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
       prayers: [4, 5, 5, 3, 5, 4, 5],
@@ -355,20 +369,6 @@
     }
   }
 
-  /* ---------- نظام التفسير ---------- */
-  const tafsirDatabase = {
-    1: "البسملة: تبدأ بها السور عدا التوبة، وهي بركة واستعانة بالله",
-    2: "الم: حروف مقطعة، الله أعلم بمرادها، فيها إعجاز بلاغي",
-    255: "آية الكرسي: أعظم آية في القرآن، فيها توحيد الله وصفاته",
-    286: "ربنا لا تؤاخذنا: دعاء بالرحمة والمغفرة بعد بيان التكليف"
-  };
-
-  function showTafsir(ayahNumber) {
-    const tafsir = tafsirDatabase[ayahNumber] || "التفسير غير متوفر لهذه الآية حالياً";
-    document.getElementById('tafsirContent').textContent = tafsir;
-    document.getElementById('tafsirSection').classList.remove('d-none');
-  }
-
   /* ---------- نظام القصص والحكم ---------- */
   const prophetStories = [
     {
@@ -397,10 +397,18 @@
     "لا تغضب ولك الجنة"
   ];
 
+  const quranTreasures = [
+    "آية الكرسي أعظم آية في القرآن",
+    "سورة الإخلاص تعدل ثلث القرآن",
+    "خيركم من تعلم القرآن وعلمه",
+    "القرآن شفاء لما في الصدور",
+    "حافظ القرآن مع السفرة الكرام البررة"
+  ];
+
   function initStoriesAndWisdom() {
     const storyElement = document.getElementById('prophetStory');
     const wisdomElement = document.getElementById('dailyWisdom');
-    const fatwaElement = document.getElementById('dailyFatwa');
+    const treasuresElement = document.getElementById('quranTreasures');
     
     if (storyElement) {
       const randomStory = prophetStories[Math.floor(Math.random() * prophetStories.length)];
@@ -415,14 +423,8 @@
       wisdomElement.textContent = dailyWisdom[Math.floor(Math.random() * dailyWisdom.length)];
     }
     
-    if (fatwaElement) {
-      const fatwas = [
-        "يجوز الجمع بين الصلاتين للمسافر والمريض",
-        "النية محلها القلب ولا تشرع باللسان",
-        "الأفضل صلاة النوافل في البيت",
-        "يستحب الدعاء بعد الصلوات المفروضة"
-      ];
-      fatwaElement.textContent = fatwas[Math.floor(Math.random() * fatwas.length)];
+    if (treasuresElement) {
+      treasuresElement.textContent = quranTreasures[Math.floor(Math.random() * quranTreasures.length)];
     }
   }
 
@@ -468,6 +470,95 @@
     }
   }
 
+  /* ---------- نظام الرحلة الإسلامية ---------- */
+  function initIslamicJourney() {
+    const journeyTopics = document.querySelectorAll('.journey-topic');
+    const journeyContent = document.getElementById('journeyContent');
+    
+    const journeyData = {
+      prophets: {
+        title: "📖 رحلة في قصص الأنبياء",
+        content: `
+          <div class="journey-lesson">
+            <h5>تعرف على أنبياء الله ورسله</h5>
+            <div class="lesson-content">
+              <p>• قصة آدم عليه السلام: أول البشر وأبو البشرية</p>
+              <p>• قصة نوح عليه السلام: داعي التوحيد وصاحب السفينة</p>
+              <p>• قصة إبراهيم عليه السلام: أبو الأنبياء وحطم الأصنام</p>
+              <p>• قصة موسى عليه السلام: كليم الله ومناجاة الرب</p>
+              <p>• قصة عيسى عليه السلام: روح الله وكلمته</p>
+              <p>• قصة محمد ﷺ: خاتم الأنبياء والمرسلين</p>
+            </div>
+            <button class="btn btn-outline-light btn-sm mt-2" onclick="awardPoints(10, 'تعلم قصص الأنبياء')">🎯 اكسب 10 نقاط</button>
+          </div>
+        `
+      },
+      quran: {
+        title: "🌙 عجائب القرآن الكريم",
+        content: `
+          <div class="journey-lesson">
+            <h5>أسرار وإعجاز القرآن</h5>
+            <div class="lesson-content">
+              <p>• الإعجاز العلمي في القرآن الكريم</p>
+              <p>• الإعجاز اللغوي والبلاغي</p>
+              <p>• قصص القرآن وعبرها</p>
+              <p>• آيات الشفاء والرحمة</p>
+              <p>• أسرار ترتيب السور</p>
+              <p>• فضائل سور القرآن</p>
+            </div>
+            <button class="btn btn-outline-light btn-sm mt-2" onclick="awardPoints(10, 'تعلم عجائب القرآن')">🎯 اكسب 10 نقاط</button>
+          </div>
+        `
+      },
+      islamicHistory: {
+        title: "🏛️ رحلة في التاريخ الإسلامي",
+        content: `
+          <div class="journey-lesson">
+            <h5>أمجاد الحضارة الإسلامية</h5>
+            <div class="lesson-content">
+              <p>• عصر النبوة والخلافة الراشدة</p>
+              <p>• الدولة الأموية والإنجازات</p>
+              <p>• الدولة العباسية وعصر الذهبي</p>
+              <p>• الأندلس: درة العالم الإسلامي</p>
+              <p>• الدولة العثمانية وحماية المقدسات</p>
+              <p>• العلماء والمخترعون المسلمين</p>
+            </div>
+            <button class="btn btn-outline-light btn-sm mt-2" onclick="awardPoints(10, 'تعلم التاريخ الإسلامي')">🎯 اكسب 10 نقاط</button>
+          </div>
+        `
+      },
+      ethics: {
+        title: "💫 الأخلاق الإسلامية الراقية",
+        content: `
+          <div class="journey-lesson">
+            <h5>بناء الشخصية المسلمة</h5>
+            <div class="lesson-content">
+              <p>• الصدق والأمانة</p>
+              <p>• التواضع وحسن الخلق</p>
+              <p>• الصبر والاحتساب</p>
+              <p>• الرحمة والتعاطف</p>
+              <p>• العدل والإحسان</p>
+              <p>• بر الوالدين وصلة الرحم</p>
+            </div>
+            <button class="btn btn-outline-light btn-sm mt-2" onclick="awardPoints(10, 'تعلم الأخلاق الإسلامية')">🎯 اكسب 10 نقاط</button>
+          </div>
+        `
+      }
+    };
+    
+    journeyTopics.forEach(topic => {
+      topic.addEventListener('click', function() {
+        const topicKey = this.dataset.topic;
+        const topicData = journeyData[topicKey];
+        
+        if (topicData && journeyContent) {
+          journeyContent.innerHTML = topicData.content;
+          playSound(soundClick);
+        }
+      });
+    });
+  }
+
   /* ---------- باقي الكود الأساسي ---------- */
   const phrases = [
     "السلام عليكم ورحمة الله 🌿",
@@ -484,7 +575,6 @@
     sidePanel.setAttribute('aria-hidden','false');
     playSound(soundWhoosh);
     
-    // تحديث العبارة اليومية
     const dailyPhrase = document.getElementById('dailyPhrase');
     if(dailyPhrase) {
       dailyPhrase.textContent = phrases[Math.floor(Math.random() * phrases.length)];
@@ -509,7 +599,6 @@
     if(t) t.classList.remove('d-none');
     playSound(soundWhoosh);
     
-    // تحميل محتوى الصفحة الديناميكي
     if(id === 'dashboard') {
       initCharts();
       initReminders();
@@ -523,6 +612,8 @@
       initAchievements();
     } else if(id === 'islamic-events') {
       updateIslamicEvents();
+    } else if(id === 'educational-games') {
+      initIslamicJourney();
     }
     
     if(window.innerWidth < 900) setTimeout(closePanel, 220);
@@ -632,7 +723,7 @@
 
   async function loadSurah(num,title,ayahCount){
     try{
-      if(surahTitle) surahTitle.textContent = 'تحميل السورة...';
+      if(surahTitle) surahTitle.textContent = 'جاري تحميل السورة...';
       if(surahMeta) surahMeta.textContent = '';
       if(surahText) surahText.innerHTML = '';
       if(searchResults) searchResults.innerHTML = '';
@@ -640,7 +731,7 @@
       const json = await res.json();
       const ayahs = json.data.ayahs;
       currentAyahs = ayahs;
-      const html = ayahs.map(a=>`<div style="margin-bottom:15px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02)" onclick="showTafsir(${a.numberInSurah})"><span style="font-weight:700;color:var(--gold)">${a.numberInSurah}.</span> <span>${escapeHtml(a.text)}</span></div>`).join('');
+      const html = ayahs.map(a=>`<div style="margin-bottom:15px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02)"><span style="font-weight:700;color:var(--gold)">${a.numberInSurah}.</span> <span>${escapeHtml(a.text)}</span></div>`).join('');
       if(surahText) surahText.innerHTML = html;
       if(surahTitle) surahTitle.textContent = title + ` (${ayahCount} آية)`;
       if(surahMeta) surahMeta.textContent = `السورة رقم ${num} — عدد الآيات: ${ayahCount}`;
@@ -649,11 +740,16 @@
       const container = document.querySelector('.surah-container'); if(container) container.scrollTop = 0;
       playSound(soundPop);
       
-      // منح نقاط لقراءة السورة
       awardPoints(5, `قراءة سورة ${title}`);
     }catch(e){
       if(surahTitle) surahTitle.textContent = 'فشل التحميل';
-      if(surahText) surahText.textContent = 'حدثت مشكلة أثناء تحميل السورة.';
+      if(surahText) surahText.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">⚠️</div>
+          <h4>حدث خطأ في التحميل</h4>
+          <p>تعذر تحميل السورة. يرجى التحقق من الاتصال بالإنترنت</p>
+        </div>
+      `;
       console.error(e);
     }
   }
@@ -674,7 +770,6 @@
   document.getElementById('increaseFont')?.addEventListener('click', ()=>{ fontSize = Math.min(32,fontSize+2); surahText.style.fontSize = fontSize+'px'; playSound(soundClick); });
   document.getElementById('decreaseFont')?.addEventListener('click', ()=>{ fontSize = Math.max(14,fontSize-2); surahText.style.fontSize = fontSize+'px'; playSound(soundClick); });
   document.getElementById('toggleReaderTheme')?.addEventListener('click', ()=>{ const container=document.querySelector('.surah-container'); if(!container) return; container.classList.toggle('reader-dark'); playSound(soundPop); });
-  document.getElementById('showTafsir')?.addEventListener('click', ()=>{ showTafsir(1); playSound(soundClick); });
 
   /* ---------- Quran Garden ---------- */
   const verses = [
@@ -787,7 +882,6 @@
       board.appendChild(col); 
     });
     
-    // بدء المؤقت
     startMemoryTimer();
   }
 
@@ -850,7 +944,7 @@
 
   // اختبار يومي متغيّر (9 أسئلة)
   const quizPool = [
-    {q:'كم ركعة الفجر؟', opts:['2','4','3'], a:0},
+    {q:'كم ركعة الصبح؟', opts:['2','4','3'], a:0},
     {q:'ما آخر سورة؟', opts:['الناس','الفاتحة','الكوثر'], a:0},
     {q:'كم جزء في القرآن؟', opts:['30','10','60'], a:0},
     {q:'أين نزل القرآن؟', opts:['مكة','المدينة','القدس'], a:0},
@@ -913,7 +1007,6 @@
       refreshStats(); 
     });
 
-    // إضافة تفاعل لاختيار الإجابات
     document.querySelectorAll('.quiz-option').forEach(option => {
       option.addEventListener('click', function() {
         const question = this.dataset.question;
@@ -1076,6 +1169,7 @@
     updateUserLevel();
     updateIslamicEvents();
     initReminders();
+    initIslamicJourney();
     
     // استعادة عدادات الأذكار
     ['morning','evening','after'].forEach(k=>{ 
@@ -1083,6 +1177,9 @@
       const el=document.getElementById('count'+capitalize(k)); 
       if(el) el.textContent=v; 
     });
+    
+    // تحميل الفهرس التلقائي للقرآن
+    loadSurahIndex();
     
     // الصفحة الافتراضية
     showPage('dashboard');
@@ -1094,24 +1191,6 @@
       localStorage.setItem('waha_last_visit', today);
       awardPoints(1, "زيارة يومية");
     }
-  });
-
-  // كشف PWA
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').then(function(registration) {
-        console.log('SW registered: ', registration);
-      }).catch(function(registrationError) {
-        console.log('SW registration failed: ', registrationError);
-      });
-    });
-  }
-
-  // كشف التثبيت
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
   });
 
   // تعريض الدوال للاستخدام الخارجي
