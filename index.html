@@ -18,12 +18,12 @@
 
   <div id="backdrop" class="backdrop-blur" aria-hidden="true"></div>
 
-  <!-- Sidebar (redesigned) -->
-  <aside class="side-panel glass" id="sidePanel" aria-hidden="true" role="dialog" aria-label="القائمة الجانبية">
+  <!-- Sidebar (solid royal green, not transparent) -->
+  <aside class="side-panel" id="sidePanel" aria-hidden="true" role="dialog" aria-label="القائمة الجانبية">
     <div class="panel-header">
       <div class="brand">
         <div class="brand-icon">🕋</div>
-        <div>
+        <div class="brand-text">
           <h3>الواحة الروحانية</h3>
           <small>ملاذك الإيماني</small>
         </div>
@@ -33,14 +33,14 @@
 
     <div class="panel-controls">
       <label class="control-label">اللغة</label>
-      <select id="wahaLangSelect" class="form-select form-select-sm mb-2">
+      <select id="wahaLangSelect" class="form-select form-select-sm mb-2" aria-label="اختيار اللغة">
         <option value="ar">العربية</option>
         <option value="en">English</option>
         <option value="fr">Français</option>
       </select>
 
       <label class="control-label">السمة</label>
-      <select id="wahaThemeSelect" class="form-select form-select-sm mb-2">
+      <select id="wahaThemeSelect" class="form-select form-select-sm mb-2" aria-label="اختيار السمة">
         <option value="normal">الوضع العادي</option>
         <option value="dark">الوضع الليلي</option>
         <option value="royal">الوضع الملكي</option>
@@ -52,11 +52,14 @@
       <button class="nav-item" data-page="quran"><i class="fas fa-book-open"></i><span>القرآن الكريم</span></button>
       <button class="nav-item" data-page="quran-garden"><i class="fas fa-seedling"></i><span>بستان القرآن</span></button>
       <button class="nav-item" data-page="righteous-path"><i class="fas fa-hands-praying"></i><span>رياض الصالحين</span></button>
+
       <div class="nav-divider"></div>
+
       <button class="nav-item" data-page="obedience-gardens"><i class="fas fa-mosque"></i><span>جنات الطاعة</span></button>
-      <button class="sub-item" data-page="dua"><i class="fas fa-pray"></i><span>دعاء الخير</span></button>
-      <button class="sub-item" data-page="worship"><i class="fas fa-star"></i><span>العبادات المستحبة</span></button>
+      <!-- removed dua & worship buttons from sidebar (kept pages themselves) -->
+
       <div class="nav-divider"></div>
+
       <button class="nav-item" data-page="educational-games"><i class="fas fa-gamepad"></i><span>ألعاب تربوية</span></button>
       <button class="nav-item" data-page="progress-tracker"><i class="fas fa-chart-line"></i><span>سجل تطورك</span></button>
       <button class="nav-item" data-page="daily-duas"><i class="fas fa-moon"></i><span>الأدعية اليومية</span></button>
@@ -70,7 +73,7 @@
 
   <!-- Main content -->
   <main class="main-wrap container-fluid">
-    <!-- Dashboard (new) -->
+    <!-- Dashboard -->
     <section id="dashboard" class="page-content islamic-card">
       <div class="dashboard-grid">
         <div class="card-stat">
@@ -103,7 +106,7 @@
       </div>
     </section>
 
-    <!-- Quran page (unchanged logic) -->
+    <!-- Quran page -->
     <section id="quran" class="page-content islamic-card d-none">
       <h3 class="blessed-text">القرآن الكريم</h3>
       <div class="row">
@@ -140,6 +143,8 @@
             <h5>آية اليوم</h5>
             <h3 id="dailyVerse">"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"</h3>
             <p id="verseSurah">الرعد - 28</p>
+            <p><strong>شرح:</strong> <span id="verseExplanation">الذكر يطمئن القلب.</span></p>
+            <button id="newVerseBtn" class="btn btn-outline-light btn-sm">آية جديدة</button>
           </div>
         </div>
         <div class="col-md-6">
@@ -173,7 +178,7 @@
       </div>
     </section>
 
-    <!-- Obedience (dua + worship) -->
+    <!-- Obedience (has dua & worship pages but not in sidebar) -->
     <section id="obedience-gardens" class="page-content islamic-card d-none">
       <h3 class="blessed-text">جنات الطاعة</h3>
       <ul class="nav nav-pills mb-3" id="obedienceTabs">
@@ -185,9 +190,9 @@
       <div class="tab-content">
         <div class="tab-pane fade show active p-2" id="azkar">
           <div class="row">
-            <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار الصباح</h6><div id="countMorning" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm" id="incMorning" data-counter="morning">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetMorning" data-counter="morning">إعادة</button></div></div></div>
-            <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار المساء</h6><div id="countEvening" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm" id="incEvening" data-counter="evening">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetEvening" data-counter="evening">إعادة</button></div></div></div>
-            <div class="col-md-4"><div class="islamic-card text-center"><h6>بعد الصلاة</h6><div id="countAfter" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-primary btn-sm" id="incAfter" data-counter="after">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetAfter" data-counter="after">إعادة</button></div></div></div>
+            <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار الصباح</h6><div id="countMorning" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-light btn-sm" id="incMorning" data-counter="morning">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetMorning" data-counter="morning">إعادة</button></div></div></div>
+            <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار المساء</h6><div id="countEvening" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-light btn-sm" id="incEvening" data-counter="evening">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetEvening" data-counter="evening">إعادة</button></div></div></div>
+            <div class="col-md-4"><div class="islamic-card text-center"><h6>بعد الصلاة</h6><div id="countAfter" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-light btn-sm" id="incAfter" data-counter="after">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetAfter" data-counter="after">إعادة</button></div></div></div>
           </div>
         </div>
 
@@ -210,7 +215,7 @@
         <div class="col-md-6">
           <h5>لعبة الذاكرة</h5>
           <div id="memoryBoard" class="memory-game row g-2"></div>
-          <div class="mt-2"><button id="newGameBtn" class="btn btn-outline-primary">بدء جديد</button></div>
+          <div class="mt-2"><button id="newGameBtn" class="btn btn-outline-light">بدء جديد</button></div>
         </div>
         <div class="col-md-6">
           <h5>الاختبار التفاعلي اليومي</h5>
