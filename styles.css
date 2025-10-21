@@ -1,5 +1,5 @@
 :root{
-  --primary:#014d40; /* royal dark green */
+  --primary:#014d40;
   --primary-2:#013b33;
   --accent:#6abf69;
   --gold:#d9b44a;
@@ -37,6 +37,52 @@ html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, sans-serif;backgr
   100% { opacity: 0.5; }
 }
 
+/* Hamburger Icon Design */
+.open-panel-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+  background: var(--gold);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(217, 180, 74, 0.3);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.open-panel-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(217, 180, 74, 0.4);
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-icon span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #014d40;
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.open-panel-btn:hover .hamburger-icon span {
+  background: #fff;
+}
+
 /* cards */
 .islamic-card{
   background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -56,7 +102,103 @@ html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, sans-serif;backgr
 .muted{color:rgba(255,255,255,0.85)}
 .control-small{font-size:0.9rem;color:rgba(255,255,255,0.9)}
 
-/* sidebar */
+/* Quran Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255,255,255,0.7);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.empty-state h4 {
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+/* Quran Header */
+.quran-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+/* Journey Game */
+.journey-container {
+  text-align: center;
+}
+
+.journey-card {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.journey-topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.journey-topic {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 20px;
+  color: white;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.journey-topic:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--gold);
+  transform: translateY(-5px);
+}
+
+.journey-topic span:first-child {
+  font-size: 2rem;
+}
+
+.journey-content {
+  min-height: 200px;
+}
+
+/* Quran Treasures */
+.treasures-text {
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 12px;
+  border-left: 4px solid var(--gold);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Prayer Reminders */
+.prayer-reminders {
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.prayer-reminders div {
+  padding: 8px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  margin: 5px 0;
+}
+
+/* باقي التنسيقات تبقى كما هي */
 .side-panel{
   position:fixed;
   top:12px;
@@ -255,16 +397,6 @@ html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, sans-serif;backgr
   border-radius: 10px;
 }
 
-/* Tafsir */
-.tafsir-text {
-  background: rgba(255,255,255,0.05);
-  padding: 15px;
-  border-radius: 10px;
-  border-right: 4px solid var(--gold);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
 /* Quran Frame */
 .quran-frame {
   background: linear-gradient(135deg, var(--primary), var(--primary-2));
@@ -298,7 +430,7 @@ html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, sans-serif;backgr
 }
 
 /* Story Cards */
-.story-card, .wisdom-text, .fatwa-text {
+.story-card, .wisdom-text {
   background: rgba(255,255,255,0.05);
   padding: 15px;
   border-radius: 12px;
@@ -470,6 +602,10 @@ html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, sans-serif;backgr
 .quiz-option:hover {
   background: rgba(255,255,255,0.1);
 }
+.quiz-option.selected {
+  background: var(--gold);
+  color: #014d40;
+}
 .quiz-option.correct {
   background: var(--accent);
   color: white;
@@ -477,21 +613,6 @@ html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, sans-serif;backgr
 .quiz-option.incorrect {
   background: #ff6b6b;
   color: white;
-}
-
-/* Puzzle */
-.puzzle-container {
-  background: var(--card-bg);
-  padding: 25px;
-  border-radius: 15px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-.puzzle-question {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: var(--gold);
 }
 
 /* themes */
@@ -528,33 +649,5 @@ html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, sans-serif;backgr
   .memory-game { grid-template-columns: repeat(2, 1fr); }
   .prayer-grid { grid-template-columns: 1fr; }
   .achievements-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* High Contrast Support */
-@media (prefers-contrast: high) {
-  :root {
-    --primary: #000000;
-    --accent: #ffffff;
-    --gold: #ffff00;
-  }
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Print Styles */
-@media print {
-  .side-panel, .open-panel-btn, .achievement-toast {
-    display: none !important;
-  }
-  .islamic-card {
-    box-shadow: none !important;
-    border: 1px solid #000 !important;
-  }
+  .journey-topics { grid-template-columns: 1fr; }
 }
