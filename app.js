@@ -1,29 +1,29 @@
-// ==========================================================
-//  الواحة الروحانية – الإصدار المُحدَّث حسب طلب المستخدم
-//  1- الأدعية اليومية دفعة واحدة
-//  2- الشريط جانب اليمين (CSS موجود)
-//  3- تنبيه «رائع» بعد تسجيل القراءة
-//  4- تفعيل أعمال الخير
-//  5- استجابة أسرع لسجل التطور
-// ==========================================================
+/********************************************************************
+ *  الواحة الروحانية – التعديلات الخمس المطلوبة فقط
+ *  1- الأدعية اليومية دفعة واحدة (لا زر «التالي»)
+ *  2- الشريط الجانبي يمين (CSS موجود)
+ *  3- تنبيه «رائع!» بعد تسجيل القراءة
+ *  4- تفعيل زر «أعمال الخير» (كان معطلًا)
+ *  5- استجابة فورية لسجل التطور
+ *******************************************************************/
 (function () {
   /* ========== أدوات صغيرة ========== */
   const $ = id => document.getElementById(id);
-  const escapeHTML = str => str.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const escapeHTML = str => str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeSet = (k, v) => { try { localStorage.setItem(k, v); } catch { } };
   const safeGet = (k, def = 0) => { try { return JSON.parse(localStorage.getItem(k)) ?? def; } catch { return def; } };
   const playSafe = a => { try { a.currentTime = 0; a.play().catch(() => { }); } catch { } };
   const click = new Audio('assets/sounds/soft-click.mp3');
   const breeze = new Audio('assets/sounds/breeze.mp3');
 
-  /* ========== Sidebar ========== */
+  /* ========== Sidebar – يمين (CSS موجود) ========== */
   const openBtn = $('openPanelBtn');
   const sidePanel = $('sidePanel');
   const closeBtn = $('closePanelBtn');
   const backdrop = $('backdrop');
   const phrases = [
-    "السلام عليكم ورحمة الله 🌿", "مرحبًا بكِ في رحاب الإيمان 💫",
-    "زادكِ الله نورًا وطمأنينة 💛", "اللهم اجعل هذا اليوم بركةً وسعادة 🌸",
+    "السلام عليكم ورحمة الله 🌿","مرحبًا بكِ في رحاب الإيمان 💫",
+    "زادكِ الله نورًا وطمأنينة 💛","اللهم اجعل هذا اليوم بركةً وسعادة 🌸",
     "يا الله اجعل قلوبنا عامرة بذكرك 🤍"
   ];
 
@@ -68,7 +68,8 @@
       $('surahList').innerHTML = '';
       list.forEach(s => {
         const btn = document.createElement('button');
-        btn.className = 'surah-list-btn'; btn.innerHTML = `<strong>${s.number}.</strong> ${s.name} <span class="text-muted" style="float:left">${s.ayahs} آية</span>`;
+        btn.className = 'surah-list-btn';
+        btn.innerHTML = `<strong>${s.number}.</strong> ${s.name} <span class="text-muted" style="float:left">${s.ayahs} آية</span>`;
         btn.addEventListener('click', () => loadSurah(s.number, `${s.englishName} — ${s.name}`, s.ayahs));
         $('surahList').appendChild(btn);
       });
@@ -80,7 +81,8 @@
       const res = await fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`);
       const ayahs = (await res.json()).data.ayahs; currentAyahs = ayahs;
       $('surahText').innerHTML = ayahs.map(a => `<div style="margin-bottom:10px"><span style="font-weight:700;color:var(--primary)">${a.numberInSurah}.</span> <span>${escapeHTML(a.text)}</span></div>`).join('');
-      $('surahTitle').textContent = `${title} (${ayahCount} آية)`; $('surahMeta').textContent = `السورة رقم ${num} — عدد الآيات: ${ayahCount}`;
+      $('surahTitle').textContent = `${title} (${ayahCount} آية)`;
+      $('surahMeta').textContent = `السورة رقم ${num} — عدد الآيات: ${ayahCount}`;
       $('searchInSurah').value = ''; $('surahText').style.fontSize = fontSize + 'px';
       document.querySelector('.surah-container').scrollTop = 0; playSafe(click);
     } catch { $('surahTitle').textContent = 'فشل التحميل'; $('surahText').textContent = 'حدثت مشكلة أثناء تحميل السورة.'; }
@@ -111,19 +113,19 @@
   const pagesGoalEl = $('pagesGoal');
   if (pagesGoalEl) {
     pagesGoalEl.addEventListener('input', () => { $('goalValue').textContent = pagesGoalEl.value; safeSet('oasis_pagesGoal', pagesGoalEl.value); playSafe(click); });
+    /* تسجيل القراءة + تنبيه تشجيعي */
     $('recordReadingBtn')?.addEventListener('click', () => {
       const added = Math.max(1, Math.round(Math.random() * (parseInt(pagesGoalEl.value) || 1)));
       state.quranPages += added; safeSet('oasis_pages', state.quranPages);
       $('quranPages').textContent = state.quranPages;
       $('achievementsList').insertAdjacentHTML('afterbegin', `<li class="list-group-item">قراءة: +${added} صفحة - ${today()}</li>`);
-      // تنبيه تشجيعي
       const praise = ['رائع!','ممتاز!','بارك الله فيك!','أحسنت!','تقبل الله منك!'];
       alert(praise[Math.floor(Math.random()*praise.length)]);
       playSafe(click); calcProgress();
     });
   }
 
-  /* ========== رياض الصالحين (تفعيل أعمال الخير) ========== */
+  /* ========== رياض الصالحين – تفعيل أعمال الخير + تنبيه تشجيعي ========== */
   $('recordDeedBtn')?.addEventListener('click', () => {
     state.goodDeeds++; safeSet('oasis_deeds', state.goodDeeds);
     $('goodDeeds').textContent = state.goodDeeds;
@@ -237,7 +239,7 @@
   $('newAyahGame')?.addEventListener('click', () => { loadAyahGame(); playSafe(click); });
   loadAyahGame();
 
-  /* ========== سجل التطور – استجابة سريعة ========== */
+  /* ========== سجل التطور – استجابة فورية ========== */
   const achievementsList = $('achievementsList');
   function today() { return new Date().toLocaleDateString('ar-EG'); }
   let state = {
@@ -261,7 +263,7 @@
   }
   calcProgress();
 
-  /* ========== الأدعية اليومية – دفعة واحدة ========== */
+  /* ========== الأدعية اليومية – دفعة واحدة (بدون زر التالي) ========== */
   const dailyDuas = [
     {title:'دعاء الاستيقاظ',text:'الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور'},
     {title:'دعاء دخول الخلاء',text:'بسم الله، اللهم إني أعوذ بك من الخبث والخبائث'},
@@ -296,7 +298,7 @@
     {title:'دعاء سجود التلاوة',text:'سبحان الذي لا ينام ولا يغفور'},
     {title:'دعاء الختمة',text:'اللهم اجعل القرآن ربيع قلوبنا، وجلاء حزننا'}
   ];
-  // عرضها دفعة واحدة
+  // عرضها دفعة واحدة داخل الصفحة
   const dailyDuaContainer = $('dailyDuaContainer');
   if (dailyDuaContainer) {
     dailyDuaContainer.innerHTML = dailyDuas.map(d => `
