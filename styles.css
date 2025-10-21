@@ -1,439 +1,194 @@
+/* ==========================================================
+   الواحة الروحانية – الإصدار الكامل
+   ========================================================== */
 :root {
-    --bg-primary: #f8f9fa;
-    --text-primary: #2c3e50;
-    --card-bg: #ffffff;
-    --primary-color: #1a5e63;
-    --secondary-color: #6abf69;
-    --accent-color: #f39c12;
+  --primary: #1a5e63;
+  --secondary: #2d936c;
+  --accent: #6abf69;
+  --gold: #d9b44a;
+  --glass: rgba(255, 255, 255, 0.92);
+  --danger-soft: #e57373;
 }
 
-[data-theme="dark"] {
-    --bg-primary: #1a1a2e;
-    --text-primary: #e9ecef;
-    --card-bg: #16213e;
-    --primary-color: #0f3460;
-    --secondary-color: #e94560;
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+  background-size: 400% 400%;
+  animation: gradient 18s ease infinite;
+  color: #111;
+  scroll-behavior: smooth;
 }
 
-[data-theme="royal"] {
-    --bg-primary: #0f3460;
-    --text-primary: #e1f5fe;
-    --card-bg: #1a237e;
-    --primary-color: #4a148c;
-    --secondary-color: #ff4081;
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+.container-fluid { padding: 16px; }
 
-body {
-    background: linear-gradient(135deg, var(--bg-primary) 0%, #e3f2fd 100%);
-    color: var(--text-primary);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    min-height: 100vh;
-    transition: all 0.3s ease;
-}
-
-/* البطاقات الإسلامية */
 .islamic-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.islamic-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
+.blessed-text { color: var(--primary); font-weight: 700; }
 
-/* النص المبارك */
-.blessed-text {
-    color: var(--primary-color);
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+.section-img { width: 100%; border-radius: 8px; margin: 8px 0; }
 
-/* اللوحة الجانبية */
-.side-panel {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    width: 300px;
-    height: 100vh;
-    background: var(--card-bg);
-    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-    transition: left 0.3s ease;
-    z-index: 1000;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.side-panel.open {
-    left: 0;
-}
-
-.backdrop-blur {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.backdrop-blur.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* أزرار التحكم */
-.open-panel-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1001;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-}
-
-.open-panel-btn:hover {
-    transform: scale(1.1);
-    background: var(--secondary-color);
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.close-btn:hover {
-    background: rgba(0,0,0,0.1);
-}
-
-/* البطاقات الإحصائية */
 .stat-card {
-    text-align: center;
-    padding: 10px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 12px;
-    min-width: 80px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff;
+  margin: 8px 0;
 }
+.stat-number { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+.label { font-size: 0.8rem; color: #666; }
 
-.stat-number {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.label {
-    font-size: 0.8em;
-    color: var(--text-primary);
-    opacity: 0.8;
-}
-
-/* قائمة السور */
-.surah-list {
-    max-height: 70vh;
-    overflow-y: auto;
-}
-
-.surah-item {
-    padding: 10px 15px;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 8px;
-    margin-bottom: 5px;
-}
-
-.surah-item:hover {
-    background: rgba(26, 94, 99, 0.1);
-    transform: translateX(-5px);
-}
-
-.surah-item.active {
-    background: var(--primary-color);
-    color: white;
-}
-
-/* نص السورة */
-.surah-text {
-    font-family: 'Traditional Arabic', 'Scheherazade New', serif;
-    font-size: 1.4em;
-    line-height: 2;
-    text-align: right;
-    direction: rtl;
-}
-
-.ayah-number {
-    color: var(--primary-color);
-    font-weight: bold;
-    margin: 0 5px;
-}
-
-/* الألعاب */
-.memory-game {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.memory-card {
-    aspect-ratio: 1;
-    perspective: 1000px;
-}
-
-.card-content {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-}
-
-.memory-card.flipped .card-content {
-    transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 10px;
-}
-
-.card-front {
-    background: var(--primary-color);
-    color: white;
-    font-size: 1.5em;
-}
-
-.card-back {
-    background: var(--secondary-color);
-    color: white;
-    transform: rotateY(180deg);
-    font-size: 0.9em;
-    text-align: center;
-}
-
-/* علامات التبويب */
-.nav-pills .nav-link {
-    color: var(--text-primary);
-    border-radius: 25px;
-    margin: 0 5px;
-    transition: all 0.3s ease;
-}
-
-.nav-pills .nav-link.active {
-    background: var(--primary-color);
-    color: white;
-}
-
-.nav-pills .nav-link:hover:not(.active) {
-    background: rgba(26, 94, 99, 0.1);
-}
-
-/* التقدم */
-.progress {
-    background: rgba(0,0,0,0.1);
-    border-radius: 25px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    transition: width 0.5s ease;
-}
-
-/* الأدعية */
 .dua-card {
-    background: linear-gradient(135deg, rgba(26, 94, 99, 0.1), rgba(106, 191, 105, 0.1));
-    border-radius: 12px;
-    border-right: 4px solid var(--primary-color);
+  background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  border-right: 5px solid var(--accent);
 }
 
-/* التجاوب للهواتف */
-@media (max-width: 768px) {
-    .side-panel {
-        width: 280px;
-        left: -280px;
-    }
-    
-    .stats-group {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .stat-card {
-        min-width: 70px;
-        margin: 5px;
-    }
-    
-    .memory-game {
-        grid-template-columns: repeat(3, 1fr);
-    }
+/* ========== القائمة الجانبية ========== */
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 360px;
+  height: 100vh;
+  z-index: 2000;
+  transition: right 350ms cubic-bezier(.2, .9, .25, 1), box-shadow 350ms;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  padding: 18px;
+  overflow: auto;
+  border-radius: 12px 0 0 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 245, 230, 0.95));
+  border-left: 3px solid rgba(217, 180, 74, 0.25);
+}
+.side-panel.open { right: 0; box-shadow: -12px 0 40px rgba(0, 0, 0, 0.25); }
+.side-panel .close-btn {
+  background: linear-gradient(90deg, rgba(217, 180, 74, 0.95), rgba(255, 225, 150, 0.95));
+  color: #2b2b2b; border-radius: 8px; padding: 6px 10px;
+  box-shadow: 0 6px 18px rgba(217, 180, 74, 0.12); border: none;
+}
+.backdrop-blur {
+  position: fixed; inset: 0; z-index: 1500;
+  background: rgba(0, 0, 0, 0.18); backdrop-filter: blur(4px);
+  opacity: 0; transition: opacity 240ms; pointer-events: none;
+}
+.backdrop-blur.show { opacity: 1; pointer-events: auto; }
+
+.open-panel-btn {
+  position: fixed; top: 14px; right: 14px; z-index: 2200;
+  background: linear-gradient(90deg, rgba(217, 180, 74, 0.95), rgba(255, 225, 150, 0.95));
+  color: #1b1b1b; border: none; padding: 10px 12px; border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); cursor: pointer;
+}
+.open-panel-btn:hover { transform: translateY(-2px); }
+
+/* رسالة الترحيب */
+.welcome-msg {
+  font-weight: 700; color: #3b2e1a; text-align: center; padding: 8px 12px;
+  border-radius: 8px; background: linear-gradient(90deg, rgba(255, 250, 240, 0.98), rgba(255, 245, 230, 0.98));
+  box-shadow: 0 6px 18px rgba(217, 180, 74, 0.06); margin-bottom: 12px;
+  opacity: 0; transform: translateY(6px); transition: opacity 420ms ease, transform 420ms ease; font-size: 0.98rem;
+}
+.welcome-msg.show { opacity: 1; transform: translateY(0); animation: sparkle 1800ms ease-in-out; }
+@keyframes sparkle {
+  0%, 100% { text-shadow: 0 0 0 rgba(217, 180, 74, 0); }
+  50% { text-shadow: 0 0 12px rgba(217, 180, 74, 0.25); }
 }
 
-@media (max-width: 480px) {
-    .open-panel-btn {
-        top: 10px;
-        left: 10px;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .islamic-card {
-        padding: 15px;
-        margin-bottom: 15px;
-    }
-    
-    .memory-game {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* ========== القرآن الكريم ========== */
+.surah-list-btn { display: block; text-align: right; padding: 6px 8px; border-radius: 6px; background: transparent; border: none; width: 100%; }
+.surah-list-btn:hover { background: rgba(0, 0, 0, 0.04); }
+.surah-container { max-height: 60vh; overflow: auto; padding: 12px; background: rgba(255, 255, 255, 0.98); border-radius: 8px; }
+#surahText { white-space: pre-wrap; font-size: 20px; line-height: 2; text-align: right; direction: rtl; }
+.control-small { font-size: 0.9rem; }
+
+/* ========== الألعاب التربوية – تبويبات ========== */
+.nav-pills .nav-link {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  margin-left: 6px;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  transition: all .25s;
+}
+.nav-pills .nav-link.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.nav-pills .nav-link:hover:not(.active) {
+  background: rgba(26, 94, 99, .08);
 }
 
-/* تأثيرات خاصة */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* لعبة الذاكرة */
+.memory-game .memory-card {
+  height: 70px; line-height: 70px; font-size: 28px;
+  cursor: pointer; user-select: none; transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.memory-game .memory-card.flipped { transform: rotateY(180deg); box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+.memory-game .memory-card:not(.flipped):hover { transform: translateY(-3px); }
+
+/* اختبار يومي */
+#quizOptions button { margin-bottom: 6px; }
+#quizArea { min-height: 200px; }
+
+/* ========== جنات الطاعة – تبويبات ========== */
+#duaDailyText, #worshipDailyText {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #2d2d2d;
 }
 
-.page-content {
-    animation: fadeIn 0.5s ease;
+/* ========== سجل التطور ========== */
+#progressBar {
+  height: 22px;
+  border-radius: 11px;
+  background-color: var(--accent);
+  transition: width .4s ease;
 }
 
-/* شريط التمرير المخصص */
-::-webkit-scrollbar {
-    width: 8px;
+/* ========== أدعية يومية ========== */
+#dailyDuaTitle {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+#dailyDuaText {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #333;
 }
 
-::-webkit-scrollbar-track {
-    background: rgba(0,0,0,0.1);
-    border-radius: 10px;
+/* ========== توافقية الشاشات الصغيرة ========== */
+@media (max-width: 900px) {
+  .side-panel { width: 85%; right: -100%; }
+  .side-panel.open { right: 0; }
+  .stats-group { flex-wrap: wrap; gap: 4px; }
+  .stat-card { margin: 4px 0; }
 }
 
-::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--secondary-color);
-}
-
-/* إطارات قرآنية */
-.quran-frame {
-    background: linear-gradient(135deg, #1a5e63, #6abf69);
-    color: white;
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    margin: 20px 0;
-    box-shadow: 0 10px 30px rgba(26, 94, 99, 0.3);
-}
-
-/* أزرار تفاعلية */
-.btn {
-    border-radius: 25px;
-    padding: 10px 25px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.btn-outline-primary {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.btn-outline-primary:hover {
-    background: var(--primary-color);
-    color: white;
-    transform: translateY(-2px);
-}
-
-.btn-primary {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    background: var(--secondary-color);
-    border-color: var(--secondary-color);
-    transform: translateY(-2px);
-}
-
-/* بطاقات الإنجازات */
-.achievement-card {
-    background: linear-gradient(135deg, var(--card-bg), rgba(255,255,255,0.1));
-    border-radius: 12px;
-    padding: 15px;
-    margin: 10px 0;
-    border-left: 4px solid var(--accent-color);
-    transition: all 0.3s ease;
-}
-
-.achievement-card:hover {
-    transform: translateX(5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.achievement-card.locked {
-    opacity: 0.6;
-    filter: grayscale(1);
-}
-
-/* تأثيرات النص */
-.text-glow {
-    text-shadow: 0 0 10px rgba(106, 191, 105, 0.5);
-}
-
-/* تحسينات الوصول */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* دعم عالي التباين */
-@media (prefers-contrast: high) {
-    :root {
-        --primary-color: #000000;
-        --secondary-color: #333333;
-        --text-primary: #000000;
-    }
+/* ========== وضوح التركيز (Accessibility) ========== */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
 }
