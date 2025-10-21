@@ -9,7 +9,29 @@
     direction: rtl;
     text-align: right;
   }
+
+  /* تصميم النقاط الثلاث الذهبي */
+  .open-panel-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 2000;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .open-panel-btn i {
+    font-size: 24px;
+    color: #FFD700; /* ذهبي */
+    transition: transform 0.2s ease, color 0.3s ease;
+  }
+  .open-panel-btn:hover i {
+    transform: scale(1.2);
+    color: #ffcc33;
+  }
 </style>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>الواحة الروحانية — ملاذك الإيماني</title>
@@ -20,14 +42,14 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="theme-normal">
-  <!-- Open button -->
+  <!-- زر فتح الشريط الجانبي -->
   <button class="open-panel-btn" id="openPanelBtn" aria-label="فتح القائمة">
-  <i class="fas fa-ellipsis-v" style="color: gold;"></i>
-</button>
+    <i class="fas fa-ellipsis-v"></i>
+  </button>
 
   <div id="backdrop" class="backdrop-blur" aria-hidden="true"></div>
 
-  <!-- Sidebar (solid royal green) -->
+  <!-- الشريط الجانبي -->
   <aside class="side-panel" id="sidePanel" aria-hidden="true" role="dialog" aria-label="القائمة الجانبية">
     <div class="panel-header">
       <div class="brand">
@@ -65,7 +87,6 @@
       <div class="nav-divider"></div>
 
       <button class="nav-item" data-page="obedience-gardens"><i class="fas fa-mosque"></i><span>جنات الطاعة</span></button>
-      <!-- Buttons for 'دعاء الخير' and 'العبادات' intentionally removed from sidebar per request -->
 
       <div class="nav-divider"></div>
 
@@ -80,42 +101,9 @@
     </footer>
   </aside>
 
-  <!-- Main content -->
+  <!-- المحتوى الرئيسي -->
   <main class="main-wrap container-fluid">
-    <!-- Dashboard -->
-    <section id="dashboard" class="page-content islamic-card">
-      <div class="dashboard-grid">
-        <div class="card-stat">
-          <div class="card-icon">🕋</div>
-          <div class="card-number" id="prayerStreak">0</div>
-          <div class="card-label">سلسلة الصلاة</div>
-        </div>
-        <div class="card-stat">
-          <div class="card-icon">⭐</div>
-          <div class="card-number" id="goodDeeds">0</div>
-          <div class="card-label">الحسنات</div>
-        </div>
-        <div class="card-stat">
-          <div class="card-icon">📖</div>
-          <div class="card-number" id="quranPages">0</div>
-          <div class="card-label">صفحات القرآن</div>
-        </div>
-        <div class="card-stat">
-          <div class="card-icon">🏆</div>
-          <div class="card-number" id="gameScore">0</div>
-          <div class="card-label">نتيجة الألعاب</div>
-        </div>
-      </div>
-
-      <div class="dashboard-body mt-3">
-        <div class="welcome-panel islamic-card">
-          <h2 class="blessed-text">مرحبا بكِ في الواحة</h2>
-          <p class="muted">نافذة سريعة لبدء اليوم: افتحي الشريط الجانبي للانتقال إلى الأقسام.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Quran page -->
+    <!-- صفحة القرآن -->
     <section id="quran" class="page-content islamic-card d-none">
       <h3 class="blessed-text">القرآن الكريم</h3>
       <div class="row">
@@ -147,130 +135,25 @@
         </div>
       </div>
     </section>
-
-    <!-- Quran Garden -->
-    <section id="quran-garden" class="page-content islamic-card d-none">
-      <h3 class="blessed-text">بستان القرآن</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="quran-frame">
-            <h5>آية اليوم</h5>
-            <h3 id="dailyVerse">"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"</h3>
-            <p id="verseSurah">الرعد - 28</p>
-            <p><strong>شرح:</strong> <span id="verseExplanation">الذكر يطمئن القلب.</span></p>
-            <button id="newVerseBtn" class="btn btn-outline-light btn-sm">آية جديدة</button>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <h5 class="blessed-text">تحديك اليومي</h5>
-          <label>الهدف: <span id="goalValue">10</span> صفحة</label>
-          <input id="pagesGoal" type="range" class="form-range" min="1" max="30" value="10">
-          <button id="recordReadingBtn" class="btn btn-success mt-2">سجّلي قراءتك</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Righteous -->
-    <section id="righteous-path" class="page-content islamic-card d-none">
-      <h3 class="blessed-text">رياض الصالحين</h3>
-      <p class="muted">أعمال صغيرة متتالية تقربك يوميًا.</p>
-      <div class="row">
-        <div class="col-md-6">
-          <h6>أعمال الخير</h6>
-          <select id="goodDeedsSelect" class="form-select mb-2"></select>
-          <button id="recordDeedBtn" class="btn btn-success">سجّلي هذا العمل</button>
-        </div>
-        <div class="col-md-6">
-          <h6>متابعة الصلوات</h6>
-          <div class="form-check"><input class="form-check-input prayer-check" type="checkbox" id="fajrPrayer"><label class="form-check-label" for="fajrPrayer">صلاة الفجر</label></div>
-          <div class="form-check"><input class="form-check-input prayer-check" type="checkbox" id="dhuhrPrayer"><label class="form-check-label" for="dhuhrPrayer">صلاة الظهر</label></div>
-          <div class="form-check"><input class="form-check-input prayer-check" type="checkbox" id="asrPrayer"><label class="form-check-label" for="asrPrayer">صلاة العصر</label></div>
-          <div class="form-check"><input class="form-check-input prayer-check" type="checkbox" id="maghribPrayer"><label class="form-check-label" for="maghribPrayer">صلاة المغرب</label></div>
-          <div class="form-check"><input class="form-check-input prayer-check" type="checkbox" id="ishaPrayer"><label class="form-check-label" for="ishaPrayer">صلاة العشاء</label></div>
-          <button id="calculatePrayerBtn" class="btn btn-primary mt-2">احسبي سلسلة الصلاة</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Obedience (dua & worship pages exist inside tabs) -->
-    <section id="obedience-gardens" class="page-content islamic-card d-none">
-      <h3 class="blessed-text">جنات الطاعة</h3>
-      <ul class="nav nav-pills mb-3" id="obedienceTabs">
-        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#azkar">الأذكار</button></li>
-        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#dua">دعاء الخير</button></li>
-        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#worship">العبادات المستحبة</button></li>
-      </ul>
-
-      <div class="tab-content">
-        <div class="tab-pane fade show active p-2" id="azkar">
-          <div class="row">
-            <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار الصباح</h6><div id="countMorning" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-light btn-sm" id="incMorning" data-counter="morning">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetMorning" data-counter="morning">إعادة</button></div></div></div>
-            <div class="col-md-4"><div class="islamic-card text-center"><h6>أذكار المساء</h6><div id="countEvening" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-light btn-sm" id="incEvening" data-counter="evening">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetEvening" data-counter="evening">إعادة</button></div></div></div>
-            <div class="col-md-4"><div class="islamic-card text-center"><h6>بعد الصلاة</h6><div id="countAfter" class="big-count">0</div><div class="mt-2"><button class="btn btn-outline-light btn-sm" id="incAfter" data-counter="after">زيادة</button><button class="btn btn-outline-secondary btn-sm" id="resetAfter" data-counter="after">إعادة</button></div></div></div>
-          </div>
-        </div>
-
-        <div class="tab-pane fade p-2" id="dua">
-          <h5>دعاء الخير</h5>
-          <div id="duaGrid" class="dua-grid p-2"></div>
-        </div>
-
-        <div class="tab-pane fade p-2" id="worship">
-          <h5>العبادات المستحبة</h5>
-          <div id="worshipGrid" class="worship-grid p-2"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Games -->
-    <section id="educational-games" class="page-content islamic-card d-none">
-      <h3 class="blessed-text">ألعاب تربوية</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <h5>لعبة الذاكرة</h5>
-          <div id="memoryBoard" class="memory-game row g-2"></div>
-          <div class="mt-2"><button id="newGameBtn" class="btn btn-outline-light">بدء جديد</button></div>
-        </div>
-        <div class="col-md-6">
-          <h5>الاختبار التفاعلي اليومي</h5>
-          <div id="quizArea"></div>
-          <hr/>
-          <h5>تحدي التأمل الفاخر</h5>
-          <div id="fancyTask" class="islamic-card p-3"></div>
-          <div class="mt-2"><button id="fancyNext" class="btn btn-outline-secondary">مهمة جديدة</button></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Progress -->
-    <section id="progress-tracker" class="page-content islamic-card d-none">
-      <h3 class="blessed-text">سجل تطورك</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <h6>هدف القراءة اليومي: <span id="currentGoal">10</span> صفحة</h6>
-          <div class="progress mb-2"><div id="pagesProgress" class="progress-bar" role="progressbar" style="width:0%">0%</div></div>
-        </div>
-        <div class="col-md-6">
-          <h6>إنجازات سريعة</h6>
-          <ul id="achievementsList" class="list-group"></ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Daily Duas -->
-    <section id="daily-duas" class="page-content islamic-card d-none">
-      <h3 class="blessed-text">الأدعية اليومية</h3>
-      <div id="dailyDuasList" class="dua-grid p-2"></div>
-    </section>
-
   </main>
 
-  <!-- UI sounds (soft) -->
+  <!-- الأصوات -->
   <audio id="soundClick" preload="auto"><source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_9f3f9f5f4b.mp3?filename=soft-click-6083.mp3" type="audio/mpeg"></audio>
   <audio id="soundPop" preload="auto"><source src="https://cdn.pixabay.com/download/audio/2021/08/18/audio_6f8b2b8f2f.mp3?filename=ui-pop-6144.mp3" type="audio/mpeg"></audio>
   <audio id="soundWhoosh" preload="auto"><source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8a1b7b6c5e.mp3?filename=soft-wind-111963.mp3" type="audio/mpeg"></audio>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // إصلاح مشكلة undefined في العناوين
+    document.addEventListener("DOMContentLoaded", () => {
+      const title = document.getElementById("surahTitle");
+      if (!title.textContent || title.textContent.includes("undefined")) {
+        title.textContent = "اختر سورة";
+      }
+    });
+  </script>
+
   <script src="app.js"></script>
 </body>
 </html>
