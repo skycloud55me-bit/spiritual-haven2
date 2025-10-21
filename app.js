@@ -1,8 +1,8 @@
-// app.js — متوافق مع index.html (تشغيل صوت عند الضغط على الأزرار فقط، مفعل اللغة والسمة، إزالة أزرار معينة من الشريط)
+// app.js — نسخة نهائية متوافقة مع index.html
 (function(){
   "use strict";
 
-  // ******** DOM refs ********
+  /* ---------- عناصر DOM ---------- */
   const openBtn = document.getElementById('openPanelBtn');
   const sidePanel = document.getElementById('sidePanel');
   const closeBtn = document.getElementById('closePanelBtn');
@@ -11,12 +11,11 @@
   const wahaLang = document.getElementById('wahaLangSelect');
   const wahaTheme = document.getElementById('wahaThemeSelect');
 
-  // Audio elements (declared in index.html)
+  /* أصوات */
   const soundClick   = document.getElementById('soundClick');
   const soundPop     = document.getElementById('soundPop');
   const soundWhoosh  = document.getElementById('soundWhoosh');
 
-  // helper: safe play
   function playSound(el){
     try{
       if(!el) return;
@@ -26,7 +25,6 @@
     }catch(e){}
   }
 
-  // small welcome phrases
   const phrases = [
     "السلام عليكم ورحمة الله 🌿",
     "مرحبا بكِ في رحاب الإيمان 💫",
@@ -35,7 +33,7 @@
     "يا الله اجعل قلوبنا عامرة بذكرك 🤍"
   ];
 
-  // open/close panel
+  /* ---------- فتح/غلق الشريط ---------- */
   function openPanel(){
     if(!sidePanel) return;
     sidePanel.classList.add('open');
@@ -58,24 +56,15 @@
   if(closeBtn) closeBtn.addEventListener('click', ()=>{ closePanel(); playSound(soundClick); });
   if(backdrop) backdrop.addEventListener('click', ()=>{ closePanel(); playSound(soundClick); });
 
-  // show page by id
+  /* ---------- تنقل بين الصفحات (data-page) ---------- */
   function showPage(id){
-    document.querySelectorAll('.page-content').forEach(p=>p.classList.add('d-none'));
+    document.querySelectorAll('.page-content').forEach(p=> p.classList.add('d-none'));
     const t = document.getElementById(id);
     if(t) t.classList.remove('d-none');
     playSound(soundWhoosh);
     if(window.innerWidth < 900) setTimeout(closePanel, 220);
   }
 
-  // hide dua & worship buttons from sidebar (but leave pages)
-  (function hideSidebarDuaWorship(){
-    // find buttons which would link to these pages and hide them
-    document.querySelectorAll('[data-page="dua"], [data-page="worship"]').forEach(el => {
-      el.style.display = 'none';
-    });
-  })();
-
-  // bind nav buttons
   navItems.forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const page = btn.getAttribute('data-page');
@@ -84,23 +73,10 @@
     });
   });
 
-  // play click sound for any button (only on actual click)
-  document.addEventListener('click', (ev)=>{
-    const b = ev.target.closest && ev.target.closest('button');
-    if(b){
-      // don't double-play for panel open/close handlers (they already play) — but tolerate
-      // We'll keep this minimal: small click - but the nav/button handlers already call playSound.
-      // To avoid doubling, we only play here if event target is not a nav-item (which already plays above).
-      if(!b.hasAttribute('data-page') && !b.classList.contains('nav-item')){
-        playSound(soundClick);
-      }
-    }
-  }, {capture:true});
-
-  // ---------- persistence keys ----------
+  /* ---------- مفاتيح التخزين ---------- */
   const LANG_KEY = 'waha_lang', THEME_KEY = 'waha_theme';
 
-  // apply language labels on nav buttons (simple)
+  /* ---------- تطبيق اللغة (labels بسيطة للأزرار فقط) ---------- */
   function applyLang(l){
     if(wahaLang) wahaLang.value = l;
     document.querySelectorAll('[data-page]').forEach(btn=>{
@@ -114,9 +90,6 @@
       if(id === 'educational-games') label = (l==='en' ? 'Games' : (l==='fr' ? 'Jeux' : 'ألعاب تربوية'));
       if(id === 'progress-tracker') label = (l==='en' ? 'Progress' : (l==='fr' ? 'Progrès' : 'سجل تطورك'));
       if(id === 'daily-duas') label = (l==='en' ? 'Daily Duas' : (l==='fr' ? 'Duas' : 'الأدعية اليومية'));
-      // dua/worship labels (kept even if hidden)
-      if(id === 'dua') label = (l==='en' ? 'Good Duas' : (l==='fr' ? 'Duas' : 'دعاء الخير'));
-      if(id === 'worship') label = (l==='en' ? 'Worship' : (l==='fr' ? 'Culte' : 'العبادات المستحبة'));
       if(label){
         const icon = btn.querySelector('i');
         if(icon) btn.innerHTML = icon.outerHTML + ' ' + `<span>${label}</span>`;
@@ -125,7 +98,7 @@
     });
   }
 
-  // apply theme
+  /* ---------- تطبيق السمة ---------- */
   function applyTheme(t){
     if(wahaTheme) wahaTheme.value = t;
     document.body.classList.remove('theme-normal','theme-dark','theme-royal');
@@ -135,7 +108,7 @@
     localStorage.setItem(THEME_KEY, t);
   }
 
-  // wire controls
+  /* ---------- تفعيل عناصر التحكم وحفظ الاختيارات ---------- */
   function initControls(){
     const savedLang = localStorage.getItem(LANG_KEY) || 'ar';
     applyLang(savedLang);
@@ -146,7 +119,23 @@
     if(wahaTheme) wahaTheme.addEventListener('change', (e)=>{ applyTheme(e.target.value); playSound(soundPop); });
   }
 
-  // ---------- Quran load (API) ----------
+  /* ---------- استعادة وعرض الإحصائيات ---------- */
+  function refreshStats(){
+    const prayer = parseInt(localStorage.getItem('oasis_prayer')) || 0;
+    const deeds  = parseInt(localStorage.getItem('oasis_deeds')) || 0;
+    const pages  = parseInt(localStorage.getItem('oasis_pages')) || 0;
+    const game   = parseInt(localStorage.getItem('oasis_game')) || 0;
+    const elPrayer = document.getElementById('prayerStreak');
+    const elDeeds  = document.getElementById('goodDeeds');
+    const elPages  = document.getElementById('quranPages');
+    const elGame   = document.getElementById('gameScore');
+    if(elPrayer) elPrayer.textContent = prayer;
+    if(elDeeds)  elDeeds.textContent  = deeds;
+    if(elPages)  elPages.textContent  = pages;
+    if(elGame)   elGame.textContent   = game;
+  }
+
+  /* ---------- Quran: فهرس السور وقراءة (API) ---------- */
   const surahList = document.getElementById('surahList');
   const surahTitle = document.getElementById('surahTitle');
   const surahMeta = document.getElementById('surahMeta');
@@ -204,7 +193,6 @@
     }
   }
 
-  // search in surah
   if(searchInSurah){
     searchInSurah.addEventListener('input', ()=>{
       const q = searchInSurah.value.trim();
@@ -216,48 +204,23 @@
       playSound(soundClick);
     });
   }
-
-  // load surah index initially
+  // load portal
   loadSurahIndex();
 
-  // ---------- Quran Garden (verse & duas mini) ----------
+  // font controls
+  document.getElementById('increaseFont')?.addEventListener('click', ()=>{ fontSize = Math.min(32,fontSize+2); surahText.style.fontSize = fontSize+'px'; playSound(soundClick); });
+  document.getElementById('decreaseFont')?.addEventListener('click', ()=>{ fontSize = Math.max(14,fontSize-2); surahText.style.fontSize = fontSize+'px'; playSound(soundClick); });
+  document.getElementById('toggleReaderTheme')?.addEventListener('click', ()=>{ const container=document.querySelector('.surah-container'); if(!container) return; container.classList.toggle('reader-dark'); playSound(soundPop); });
+
+  /* ---------- Quran Garden handlers ---------- */
   const verses = [
     {text:'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ',surah:'الرعد - 28',ex:'الذكر يطمئن القلب.'},
     {text:'وَقُلْ رَبِّ زِدْنِي عِلْمًا',surah:'طه - 114',ex:'دعاء لزيادة العلم.'},
     {text:'إِنَّ مَعَ الْعُسْرِ يُسْرًا',surah:'الشرح - 5',ex:'التوكّل والصبر.'}
   ];
-  const newVerseBtn = document.getElementById('newVerseBtn');
-  if(newVerseBtn) newVerseBtn.addEventListener('click', ()=>{
-    const v = verses[Math.floor(Math.random()*verses.length)];
-    const dv = document.getElementById('dailyVerse'); const vs = document.getElementById('verseSurah'); const ex = document.getElementById('verseExplanation');
-    if(dv) dv.textContent = '"' + v.text + '"';
-    if(vs) vs.textContent = v.surah;
-    if(ex) ex.textContent = v.ex;
-    playSound(soundPop);
-  });
+  document.getElementById('newVerseBtn')?.addEventListener('click', ()=>{ const v = verses[Math.floor(Math.random()*verses.length)]; document.getElementById('dailyVerse').textContent = '"' + v.text + '"'; document.getElementById('verseSurah').textContent = v.surah; document.getElementById('verseExplanation').textContent = v.ex; playSound(soundPop); });
 
-  // pages goal
-  const pagesGoalEl = document.getElementById('pagesGoal');
-  if(pagesGoalEl){
-    pagesGoalEl.addEventListener('input', ()=>{
-      document.getElementById('goalValue').textContent = pagesGoalEl.value;
-      localStorage.setItem('oasis_pagesGoal', pagesGoalEl.value);
-      playSound(soundClick);
-    });
-  }
-  const recordReadingBtn = document.getElementById('recordReadingBtn');
-  if(recordReadingBtn) recordReadingBtn.addEventListener('click', ()=>{
-    const added = Math.max(1, Math.round(Math.random() * (parseInt(document.getElementById('pagesGoal').value || 1))));
-    const statePages = parseInt(localStorage.getItem('oasis_pages')) || 0;
-    const newPages = statePages + added;
-    localStorage.setItem('oasis_pages', newPages);
-    const elPages = document.getElementById('quranPages'); if(elPages) elPages.textContent = newPages;
-    const ach = document.getElementById('achievementsList');
-    if(ach) ach.insertAdjacentHTML('afterbegin', `<li class="list-group-item">قراءة: +${added} صفحة - ${new Date().toLocaleDateString()}</li>`);
-    playSound(soundPop);
-  });
-
-  // ---------- Obedience population (30 items each) ----------
+  /* ---------- صفحات جنات الطاعة: ملء الدعاء و العبادات (30 عنصر) ---------- */
   function generateThirtyDuas(){
     return [
       "اللهم ارزقنا العلم النافع","اللهم فرّج همّي","اللهم اشفِ مرضانا","اللهم ثبت قلوبنا",
@@ -282,7 +245,6 @@
       "الإكثار من الصلاة على النبي","التوبة النصوح","ذكر الله في السر"
     ].slice(0,30);
   }
-
   function populateDuaWorship(){
     const duaGrid = document.getElementById('duaGrid');
     const worshipGrid = document.getElementById('worshipGrid');
@@ -295,31 +257,18 @@
       let html = '';
       duas.forEach((d,i)=> html += `<div class="interactive-card dua-item" data-idx="${i}" tabindex="0"><h6>دعاء ${i+1}</h6><p>${d}</p></div>`);
       duaGrid.innerHTML = html;
-      duaGrid.querySelectorAll('.dua-item').forEach(el=> el.addEventListener('click', ()=>{
-        const idx = +el.getAttribute('data-idx');
-        try{ navigator.clipboard.writeText(duas[idx]); }catch(e){}
-        playSound(soundClick);
-        showTempToast('نسخ إلى الحافظة');
-      }));
+      duaGrid.querySelectorAll('.dua-item').forEach(el=> el.addEventListener('click', ()=>{ const idx = +el.getAttribute('data-idx'); try{ navigator.clipboard.writeText(duas[idx]); }catch(e){} playSound(soundClick); showTempToast('نسخ إلى الحافظة'); }));
     }
-
     if(worshipGrid){
       let html = '';
       worships.forEach((w,i)=> html += `<div class="interactive-card worship-item" data-idx="${i}" tabindex="0"><h6>${w.split('—')[0].trim()}</h6><p>${w}</p></div>`);
       worshipGrid.innerHTML = html;
-      worshipGrid.querySelectorAll('.worship-item').forEach(el=> el.addEventListener('click', ()=>{
-        const idx = +el.getAttribute('data-idx');
-        const key = 'waha_worship_mark_'+idx;
-        if(localStorage.getItem(key)){ localStorage.removeItem(key); el.style.opacity = '1'; showTempToast('إزالة العلامة'); }
-        else { localStorage.setItem(key,'1'); el.style.opacity = '0.6'; showTempToast('تم التمييز'); }
-        playSound(soundClick);
-      }));
-      // restore marks
+      worshipGrid.querySelectorAll('.worship-item').forEach(el=> el.addEventListener('click', ()=>{ const idx = +el.getAttribute('data-idx'); const key = 'waha_worship_mark_'+idx; if(localStorage.getItem(key)){ localStorage.removeItem(key); el.style.opacity = '1'; showTempToast('إزالة العلامة'); } else { localStorage.setItem(key,'1'); el.style.opacity = '0.6'; showTempToast('تم التمييز'); } playSound(soundClick); }));
       worshipGrid.querySelectorAll('.worship-item').forEach((el, idx)=>{ if(localStorage.getItem('waha_worship_mark_'+idx)) el.style.opacity = '0.6'; });
     }
   }
 
-  // ---------- Games: memory + daily quiz ----------
+  /* ---------- ألعاب: الذاكرة و الاختبار ---------- */
   function createMemoryBoard(){
     const board = document.getElementById('memoryBoard');
     if(!board) return;
@@ -327,38 +276,16 @@
     const symbols = ['★','✿','☪','✦','❤','☀','✈','✧'];
     const cards = symbols.concat(symbols);
     for(let i=cards.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [cards[i],cards[j]]=[cards[j],cards[i]]; }
-    cards.forEach(sym=>{
-      const col = document.createElement('div'); col.className='col-3';
-      const c = document.createElement('div'); c.className='memory-card islamic-card text-center'; c.dataset.face = sym; c.textContent='?';
-      c.addEventListener('click', memoryFlip);
-      col.appendChild(c); board.appendChild(col);
-    });
+    cards.forEach(sym=>{ const col=document.createElement('div'); col.className='col-3'; const c=document.createElement('div'); c.className='memory-card islamic-card text-center'; c.dataset.face=sym; c.textContent='?'; c.addEventListener('click', memoryFlip); col.appendChild(c); board.appendChild(col); });
   }
-  let f=null, s=null, lock=false, matches=0;
+  let f=null, s=null, lock=false;
   function memoryFlip(e){
-    if(lock) return; const el = e.currentTarget;
-    if(el===f) return;
-    el.textContent = el.dataset.face; el.classList.add('flipped');
-    if(!f){ f = el; return; }
-    s = el; lock = true;
-    setTimeout(()=>{
-      if(f.dataset.face === s.dataset.face){
-        f.style.visibility='hidden'; s.style.visibility='hidden'; matches++;
-        const stateGame = parseInt(localStorage.getItem('oasis_game')) || 0;
-        localStorage.setItem('oasis_game', stateGame + 10);
-        refreshStats();
-        playSound(soundPop);
-      } else {
-        f.textContent='?'; s.textContent='?'; f.classList.remove('flipped'); s.classList.remove('flipped'); playSound(soundClick);
-      }
-      f=null; s=null; lock=false;
-    }, 700);
+    if(lock) return; const el = e.currentTarget; if(el===f) return; el.textContent = el.dataset.face; el.classList.add('flipped'); if(!f){ f = el; return; } s = el; lock = true; setTimeout(()=>{ if(f.dataset.face === s.dataset.face){ f.style.visibility='hidden'; s.style.visibility='hidden'; const g = parseInt(localStorage.getItem('oasis_game')) || 0; localStorage.setItem('oasis_game', g + 10); refreshStats(); playSound(soundPop); } else { f.textContent='?'; s.textContent='?'; f.classList.remove('flipped'); s.classList.remove('flipped'); playSound(soundClick); } f=null; s=null; lock=false; },700);
   }
-  const newGameBtn = document.getElementById('newGameBtn');
-  if(newGameBtn) newGameBtn.addEventListener('click', ()=>{ createMemoryBoard(); matches=0; localStorage.setItem('oasis_game',0); refreshStats(); playSound(soundClick); });
+  document.getElementById('newGameBtn')?.addEventListener('click', ()=>{ createMemoryBoard(); localStorage.setItem('oasis_game',0); refreshStats(); playSound(soundClick); });
   createMemoryBoard();
 
-  // Daily quiz deterministic by date (9 q)
+  // اختبار يومي متغيّر (9 أسئلة)
   const quizPool = [
     {q:'كم ركعة الفجر؟', opts:['2','4','3'], a:0},
     {q:'ما آخر سورة؟', opts:['الناس','الفاتحة','الكوثر'], a:0},
@@ -371,64 +298,32 @@
     {q:'من هو خاتم الأنبياء؟', opts:['محمد ﷺ','عيسى','موسى'], a:0},
     {q:'ما حكم الصدق؟', opts:['مطلوب','ممنوع','غير مهم'], a:0}
   ];
-  function pickN(pool, n, seed){
-    let s = seed % 2147483647; if(s<=0) s += 2147483646;
-    function rand(){ s = (s * 16807) % 2147483647; return (s-1)/2147483646; }
-    const copy = pool.slice();
-    for(let i=copy.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [copy[i],copy[j]]=[copy[j],copy[i]]; }
-    return copy.slice(0, Math.min(n, copy.length));
-  }
+  function pickN(pool,n,seed){ let s = seed % 2147483647; if(s<=0) s+=2147483646; function rand(){ s = (s * 16807) % 2147483647; return (s-1)/2147483646; } const copy = pool.slice(); for(let i=copy.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [copy[i],copy[j]]=[copy[j],copy[i]]; } return copy.slice(0, Math.min(n, copy.length)); }
   function initDailyQuiz(){
     const area = document.getElementById('quizArea'); if(!area) return;
     const today = new Date(); const seed = Number(`${today.getFullYear()}${today.getMonth()+1}${today.getDate()}`);
     const chosen = pickN(quizPool, 9, seed);
     let html = '<form id="quizForm">';
-    chosen.forEach((q, i)=>{
-      html += `<div style="margin-bottom:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02)"><div style="font-weight:700;margin-bottom:6px">${i+1}. ${q.q}</div>`;
-      q.opts.forEach((opt, idx)=> html += `<label style="display:block;margin-bottom:6px"><input type="radio" name="q${i}" value="${idx}"> ${opt}</label>`);
-      html += '</div>';
-    });
+    chosen.forEach((q,i)=>{ html += `<div style="margin-bottom:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02)"><div style="font-weight:700;margin-bottom:6px">${i+1}. ${q.q}</div>`; q.opts.forEach((opt,idx)=> html += `<label style="display:block;margin-bottom:6px"><input type="radio" name="q${i}" value="${idx}"> ${opt}</label>`); html += '</div>'; });
     html += '<button type="submit" class="btn btn-success">إرسال الإجابات</button></form><div id="quizResult" style="margin-top:12px"></div>';
     area.innerHTML = html;
     const form = document.getElementById('quizForm');
-    form.addEventListener('submit', function(ev){
-      ev.preventDefault();
-      let score = 0;
-      chosen.forEach((q, idx)=>{ const val = form['q'+idx] ? form['q'+idx].value : null; if(String(val) === String(q.a)) score++; });
-      const percent = Math.round((score/chosen.length)*100);
-      const result = document.getElementById('quizResult');
-      result.innerHTML = `<div style="font-weight:700">نتيجتك: ${score}/${chosen.length} — ${percent}%</div>`;
-      if(percent === 100) result.innerHTML += '<div>ما شاء الله — ممتاز!</div>';
-      else if(percent >= 70) result.innerHTML += '<div>جيد جدًا — أحسنتِ!</div>';
-      else result.innerHTML += '<div>حاولي مرة أخرى غدًا — التعلم مستمر</div>';
-      playSound(soundPop);
-      // reward small good deeds
-      const g = parseInt(localStorage.getItem('oasis_deeds')) || 0;
-      localStorage.setItem('oasis_deeds', g + Math.max(0, Math.floor(score/3)));
-      refreshStats();
-    });
+    form.addEventListener('submit', function(ev){ ev.preventDefault(); let score=0; chosen.forEach((q,idx)=>{ const val = form['q'+idx] ? form['q'+idx].value : null; if(String(val) === String(q.a)) score++; }); const percent = Math.round((score/chosen.length)*100); const result = document.getElementById('quizResult'); result.innerHTML = `<div style="font-weight:700">نتيجتك: ${score}/${chosen.length} — ${percent}%</div>`; if(percent === 100) result.innerHTML += '<div>ما شاء الله — ممتاز!</div>'; else if(percent >= 70) result.innerHTML += '<div>جيد جدًا — أحسنتِ!</div>'; else result.innerHTML += '<div>حاولي مرة أخرى غدًا — التعلم مستمر</div>'; playSound(soundPop); const g = parseInt(localStorage.getItem('oasis_deeds')) || 0; localStorage.setItem('oasis_deeds', g + Math.max(0, Math.floor(score/3))); refreshStats(); });
   }
   initDailyQuiz();
 
   // Fancy task
-  function initFancyTask(){
+  (function initFancyTask(){
     const el = document.getElementById('fancyTask');
     const btn = document.getElementById('fancyNext');
     if(!el || !btn) return;
-    const tasks = [
-      "اكتبي 3 نعم تشكرين الله عليها اليوم.",
-      "أرسلي رسالة طيبة لأحد الأقارب.",
-      "اقرئي آية وتأمليها دقيقة.",
-      "قدّمِي صدقة صغيرة وادعي بها.",
-      "اقضي 10 دقائق في الذكر بهدوء."
-    ];
+    const tasks = ["اكتبي 3 نعم تشكرين الله عليها اليوم.","أرسلي رسالة طيبة لأحد الأقارب.","اقرئي آية وتأمليها دقيقة.","قدّمِي صدقة صغيرة وادعي بها.","اقضي 10 دقائق في الذكر بهدوء."];
     function show(){ el.textContent = tasks[Math.floor(Math.random()*tasks.length)]; playSound(soundPop); }
     btn.addEventListener('click', show);
     show();
-  }
-  initFancyTask();
+  })();
 
-  // ---------- Daily Duas population ----------
+  /* ---------- الأدعية اليومية ---------- */
   const DAILY_DUAS = [
     "دعاء الاستيقاظ: الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.",
     "دعاء الدخول للبيت: بسم الله ولجنا، وبسم الله خرجنا.",
@@ -460,84 +355,40 @@
     "دعاء للرزق في العمل: اللهم بارك لي في عملي وارزقني الخير.",
     "دعاء عند القراءة: اللهم اجعل القرآن ربيع قلبي ونور صدري."
   ];
-  function populateDailyDuas(){
-    const area = document.getElementById('dailyDuasList');
-    if(!area) return;
-    let html = '';
-    DAILY_DUAS.forEach((d,i)=> html += `<div class="interactive-card" tabindex="0"><h6>دعاء ${i+1}</h6><p>${d}</p></div>`);
-    area.innerHTML = html;
-    area.querySelectorAll('.interactive-card').forEach((el, idx)=> el.addEventListener('click', ()=>{
-      try{ navigator.clipboard.writeText(DAILY_DUAS[idx]); }catch(e){}
-      playSound(soundClick); showTempToast('نسخ الدعاء');
-    }));
-  }
+  function populateDailyDuas(){ const area = document.getElementById('dailyDuasList'); if(!area) return; let html = ''; DAILY_DUAS.forEach((d,i)=> html += `<div class="interactive-card" tabindex="0"><h6>دعاء ${i+1}</h6><p>${d}</p></div>`); area.innerHTML = html; area.querySelectorAll('.interactive-card').forEach((el,idx)=> el.addEventListener('click', ()=>{ try{ navigator.clipboard.writeText(DAILY_DUAS[idx]); }catch(e){} playSound(soundClick); showTempToast('نسخ الدعاء'); })); }
 
-  // ---------- Azkar counters ----------
+  /* ---------- أذكار العدادات ---------- */
   function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-  function incAzkar(type){
-    const key = 'oasis_azkar_' + type;
-    let v = parseInt(localStorage.getItem(key)) || 0; v++;
-    if(v > 33) v = 0;
-    localStorage.setItem(key, v);
-    const el = document.getElementById('count' + capitalize(type));
-    if(el) el.textContent = v;
-    if(v === 0){ playSound(soundPop); alert('انتهيت من 33 ذكرًا — بارك الله فيك'); } else playSound(soundClick);
-  }
-  function resetAzkar(type){ localStorage.setItem('oasis_azkar_' + type, 0); const el = document.getElementById('count' + capitalize(type)); if(el) el.textContent = 0; playSound(soundClick); }
+  function incAzkar(type){ const key = 'oasis_azkar_' + type; let v = parseInt(localStorage.getItem(key))||0; v++; if(v>33) v=0; localStorage.setItem(key,v); const el=document.getElementById('count'+capitalize(type)); if(el) el.textContent=v; if(v===0){ playSound(soundPop); alert('انتهيت من 33 ذكرًا — بارك الله فيك'); } else playSound(soundClick); }
+  function resetAzkar(type){ localStorage.setItem('oasis_azkar_'+type,0); const el=document.getElementById('count'+capitalize(type)); if(el) el.textContent=0; playSound(soundClick); }
   ['incMorning','incEvening','incAfter'].forEach(id=>{ const el = document.getElementById(id); if(el) el.addEventListener('click', ()=> incAzkar(el.getAttribute('data-counter'))); });
   ['resetMorning','resetEvening','resetAfter'].forEach(id=>{ const el = document.getElementById(id); if(el) el.addEventListener('click', ()=> resetAzkar(el.getAttribute('data-counter'))); });
 
-  // ---------- Righteous goods select ----------
+  /* ---------- رياض الصالحين: اعمال الخير ---------- */
   const defaultDeeds = ['مساعدة الوالدين','زيارة الأقارب','إطعام طائر','تبسم في وجه أخيك','إماطة الأذى عن الطريق','إطعام صائم','التصدق بقطعة خبز','حفظ صفحة من القرآن','برّ الجار','الاستغفار 100 مرة','تعليم شخص حكمة بسيطة','زيارة مريض','مساعدة طالب في دراسته'];
-  (function fillGoodDeeds(){ const sel = document.getElementById('goodDeedsSelect'); if(!sel) return; sel.innerHTML = defaultDeeds.map(d=>`<option>${d}</option>`).join(''); })();
-  const recordDeedBtn = document.getElementById('recordDeedBtn');
-  if(recordDeedBtn) recordDeedBtn.addEventListener('click', ()=>{ const g = parseInt(localStorage.getItem('oasis_deeds')) || 0; localStorage.setItem('oasis_deeds', g+1); refreshStats(); playSound(soundClick); });
+  (function fillGoodDeeds(){ const sel=document.getElementById('goodDeedsSelect'); if(!sel) return; sel.innerHTML = defaultDeeds.map(d=>`<option>${d}</option>`).join(''); })();
+  document.getElementById('recordDeedBtn')?.addEventListener('click', ()=>{ const g = parseInt(localStorage.getItem('oasis_deeds'))||0; localStorage.setItem('oasis_deeds', g+1); refreshStats(); playSound(soundClick); });
 
-  const calculatePrayerBtn = document.getElementById('calculatePrayerBtn');
-  if(calculatePrayerBtn) calculatePrayerBtn.addEventListener('click', ()=>{
-    const checks = document.querySelectorAll('.prayer-check'); let c=0; checks.forEach(ch=>{ if(ch.checked) c++; });
-    if(c === 5){ const p = parseInt(localStorage.getItem('oasis_prayer')) || 0; localStorage.setItem('oasis_prayer', p+1); refreshStats(); playSound(soundPop); alert('مبروك! سلسلة الصلاة زادت'); }
-    else { playSound(soundClick); alert('تم احتساب الصلوات ('+c+'/5)'); }
-  });
+  document.getElementById('calculatePrayerBtn')?.addEventListener('click', ()=>{ const checks = document.querySelectorAll('.prayer-check'); let c=0; checks.forEach(ch=>{ if(ch.checked) c++; }); if(c===5){ const p=parseInt(localStorage.getItem('oasis_prayer'))||0; localStorage.setItem('oasis_prayer', p+1); refreshStats(); playSound(soundPop); alert('مبروك! سلسلة الصلاة زادت'); } else { playSound(soundClick); alert('تم احتساب الصلوات ('+c+'/5)'); } });
 
-  // ---------- small utilities ----------
-  function showTempToast(msg){
-    const t = document.createElement('div'); t.style.position='fixed'; t.style.left='18px'; t.style.bottom='18px'; t.style.zIndex=99999; t.style.background='rgba(0,0,0,0.7)'; t.style.color='#fff'; t.style.padding='8px 12px'; t.style.borderRadius='8px'; t.textContent = msg; document.body.appendChild(t);
-    setTimeout(()=> t.remove(), 2000);
-  }
+  /* ---------- مساعدة سريعة (toast) ---------- */
+  function showTempToast(msg){ const t=document.createElement('div'); t.style.position='fixed'; t.style.left='18px'; t.style.bottom='18px'; t.style.zIndex=99999; t.style.background='rgba(0,0,0,0.7)'; t.style.color='#fff'; t.style.padding='8px 12px'; t.style.borderRadius='8px'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),1800); }
 
-  // ---------- stats restore ----------
-  function refreshStats(){
-    const prayer = parseInt(localStorage.getItem('oasis_prayer')) || 0;
-    const deeds  = parseInt(localStorage.getItem('oasis_deeds')) || 0;
-    const pages  = parseInt(localStorage.getItem('oasis_pages')) || 0;
-    const game   = parseInt(localStorage.getItem('oasis_game')) || 0;
-    const elPrayer = document.getElementById('prayerStreak');
-    const elDeeds  = document.getElementById('goodDeeds');
-    const elPages  = document.getElementById('quranPages');
-    const elGame   = document.getElementById('gameScore');
-    if(elPrayer) elPrayer.textContent = prayer;
-    if(elDeeds)  elDeeds.textContent  = deeds;
-    if(elPages)  elPages.textContent  = pages;
-    if(elGame)   elGame.textContent   = game;
-  }
-
-  // ---------- init ----------
+  /* ---------- init ---------- */
   document.addEventListener('DOMContentLoaded', ()=>{
     initControls();
+    refreshStats();
     populateDuaWorship();
     populateDailyDuas();
     createMemoryBoard();
     initDailyQuiz();
-    initFancyTask();
     // restore azkar
-    ['morning','evening','after'].forEach(k=>{ const v=parseInt(localStorage.getItem('oasis_azkar_'+k))||0; const el=document.getElementById('count'+capitalize(k)); if(el) el.textContent = v; });
-    refreshStats();
-    // show default
+    ['morning','evening','after'].forEach(k=>{ const v=parseInt(localStorage.getItem('oasis_azkar_'+k))||0; const el=document.getElementById('count'+capitalize(k)); if(el) el.textContent=v; });
+    // default page
     showPage('dashboard');
   });
 
-  // expose
-  window.Oasis = { openPanel, closePanel, showPage, refreshStats };
+  // expose debug
+  window.Oasis = { showPage, openPanel, closePanel, refreshStats };
 
 })();
