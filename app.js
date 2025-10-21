@@ -78,26 +78,38 @@
 
 /* ---------- تطبيق اللغة (labels بسيطة للأزرار فقط) ---------- */
 function applyLang(l){
-  document.documentElement.lang = l;
+  // حفظ/تعيين العنصر الاختياري للغة
+  if(wahaLang) wahaLang.value = l;
+  document.documentElement.lang = l || 'ar';
+
+  // خريطة العناوين تتوافق مع قيم data-page الموجودة في HTML
   const labels = {
-    dashboard: l === 'ar' ? 'الصفحة الرئيسية' : 'Dashboard',
-    quran: l === 'ar' ? 'القرآن الكريم' : 'Quran',
-    quran_garden: l === 'ar' ? 'بستان القرآن' : 'Quran Garden',
-    righteous: l === 'ar' ? 'رياض الصالحين' : 'Righteous Deeds',
-    taah: l === 'ar' ? 'جنات الطاعة' : 'Gardens of Obedience',
-    games: l === 'ar' ? 'الألعاب التربوية' : 'Educational Games',
-    tracker: l === 'ar' ? 'سجل التطور' : 'Progress Tracker',
-    daily_duas: l === 'ar' ? 'الأدعية اليومية' : 'Daily Duas',
-    settings: l === 'ar' ? 'الإعدادات' : 'Settings'
+    'dashboard':        l === 'ar' ? 'الصفحة الرئيسية' : (l==='fr' ? 'Tableau' : 'Dashboard'),
+    'quran':            l === 'ar' ? 'القرآن الكريم'    : (l==='fr' ? 'Coran'   : 'Quran'),
+    'quran-garden':     l === 'ar' ? 'بستان القرآن'     : (l==='fr' ? 'Jardin'  : 'Quran Garden'),
+    'righteous-path':   l === 'ar' ? 'رياض الصالحين'   : (l==='fr' ? 'Vertueux': 'Righteous'),
+    'obedience-gardens':l === 'ar' ? 'جنات الطاعة'      : (l==='fr' ? 'Obéissance' : 'Obedience'),
+    'educational-games':l === 'ar' ? 'ألعاب تربوية'     : (l==='fr' ? 'Jeux'    : 'Games'),
+    'progress-tracker': l === 'ar' ? 'سجل تطورك'       : (l==='fr' ? 'Progrès' : 'Progress'),
+    'daily-duas':       l === 'ar' ? 'الأدعية اليومية'  : (l==='fr' ? 'Duas'    : 'Daily Duas')
   };
 
-  document.querySelectorAll('#sidebar button').forEach(btn => {
-    const key = btn.dataset.page;
+  // نستخدم المحدد العام [data-page] بحيث نلتقط جميع الأزرار بغض النظر عن مكانها في الـ DOM
+  document.querySelectorAll('[data-page]').forEach(btn=>{
+    const key = btn.getAttribute('data-page');
     const label = labels[key];
-    if (label && label.trim() !== '') {
-      const icon = btn.querySelector('i');
-      const existingIcon = icon ? icon.outerHTML + ' ' : '';
-      btn.innerHTML = `${existingIcon}<span>${label}</span>`;
+
+    // إذا لم توجد ترجمة، نترك الزر كما هو (لا نستبدل ونمنع ظهور "undefined")
+    if(!label || String(label).trim() === '') return;
+
+    // نحافظ على الأيقونة إن وُجدت، وإلا نضع النص فقط
+    const icon = btn.querySelector('i');
+    if(icon){
+      // إذا كانت البنية داخليًا تحتوي على نص إضافي (span) نبدّله بلطف
+      btn.innerHTML = icon.outerHTML + ' ' + `<span>${label}</span>`;
+    } else {
+      // زر بدون أيقونة -> نملأه بالنص (لا نحذف عناصر أخرى)
+      btn.textContent = label;
     }
   });
 }
@@ -396,5 +408,6 @@ function applyLang(l){
   window.Oasis = { showPage, openPanel, closePanel, refreshStats };
 
 })();
+
 
 
