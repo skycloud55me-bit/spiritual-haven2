@@ -1,46 +1,89 @@
-// العناصر
-const sections = document.querySelectorAll(".section");
-const buttons = document.querySelectorAll(".nav-btn");
-const body = document.body;
+// app.js — النسخة الكاملة مع تشغيل الصوت عند الضغط فقط
+(function(){
+  "use strict";
 
-// إنشاء الأصوات
-const clickSound = new Audio("sounds/click.mp3");
-const sectionSound = new Audio("sounds/section.mp3");
+  /* ---------- عناصر DOM ---------- */
+  const openBtn = document.getElementById('openPanelBtn');
+  const sidePanel = document.getElementById('sidePanel');
+  const closeBtn = document.getElementById('closePanelBtn');
+  const backdrop = document.getElementById('backdrop');
+  const navItems = document.querySelectorAll('[data-page]');
+  const phrases = [
+    "السلام عليكم ورحمة الله 🌿",
+    "مرحبا بكِ في رحاب الإيمان 💫",
+    "زادكِ الله نورًا وطمأنينة 💛",
+    "اللهم اجعل هذا اليوم بركةً وسعادة 🌸",
+    "يا الله اجعل قلوبنا عامرة بذكرك 🤍"
+  ];
 
-// إعداد مستوى الصوت (اختياري)
-clickSound.volume = 0.4;
-sectionSound.volume = 0.5;
+  /* ---------- الأصوات ---------- */
+  const soundClick = document.getElementById('soundClick');
+  const soundPop = document.getElementById('soundPop');
+  const soundWhoosh = document.getElementById('soundWhoosh');
 
-// وظيفة لتغيير القسم عند الضغط على زر
-buttons.forEach((btn, index) => {
-  btn.addEventListener("click", () => {
-    // تشغيل الصوت عند الضغط فقط
-    clickSound.currentTime = 0;
-    clickSound.play();
+  function play(el){
+    try {
+      if(!el) return;
+      el.currentTime = 0;
+      const playPromise = el.play();
+      if(playPromise !== undefined){
+        playPromise.catch(()=>{});
+      }
+    } catch(e){}
+  }
 
-    // إزالة التفعيل عن كل الأزرار
-    buttons.forEach(b => b.classList.remove("active"));
-    sections.forEach(s => s.classList.remove("active"));
+  /* ---------- وظائف اللوحة الجانبية ---------- */
+  function openPanel(){
+    sidePanel.classList.add('open');
+    backdrop.classList.add('show');
+    sidePanel.setAttribute('aria-hidden','false');
+    play(soundWhoosh);
 
-    // تفعيل الزر والقسم المطلوب
-    btn.classList.add("active");
-    sections[index].classList.add("active");
+    const p = phrases[Math.floor(Math.random()*phrases.length)];
+    const phrasesList = document.getElementById('phrasesList');
+    if(phrasesList) phrasesList.textContent = p;
+    setTimeout(()=> {
+      if(phrasesList) phrasesList.textContent = '';
+    }, 3000);
+  }
 
-    // تغيير لون الخلفية بتدرج الأخضر الملكي
-    body.style.background = "linear-gradient(135deg, #013220, #046d46)";
+  function closePanel(){
+    sidePanel.classList.remove('open');
+    backdrop.classList.remove('show');
+    sidePanel.setAttribute('aria-hidden','true');
+    play(soundWhoosh);
+  }
 
-    // تشغيل صوت الانتقال بعد الضغط بقليل
-    setTimeout(() => {
-      sectionSound.currentTime = 0;
-      sectionSound.play();
-    }, 150);
+  if(openBtn) openBtn.addEventListener('click', openPanel);
+  if(closeBtn) closeBtn.addEventListener('click', closePanel);
+  if(backdrop) backdrop.addEventListener('click', closePanel);
+
+  /* ---------- التنقل بين الصفحات ---------- */
+  navItems.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const page = btn.getAttribute('data-page');
+      document.querySelectorAll('.page-content').forEach(sec=>sec.classList.add('d-none'));
+      const active = document.getElementById(page);
+      if(active) active.classList.remove('d-none');
+      closePanel();
+      play(soundClick);
+    });
   });
-});
 
-// تأثير دخول الصفحة الأول
-window.addEventListener("load", () => {
-  body.style.transition = "background 1s ease";
-  body.style.background = "linear-gradient(135deg, #013220, #046d46)";
-  sections[0].classList.add("active");
-  buttons[0].classList.add("active");
-});
+  /* ---------- تشغيل صوت عند الضغط على أي زر ---------- */
+  document.querySelectorAll('button').forEach(button=>{
+    button.addEventListener('click',()=>{
+      play(soundClick);
+    });
+  });
+
+  /* ---------- تحديث العبارات عند الفتح ---------- */
+  window.addEventListener('load',()=>{
+    const phrasesList = document.getElementById('phrasesList');
+    if(phrasesList){
+      const p = phrases[Math.floor(Math.random()*phrases.length)];
+      phrasesList.textContent = p;
+    }
+  });
+
+})();
