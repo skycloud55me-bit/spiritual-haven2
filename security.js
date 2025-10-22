@@ -147,3 +147,26 @@ export function auditLog(entry){
     console.warn('auditLog failed', e);
   }
 }
+
+// نظام الحماية — ملف مستقل يمكن تعديله لاحقًا
+(function(){
+  const Security = {
+    version: "1.0.0",
+    safeWords: ["هاك", "اختراق", "فيروس", "تخريب", "تدمير", "جريمة"],
+    checkInput: function(input){
+      return !this.safeWords.some(word => input.includes(word));
+    }
+  };
+
+  window.Security = Security;
+})();
+
+// منع الكلمات الضارة
+document.addEventListener("input", function(e){
+  if(e.target.id === "user-input"){
+    if(!window.Security.checkInput(e.target.value)){
+      alert("⚠️ تم حظر كلمة غير آمنة!");
+      e.target.value = "";
+    }
+  }
+});
