@@ -1,64 +1,52 @@
-<!doctype html>
-<html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>منصة الذكاء الوجودي — تجريبي</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الكون الداخلي - رحلة إلى الذات</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>منصة الذكاء الوجودي — تجربة أولية</h1>
-    <p class="subtitle">مرآتك، رحلاتك، وبصيرتك — نسخة أولى بسيطة قابلة للتطوير</p>
-  </header>
+    <!-- المشهد الثلاثي الأبعاد -->
+    <div id="threejs-container"></div>
+    
+    <!-- واجهة التحليل العاطفي -->
+    <div id="emotional-interface">
+        <div class="mind-mirror">
+            <h3>مرآة الذات 🌸</h3>
+            <div class="emotional-state">
+                <div class="state-indicator" id="moodIndicator">🔄 جاري الاستشعار...</div>
+                <div class="emotional-map">
+                    <canvas id="emotionCanvas"></canvas>
+                </div>
+            </div>
+            
+            <div class="deep-dialogue">
+                <div class="ai-guide-message">
+                    <p>"أنا هنا لأسمع لا لأحكم. شاركيني ما يدور في داخلك..."</p>
+                </div>
+                
+                <div class="user-expression">
+                    <textarea 
+                        id="heartMessage" 
+                        placeholder="اكتبي ما تشعرين به الآن... لا تحذفي أي شيء"
+                        rows="4"
+                    ></textarea>
+                    <button id="expressBtn">أطلقِ المشاعر</button>
+                </div>
+                
+                <div class="ai-response" id="aiResponse">
+                    <!-- سيتغير هذا بناءً على التحليل العاطفي -->
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <main>
-    <section id="start">
-      <label for="introName">من أنت اليوم؟ (سطر واحد)</label>
-      <input id="introName" placeholder="مثال: متلهفة للتغيير، فضولية..." />
-      <button id="startBtn">ابدأ رحلتك</button>
-    </section>
-
-    <section id="mirror" class="card hidden">
-      <h2>مرآة الذات الرقمية</h2>
-      <textarea id="dailyInput" rows="6" placeholder="اكتب ما تشعرين به أو سؤالاً وجودياً..."></textarea>
-      <div class="controls">
-        <button id="analyzeBtn">حلّل/اقترح سؤال</button>
-        <button id="saveNoteBtn">احفظ ملاحظة</button>
-      </div>
-      <div id="analysis" class="analysis"></div>
-    </section>
-
-    <section id="journeys" class="card hidden">
-      <h2>رحلات المعنى التفاعلية</h2>
-      <div id="promptsContainer"></div>
-      <button id="newPromptBtn">أطلب سؤالاً وجودياً جديداً</button>
-    </section>
-
-    <section id="insight" class="card hidden">
-      <h2>البصيرة الرقمية</h2>
-      <div id="insightContent">لم توجد بعد — ابدأ بكتابة و حفظ ملاحظات لتظهر البصيرة هنا.</div>
-      <button id="viewTimelineBtn">عرض الخريطة الثلاثية الأبعاد</button>
-    </section>
-
-    <section id="threeWrapper" class="card hidden">
-      <h2>خريطتك الوجودية الثلاثية الأبعاد</h2>
-      <div id="threeArea"></div>
-      <p class="hint">تحكمي بالماوس/لمس لتحريك المشهد</p>
-      <button id="reset3D">إعادة ضبط المشهد</button>
-    </section>
-
-    <section id="notes" class="card hidden">
-      <h2>دفتر ملاحظات الرحلة</h2>
-      <ul id="notesList"></ul>
-    </section>
-  </main>
-
-  <footer>
-    <small>نسخة تجريبية — تم إنشاؤها لمشروع "منصة الذكاء الوجودي".</small>
-  </footer>
-
-  <script type="module" src="three-scene.js"></script>
-  <script src="app.js"></script>
+    <!-- تحميل المكتبات -->
+    <script src="https://cdn.jsdelivr.net/npm/compromise@latest/builds/compromise.min.js"></script>
+    <script src="emotionalAI.js"></script>
+    <script src="threeScene.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
