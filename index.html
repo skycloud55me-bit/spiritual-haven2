@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الكون الداخلي - رحلة إلى الذات</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,15 +15,15 @@
         <div class="mind-mirror">
             <h3>مرآة الذات 🌸</h3>
             <div class="emotional-state">
-                <div class="state-indicator" id="moodIndicator">🔄 جاري الاستشعار...</div>
+                <div class="state-indicator" id="moodIndicator">🔄 اكتبي مشاعركِ لتبدأ الرحلة...</div>
                 <div class="emotional-map">
-                    <canvas id="emotionCanvas"></canvas>
+                    <!-- سيتم رسم خريطة المشاعر هنا -->
                 </div>
             </div>
             
             <div class="deep-dialogue">
                 <div class="ai-guide-message">
-                    <p>"أنا هنا لأسمع لا لأحكم. شاركيني ما يدور في داخلك..."</p>
+                    <p>"أنا هنا لأسمع لا لأحكم. شاركيني ما يدور في داخلكِ..."</p>
                 </div>
                 
                 <div class="user-expression">
@@ -37,16 +36,13 @@
                 </div>
                 
                 <div class="ai-response" id="aiResponse">
-                    <!-- سيتغير هذا بناءً على التحليل العاطفي -->
+                    <!-- ستظهر الردود هنا -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- تحميل المكتبات -->
-    <script src="https://cdn.jsdelivr.net/npm/compromise@latest/builds/compromise.min.js"></script>
     <script src="emotionalAI.js"></script>
-    <script src="threeScene.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
