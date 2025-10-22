@@ -1,85 +1,107 @@
-// بيانات المستخدم الأولية
-let userData = {
-    reason: '',
-    emotion: '',
-    journeyStarted: false
+// حالة الكون
+const universeState = {
+    consciousnessLevel: '',
+    activePlanet: null,
+    discoveredPlanets: [],
+    existentialData: {}
 };
 
-// اختيار السبب
-document.querySelectorAll('.option-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        // إزالة التحديد السابق
-        document.querySelectorAll('.option-btn').forEach(b => {
-            b.style.background = 'rgba(255, 255, 255, 0.1)';
-        });
-        
-        // تحديد الحالي
-        this.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
-        userData.reason = this.textContent;
-        checkReadyToStart();
-    });
-});
+// تهيئة الكون
+function initUniverse() {
+    createStars();
+    initPlanets();
+    initConsciousnessCheck();
+}
 
-// اختيار المشاعر
-document.querySelectorAll('.emotion-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        // إزالة التحديد السابق
-        document.querySelectorAll('.emotion-btn').forEach(b => {
-            b.style.background = 'rgba(255, 255, 255, 0.1)';
-        });
-        
-        // تحديد الحالي
-        this.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
-        userData.emotion = this.textContent;
-        checkReadyToStart();
-    });
-});
-
-// التحقق من الجاهزية للبدء
-function checkReadyToStart() {
-    const startBtn = document.getElementById('startJourney');
-    if (userData.reason && userData.emotion) {
-        startBtn.disabled = false;
-        startBtn.style.opacity = '1';
-    } else {
-        startBtn.disabled = true;
-        startBtn.style.opacity = '0.5';
+// إنشاء النجوم الديناميكية
+function createStars() {
+    const scene = document.getElementById('universeScene');
+    for (let i = 0; i < 200; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 3}px;
+            height: ${Math.random() * 3}px;
+            background: white;
+            border-radius: 50%;
+            top: ${Math.random() * 100}%;
+            left: ${Math.random() * 100}%;
+            opacity: ${Math.random() * 0.8 + 0.2};
+            animation: twinkle ${Math.random() * 5 + 3}s infinite;
+        `;
+        scene.appendChild(star);
     }
 }
 
-// بدء الرحلة
-document.getElementById('startJourney').addEventListener('click', function() {
-    userData.journeyStarted = true;
-    
-    // رسالة ترحيب شخصية
-    const messages = {
-        'ضائع': '🌌 كل المستكشفين العظماء شعروا بالضياع في البداية',
-        'فضولي': '🔍 فضولك هو دليلك إلى عوالم جديدة داخل نفسك',
-        'متحمس': '🚀 حماسك هو وقود رحلتك الاستكشافية',
-        'هادئ': '☁️ هدوئك سيمكنك من رؤية ما لا يراه الآخرون'
-    };
-    
-    const personalMessage = messages[userData.emotion] || '🚀 لنبدأ هذه الرحلة المدهشة معاً';
-    
-    // الانتقال إلى الصفحة التالية
-    document.querySelector('.portal').innerHTML = `
-        <div class="welcome-message">
-            <h2>أهلاً بك في رحلتك، أيها المستكشف الشجاع!</h2>
-            <p class="personal-msg">${personalMessage}</p>
-            <div class="planet-welcome">
-                <div class="planet"></div>
-                <p>ها هو كوكبك الأول ينتظر استكشافك...</p>
-            </div>
-            <button onclick="enterUniverse()" class="enter-btn">ادخل إلى الكون</button>
-        </div>
-    `;
-});
-
-// الدخول إلى الكون
-function enterUniverse() {
-    alert('🎉 هنيئاً! لقد دخلت الكون الوجودي! (هذه نهاية النسخة التجريبية الأولى)');
-    // هنا سنضيف الصفحات التالية
+// تفعيل الكواكب
+function initPlanets() {
+    document.querySelectorAll('.planet').forEach(planet => {
+        planet.addEventListener('click', function() {
+            const planetType = this.dataset.type;
+            explorePlanet(planetType);
+        });
+    });
 }
 
-// تهيئة الصفحة
-checkReadyToStart();
+// استكشاف الكوكب
+function explorePlanet(planetType) {
+    universeState.activePlanet = planetType;
+    
+    const messages = {
+        mind: "🪐 كوكب العقل: هنا تبدأ رحلة الأفكار... ما الفكرة التي تريد استكشافها؟",
+        heart: "💖 كوكب القلب: هذه مساحة للمشاعر... ما الذي يشغلك عاطفياً؟", 
+        soul: "🌌 كوكب الروح: هنا نبحث عن المعنى... ما السؤال الوجودي الذي يحيرك؟"
+    };
+    
+    showAIDialog(messages[planetType]);
+}
+
+// محادثة الذكاء الوجودي
+function showAIDialog(message) {
+    const ai = document.getElementById('existentialAI');
+    ai.querySelector('.ai-message').textContent = message;
+    ai.classList.remove('hidden');
+}
+
+// اختيار مستوى الوعي
+function initConsciousnessCheck() {
+    document.querySelectorAll('.level-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            universeState.consciousnessLevel = this.dataset.level;
+            
+            // تحديث الواجهة بناءً على مستوى الوعي
+            updateInterfaceForConsciousness();
+        });
+    });
+}
+
+// تحديث الواجهة لمستوى الوعي
+function updateInterfaceForConsciousness() {
+    const portal = document.getElementById('existentialPortal');
+    const levels = {
+        explorer: "👣 رحلة المستكشف: لنبدأ من الأساسيات...",
+        seeker: "🔍 رحلة الباحث: دعنا نتعمق أكثر...", 
+        philosopher: "💭 رحلة الفيلسوف: لنغوص في الأعماق..."
+    };
+    
+    portal.querySelector('.portal-subtitle').textContent = levels[universeState.consciousnessLevel];
+}
+
+// الدخول إلى الكون
+document.getElementById('enterUniverse').addEventListener('click', function() {
+    if (!universeState.consciousnessLevel) {
+        showAIDialog("⏳ اختر مستوى وعيك أولاً لتبدأ الرحلة...");
+        return;
+    }
+    
+    // اختفاء البوابة
+    document.getElementById('existentialPortal').style.opacity = '0';
+    setTimeout(() => {
+        document.getElementById('existentialPortal').classList.add('hidden');
+        showAIDialog("🌌 أهلاً بك في كونك الشخصي! انقر على أي كوكب لتبدأ الاستكشاف...");
+    }, 1000);
+});
+
+// بدء الكون
+document.addEventListener('DOMContentLoaded', initUniverse);
