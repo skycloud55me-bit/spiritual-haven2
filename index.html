@@ -1,48 +1,83 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الكون الداخلي - رحلة إلى الذات</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>العالم الهادئ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    body {
+      direction: rtl;
+      font-family: "Tajawal", sans-serif;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: background 2s ease;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #ai-response {
+      background: rgba(255,255,255,0.85);
+      border-radius: 15px;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    input, button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    input {
+      width: 70%;
+    }
+
+    button {
+      background: #4a90e2;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #357abd;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
-    <!-- المشهد الثلاثي الأبعاد -->
-    <div id="threejs-container"></div>
-    
-    <!-- واجهة التحليل العاطفي -->
-    <div id="emotional-interface">
-        <div class="mind-mirror">
-            <h3>مرآة الذات 🌸</h3>
-            <div class="emotional-state">
-                <div class="state-indicator" id="moodIndicator">🔄 اكتبي مشاعركِ لتبدأ الرحلة...</div>
-                <div class="emotional-map">
-                    <!-- سيتم رسم خريطة المشاعر هنا -->
-                </div>
-            </div>
-            
-            <div class="deep-dialogue">
-                <div class="ai-guide-message">
-                    <p>"أنا هنا لأسمع لا لأحكم. شاركيني ما يدور في داخلكِ..."</p>
-                </div>
-                
-                <div class="user-expression">
-                    <textarea 
-                        id="heartMessage" 
-                        placeholder="اكتبي ما تشعرين به الآن... لا تحذفي أي شيء"
-                        rows="4"
-                    ></textarea>
-                    <button id="expressBtn">أطلقِ المشاعر</button>
-                </div>
-                
-                <div class="ai-response" id="aiResponse">
-                    <!-- ستظهر الردود هنا -->
-                </div>
-            </div>
-        </div>
-    </div>
+  <h1>🌿 مرحبًا بك في عالمك الهادئ</h1>
+  <div id="ai-response">كيف تشعر اليوم؟</div>
+  <input type="text" id="user-input" placeholder="اكتب شعورك هنا..." />
+  <button onclick="analyzeMood()">إرسال</button>
 
-    <script src="emotionalAI.js"></script>
-    <script src="app.js"></script>
+  <canvas id="bg"></canvas>
+
+  <script src="security.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
