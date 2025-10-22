@@ -1,4 +1,3 @@
-// النظام العاطفي المتقدم
 class EmotionalAI {
     constructor() {
         this.sentimentData = {
@@ -7,32 +6,18 @@ class EmotionalAI {
             anxious: ['قلق', 'توتر', 'خوف', 'تردد', 'اضطراب', 'هلع'],
             peaceful: ['سلام', 'طمأنينة', 'هدوء', 'صفاء', 'استقرار']
         };
-        
-        this.emotionalHistory = [];
     }
 
-    // تحليل عاطفي متقدم
     analyzeEmotionalState(text) {
         const words = text.split(/\s+/);
-        let scores = {
-            positive: 0,
-            negative: 0,
-            anxious: 0,
-            peaceful: 0,
-            intensity: 0
-        };
+        let scores = { positive: 0, negative: 0, anxious: 0, peaceful: 0 };
 
-        // تحليل كل كلمة
         words.forEach(word => {
             if (this.sentimentData.positive.includes(word)) scores.positive++;
             if (this.sentimentData.negative.includes(word)) scores.negative++;
             if (this.sentimentData.anxious.includes(word)) scores.anxious++;
             if (this.sentimentData.peaceful.includes(word)) scores.peaceful++;
         });
-
-        // حساب الشدة العاطفية
-        scores.intensity = words.length * 0.1 + 
-                          (scores.positive + scores.negative + scores.anxious) * 0.3;
 
         return this.determineDominantEmotion(scores);
     }
@@ -51,16 +36,14 @@ class EmotionalAI {
 
         return {
             type: dominant.type,
-            intensity: scores.intensity,
-            confidence: dominant.score / (scores.positive + scores.negative + scores.anxious + scores.peaceful || 1)
+            intensity: dominant.score / (scores.positive + scores.negative + scores.anxious + scores.peaceful || 1)
         };
     }
 
-    // توليد رد عاطفي ذكي
     generateEmotionalResponse(emotion, userMessage) {
         const responseTemplates = {
             positive: [
-                "🌸 أرى نوراً في كلماتك... هذا الجميل الذي تشعرين به، هل يمكنكِ مشاركته مع العالم؟",
+                "🌸 أرى نوراً في كلماتكِ... هذا الجميل الذي تشعرين به، هل يمكنكِ مشاركته مع العالم؟",
                 "🌞 فرحكِ يلمع عبر السطور. ما الذي أضاء هذا النور في داخلكِ اليوم؟"
             ],
             negative: [
@@ -81,20 +64,6 @@ class EmotionalAI {
             "🌺 شكراً لكِ على مشاركة مشاعركِ. كل شعور هو لغة تخبرنا عن احتياجاتنا العميقة."
         ];
 
-        // اختيار رد عشوائي مع تعديلات طفيفة
-        let response = responses[Math.floor(Math.random() * responses.length)];
-        
-        // إضافة سؤال استقصائي
-        const followUpQuestions = [
-            "كيف يؤثر هذا الشعور على قراراتكِ؟",
-            "متى بدأتِ تشعرين بهذا لأول مرة؟",
-            "إذا كان هذا الشعور يختبئ وراء قناع، ماذا سيكون شكله؟"
-        ];
-
-        if (emotion.intensity > 0.5) {
-            response += " " + followUpQuestions[Math.floor(Math.random() * followUpQuestions.length)];
-        }
-
-        return response;
+        return responses[Math.floor(Math.random() * responses.length)];
     }
 }
