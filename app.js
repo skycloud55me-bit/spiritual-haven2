@@ -1,154 +1,100 @@
-// التطبيق الرئيسي
-class InnerUniverseApp {
+// النظام العاطفي المتقدم
+class EmotionalAI {
     constructor() {
-        this.emotionalAI = new EmotionalAI();
-        this.scene3D = new EmotionalScene3D();
-        this.currentEmotion = null;
-        
-        this.init();
-    }
-
-    init() {
-        this.setupEventListeners();
-        this.initializeEmotionalCanvas();
-    }
-
-    setupEventListeners() {
-        const expressBtn = document.getElementById('expressBtn');
-        const heartMessage = document.getElementById('heartMessage');
-        
-        expressBtn.addEventListener('click', () => this.processEmotionalExpression());
-        
-        heartMessage.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                this.processEmotionalExpression();
-            }
-        });
-        
-        // تحليل عاطفي أثناء الكتابة
-        heartMessage.addEventListener('input', () => {
-            this.realTimeEmotionalAnalysis();
-        });
-    }
-
-    initializeEmotionalCanvas() {
-        const canvas = document.getElementById('emotionCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        
-        this.drawEmotionalGrid(ctx, canvas.width, canvas.height);
-    }
-
-    drawEmotionalGrid(ctx, width, height) {
-        // رسم شبكة المشاعر الأساسية
-        ctx.clearRect(0, 0, width, height);
-        
-        // دوائر تمثل المشاعر المختلفة
-        const emotions = [
-            { name: 'فرح', color: '#4CAF50', x: width * 0.3, y: height * 0.3 },
-            { name: 'حزن', color: '#2196F3', x: width * 0.7, y: height * 0.3 },
-            { name: 'قلق', color: '#FF9800', x: width * 0.3, y: height * 0.7 },
-            { name: 'سلام', color: '#9C27B0', x: width * 0.7, y: height * 0.7 }
-        ];
-        
-        emotions.forEach(emotion => {
-            ctx.beginPath();
-            ctx.arc(emotion.x, emotion.y, 25, 0, 2 * Math.PI);
-            ctx.fillStyle = emotion.color + '40';
-            ctx.fill();
-            ctx.strokeStyle = emotion.color;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            
-            ctx.fillStyle = emotion.color;
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText(emotion.name, emotion.x, emotion.y + 35);
-        });
-    }
-
-    realTimeEmotionalAnalysis() {
-        const text = document.getElementById('heartMessage').value;
-        if (text.length > 10) {
-            const emotion = this.emotionalAI.analyzeEmotionalState(text);
-            this.updateEmotionalIndicator(emotion);
-        }
-    }
-
-    updateEmotionalIndicator(emotion) {
-        const indicator = document.getElementById('moodIndicator');
-        const stateClasses = ['state-happy', 'state-sad', 'state-anxious', 'state-peaceful'];
-        
-        // إزالة الفئات السابقة
-        indicator.classList.remove(...stateClasses);
-        
-        // إضافة الفئة الجديدة
-        indicator.classList.add(`state-${emotion.type}`);
-        
-        // تحديث النص
-        const emotionNames = {
-            positive: '🌸 مشاعر إيجابية',
-            negative: '🌧️ مشاعر صعبة', 
-            anxious: '🌀 مشاعر قلقة',
-            peaceful: '🍃 حالة من السلام'
+        this.sentimentData = {
+            positive: ['فرح', 'سعادة', 'أمل', 'حماس', 'رضا', 'سلام', 'حب', 'امتنان'],
+            negative: ['حزن', 'قلق', 'خوف', 'غضب', 'يأس', 'تعب', 'ضياع', 'وحدة'],
+            anxious: ['قلق', 'توتر', 'خوف', 'تردد', 'اضطراب', 'هلع'],
+            peaceful: ['سلام', 'طمأنينة', 'هدوء', 'صفاء', 'استقرار']
         };
         
-        indicator.textContent = `${emotionNames[emotion.type]} (شدة: ${Math.round(emotion.intensity * 100)}%)`;
+        this.emotionalHistory = [];
     }
 
-    async processEmotionalExpression() {
-        const userMessage = document.getElementById('heartMessage').value.trim();
-        
-        if (!userMessage) {
-            alert('🖋️ اكتبي شيئاً من قلبكِ أولاً...');
-            return;
-        }
-        
-        // تحليل العاطفة
-        const emotion = this.emotionalAI.analyzeEmotionalState(userMessage);
-        this.currentEmotion = emotion;
-        
-        // تحديث الواجهة
-        this.updateEmotionalIndicator(emotion);
-        
-        // تحديث المشهد الثلاثي الأبعاد
-        this.scene3D.updateEmotionalScene(emotion);
-        
-        // توليد الرد
-        const aiResponse = this.emotionalAI.generateEmotionalResponse(emotion, userMessage);
-        this.displayAIResponse(aiResponse);
-        
-        // حفظ في السجل
-        this.emotionalAI.emotionalHistory.push({
-            message: userMessage,
-            emotion: emotion,
-            timestamp: new Date().toISOString(),
-            response: aiResponse
+    // تحليل عاطفي متقدم
+    analyzeEmotionalState(text) {
+        const words = text.split(/\s+/);
+        let scores = {
+            positive: 0,
+            negative: 0,
+            anxious: 0,
+            peaceful: 0,
+            intensity: 0
+        };
+
+        // تحليل كل كلمة
+        words.forEach(word => {
+            if (this.sentimentData.positive.includes(word)) scores.positive++;
+            if (this.sentimentData.negative.includes(word)) scores.negative++;
+            if (this.sentimentData.anxious.includes(word)) scores.anxious++;
+            if (this.sentimentData.peaceful.includes(word)) scores.peaceful++;
         });
-        
-        // مسح الحقل
-        document.getElementById('heartMessage').value = '';
+
+        // حساب الشدة العاطفية
+        scores.intensity = words.length * 0.1 + 
+                          (scores.positive + scores.negative + scores.anxious) * 0.3;
+
+        return this.determineDominantEmotion(scores);
     }
 
-    displayAIResponse(response) {
-        const responseElement = document.getElementById('aiResponse');
-        responseElement.innerHTML = `
-            <div class="response-header">
-                <strong>رفيق رحلتكِ:</strong>
-            </div>
-            <div class="response-content">
-                ${response}
-            </div>
-        `;
+    determineDominantEmotion(scores) {
+        const emotions = [
+            { type: 'peaceful', score: scores.peaceful },
+            { type: 'positive', score: scores.positive },
+            { type: 'anxious', score: scores.anxious },
+            { type: 'negative', score: scores.negative }
+        ];
+
+        const dominant = emotions.reduce((prev, current) => 
+            (prev.score > current.score) ? prev : current
+        );
+
+        return {
+            type: dominant.type,
+            intensity: scores.intensity,
+            confidence: dominant.score / (scores.positive + scores.negative + scores.anxious + scores.peaceful || 1)
+        };
+    }
+
+    // توليد رد عاطفي ذكي
+    generateEmotionalResponse(emotion, userMessage) {
+        const responseTemplates = {
+            positive: [
+                "🌸 أرى نوراً في كلماتك... هذا الجميل الذي تشعرين به، هل يمكنكِ مشاركته مع العالم؟",
+                "🌞 فرحكِ يلمع عبر السطور. ما الذي أضاء هذا النور في داخلكِ اليوم؟"
+            ],
+            negative: [
+                "🌧️ أحس بثقل في كلماتكِ... لا بأس في أن تشعري بهذا. هل تريدين الحديث عما يثقل قلبكِ؟",
+                "🕊️ الألم الذي تحملينه هو دليل على إنسانيتكِ. دعينا نستمع إليه معاً دون حكم."
+            ],
+            anxious: [
+                "🌀 أرى أفكاراً تدور في كلماتكِ... التنفس بعمق قد يبطئ هذه الدوامة. هل جربتِ ذلك؟",
+                "🌌 القلق هو رسالة من أعماقكِ تخبركِ أن شيء ما يحتاج للاهتمام. ما هو هذا الشيء برأيكِ؟"
+            ],
+            peaceful: [
+                "🍃 هدوئكِ يشبه نسمة الصباح الهادئة... كيف حافظتِ على هذا السلام الداخلي؟",
+                "⭐️ الطمأنينة التي تشعرين بها هي كنز حقيقي. ما الذي ساعدكِ في الوصول إلى هذه الحالة؟"
+            ]
+        };
+
+        const responses = responseTemplates[emotion.type] || [
+            "🌺 شكراً لكِ على مشاركة مشاعركِ. كل شعور هو لغة تخبرنا عن احتياجاتنا العميقة."
+        ];
+
+        // اختيار رد عشوائي مع تعديلات طفيفة
+        let response = responses[Math.floor(Math.random() * responses.length)];
         
-        responseElement.scrollIntoView({ behavior: 'smooth' });
+        // إضافة سؤال استقصائي
+        const followUpQuestions = [
+            "كيف يؤثر هذا الشعور على قراراتكِ؟",
+            "متى بدأتِ تشعرين بهذا لأول مرة؟",
+            "إذا كان هذا الشعور يختبئ وراء قناع، ماذا سيكون شكله؟"
+        ];
+
+        if (emotion.intensity > 0.5) {
+            response += " " + followUpQuestions[Math.floor(Math.random() * followUpQuestions.length)];
+        }
+
+        return response;
     }
 }
-
-// بدء التطبيق عندما يتم تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-    window.innerUniverseApp = new InnerUniverseApp();
-});
