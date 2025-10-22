@@ -1,0 +1,31 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --accent:#7dd3fc;
+  --muted:#94a3b8;
+  --glass: rgba(255,255,255,0.03);
+}
+
+*{box-sizing:border-box;font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#08101a 70%);color:#e6eef6}
+header{padding:28px 20px;text-align:center}
+h1{margin:0;font-size:1.6rem}
+.subtitle{margin:6px 0 0;color:var(--muted)}
+
+main{max-width:980px;margin:18px auto;padding:16px}
+.card{background:var(--card);border-radius:12px;padding:14px;margin:12px 0;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+.hidden{display:none}
+
+label,input,textarea,button{font-size:1rem}
+input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit;resize:vertical}
+.controls{display:flex;gap:8px;margin-top:10px}
+button{background:linear-gradient(90deg,var(--accent),#60a5fa);border:none;padding:10px 12px;border-radius:8px;color:#012;cursor:pointer}
+button:active{transform:translateY(1px)}
+#threeArea{height:380px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#071422,#02111a)}
+.analysis{margin-top:10px;padding:10px;background:rgba(255,255,255,0.02);border-radius:8px;color:var(--muted)}
+#promptsContainer{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.prompt{padding:8px;background:rgba(255,255,255,0.02);border-radius:6px}
+#notesList{list-style:none;padding:0;margin:0}
+#notesList li{padding:8px;border-bottom:1px dashed rgba(255,255,255,0.03)}
+.hint{color:var(--muted);font-size:0.9rem;margin-top:6px}
+footer{text-align:center;padding:18px;color:var(--muted)}

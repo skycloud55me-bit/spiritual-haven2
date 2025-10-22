@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>منصة الذكاء الوجودي — تجريبي</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>منصة الذكاء الوجودي — تجربة أولية</h1>
+    <p class="subtitle">مرآتك، رحلاتك، وبصيرتك — نسخة أولى بسيطة قابلة للتطوير</p>
+  </header>
+
+  <main>
+    <section id="start">
+      <label for="introName">من أنت اليوم؟ (سطر واحد)</label>
+      <input id="introName" placeholder="مثال: متلهفة للتغيير، فضولية..." />
+      <button id="startBtn">ابدأ رحلتك</button>
+    </section>
+
+    <section id="mirror" class="card hidden">
+      <h2>مرآة الذات الرقمية</h2>
+      <textarea id="dailyInput" rows="6" placeholder="اكتب ما تشعرين به أو سؤالاً وجودياً..."></textarea>
+      <div class="controls">
+        <button id="analyzeBtn">حلّل/اقترح سؤال</button>
+        <button id="saveNoteBtn">احفظ ملاحظة</button>
+      </div>
+      <div id="analysis" class="analysis"></div>
+    </section>
+
+    <section id="journeys" class="card hidden">
+      <h2>رحلات المعنى التفاعلية</h2>
+      <div id="promptsContainer"></div>
+      <button id="newPromptBtn">أطلب سؤالاً وجودياً جديداً</button>
+    </section>
+
+    <section id="insight" class="card hidden">
+      <h2>البصيرة الرقمية</h2>
+      <div id="insightContent">لم توجد بعد — ابدأ بكتابة و حفظ ملاحظات لتظهر البصيرة هنا.</div>
+      <button id="viewTimelineBtn">عرض الخريطة الثلاثية الأبعاد</button>
+    </section>
+
+    <section id="threeWrapper" class="card hidden">
+      <h2>خريطتك الوجودية الثلاثية الأبعاد</h2>
+      <div id="threeArea"></div>
+      <p class="hint">تحكمي بالماوس/لمس لتحريك المشهد</p>
+      <button id="reset3D">إعادة ضبط المشهد</button>
+    </section>
+
+    <section id="notes" class="card hidden">
+      <h2>دفتر ملاحظات الرحلة</h2>
+      <ul id="notesList"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <small>نسخة تجريبية — تم إنشاؤها لمشروع "منصة الذكاء الوجودي".</small>
+  </footer>
+
+  <script type="module" src="three-scene.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
