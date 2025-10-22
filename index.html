@@ -3,41 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كوني - رحلتك الوجودية</title>
+    <title>الكون الوجودي - رحلة في أعماق النفس</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="universe-bg">
-        <div class="portal">
-            <h1>🪐 مرحباً بك في كونك</h1>
-            <p class="subtitle">هذه بداية رحلتك لاكتشاف أعماق نفسك</p>
-            
-            <div class="questions">
-                <div class="question">
-                    <h3>ما الذي أتى بك إلى هنا اليوم؟</h3>
-                    <div class="options">
-                        <button class="option-btn">أبحث عن معنى</button>
-                        <button class="option-btn">أريد فهم نفسي أكثر</button>
-                        <button class="option-btn">أشعر بالضياع</button>
-                        <button class="option-btn">مجرد فضول</button>
+    <div id="universeScene">
+        <!-- النجوم المتحركة -->
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+        
+        <!-- الكواكب الشخصية -->
+        <div class="planet mind-planet" data-type="mind">
+            <div class="planet-info">
+                <h3>كوكب العقل</h3>
+                <p>أفكارك، معتقداتك، فلسفتك</p>
+            </div>
+        </div>
+        
+        <div class="planet heart-planet" data-type="heart">
+            <div class="planet-info">
+                <h3>كوكب القلب</h3>
+                <p>مشاعرك، علاقاتك، أحلامك</p>
+            </div>
+        </div>
+        
+        <div class="planet soul-planet" data-type="soul">
+            <div class="planet-info">
+                <h3>كوكب الروح</h3>
+                <p>قيمك، معانيك، غايتك</p>
+            </div>
+        </div>
+
+        <!-- البوابة الوجودية -->
+        <div id="existentialPortal">
+            <div class="portal-content">
+                <h1 class="portal-title">🪐 أهلاً بك في كونك الوجودي</h1>
+                <p class="portal-subtitle">هذا ليس موقعاً... هذه مركبة استكشاف ذاتي</p>
+                
+                <div class="consciousness-check">
+                    <h3>ما مستوى وعيك الحالي؟</h3>
+                    <div class="consciousness-levels">
+                        <button class="level-btn" data-level="explorer">👣 مستكشف مبتدئ</button>
+                        <button class="level-btn" data-level="seeker">🔍 باحث عن الحقيقة</button>
+                        <button class="level-btn" data-level="philosopher">💭 فيلسوف داخلي</button>
                     </div>
                 </div>
-                
-                <div class="question">
-                    <h3>كيف تشعر الآن؟</h3>
-                    <div class="emotions">
-                        <button class="emotion-btn">☁️ ضائع</button>
-                        <button class="emotion-btn">🌱 فضولي</button>
-                        <button class="emotion-btn">💫 متحمس</button>
-                        <button class="emotion-btn">🌙 هادئ</button>
-                    </div>
+
+                <button id="enterUniverse" class="quantum-btn">ابدأ الرحلة الكمومية</button>
+            </div>
+        </div>
+
+        <!-- الذكاء الوجودي -->
+        <div id="existentialAI" class="hidden">
+            <div class="ai-dialog">
+                <div class="ai-message">
+                    "أنا هنا لأسأل لا لأجيب... ما السؤال الذي يختبئ في أعماقك؟"
+                </div>
+                <div class="question-options">
+                    <button class="deep-question">من أنا حقاً؟</button>
+                    <button class="deep-question">ما هدفي الحقيقي؟</button>
+                    <button class="deep-question">كيف أجد السلام الداخلي؟</button>
                 </div>
             </div>
-            
-            <button id="startJourney" class="start-btn">ابدأ الرحلة</button>
         </div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
