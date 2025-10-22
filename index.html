@@ -1,61 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الكون الوجودي</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="universe">
-        <!-- الخلفية الكونية -->
-        <div class="stars"></div>
-        
-        <!-- البوابة الرئيسية -->
-        <div id="portal">
-            <h1>🌌 كونك الوجودي</h1>
-            <p>رحلتك لاكتشاف أعماق نفسك</p>
-            
-            <div class="planets-container">
-                <div class="planet" id="mindPlanet">
-                    <div class="planet-content">
-                        <h3>🧠 كوكب العقل</h3>
-                        <p>أفكارك ومعتقداتك</p>
-                    </div>
-                </div>
-                
-                <div class="planet" id="heartPlanet">
-                    <div class="planet-content">
-                        <h3>💖 كوكب القلب</h3>
-                        <p>مشاعرك وعلاقاتك</p>
-                    </div>
-                </div>
-                
-                <div class="planet" id="soulPlanet">
-                    <div class="planet-content">
-                        <h3>✨ كوكب الروح</h3>
-                        <p>قيمك ومعانيك</p>
-                    </div>
-                </div>
-            </div>
-            
-            <button id="startBtn">ابدأ الرحلة</button>
-        </div>
-        
-        <!-- محادثة الذكاء الاصطناعي -->
-        <div id="aiChat" class="hidden">
-            <div class="chat-container">
-                <div class="ai-message">
-                    <p>أهلاً بك! أنا هنا لأساعدك في استكشاف ذاتك. أي كوكب تريد زيارته أولاً؟</p>
-                </div>
-                <div class="user-input">
-                    <input type="text" id="userMessage" placeholder="اكتب رسالتك هنا...">
-                    <button onclick="sendMessage()">إرسال</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
