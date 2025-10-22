@@ -1,136 +1,218 @@
-/* 🌌 تصميم الكون الحقيقي */
-#universeScene {
-    position: relative;
+/* إعادة الضبط الأساسية */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* الكون */
+#universe {
     width: 100%;
     height: 100vh;
-    background: 
-        radial-gradient(ellipse at center, #0a0e2a 0%, #1a1a4a 50%, #0c0d20 100%),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><circle cx="50" cy="50" r="1" fill="white" opacity="0.8"/><circle cx="200" cy="150" r="1" fill="white" opacity="0.6"/></svg>') repeat;
-    overflow: hidden;
-    cursor: grab;
+    position: relative;
+    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
 }
 
-/* 🪐 الكواكب المتحركة */
-.planet {
+/* النجوم */
+.stars {
     position: absolute;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    animation: planetFloat 8s ease-in-out infinite;
-    box-shadow: 
-        0 0 60px rgba(255, 255, 255, 0.1),
-        inset 0 0 60px rgba(255, 255, 255, 0.05);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 100px 150px, #fff, transparent),
+        radial-gradient(2px 2px at 300px 350px, #fff, transparent),
+        radial-gradient(1px 1px at 500px 200px, #fff, transparent),
+        radial-gradient(2px 2px at 700px 450px, #fff, transparent);
+    animation: twinkle 4s infinite;
 }
 
-.planet::before {
-    content: '';
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* البوابة */
+#portal {
     position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, #ff6b6b, #ffd93d, #4ecdc4, #667eea, #ff6b6b);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.planet:hover::before {
-    opacity: 0.3;
-    animation: rotateHalo 3s linear infinite;
-}
-
-@keyframes planetFloat {
-    0%, 100% { 
-        transform: translateY(0px) rotate(0deg) scale(1);
-        box-shadow: 0 0 60px currentColor;
-    }
-    50% { 
-        transform: translateY(-30px) rotate(5deg) scale(1.05);
-        box-shadow: 0 0 80px currentColor;
-    }
-}
-
-@keyframes rotateHalo {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* 🧠 كوكب العقل */
-.mind-planet {
-    width: 140px;
-    height: 140px;
-    top: 25%;
-    left: 20%;
-    background: 
-        radial-gradient(circle at 30% 30%, #667eea, #764ba2),
-        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
-    animation-delay: -1s;
-}
-
-/* 💖 كوكب القلب */
-.heart-planet {
-    width: 160px;
-    height: 160px;
-    top: 60%;
-    left: 70%;
-    background: 
-        radial-gradient(circle at 40% 40%, #ff6b6b, #ffa726),
-        repeating-radial-gradient(circle, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
-    animation-delay: -3s;
-}
-
-/* 🌌 كوكب الروح */
-.soul-planet {
-    width: 120px;
-    height: 120px;
-    top: 45%;
-    left: 50%;
-    background: 
-        radial-gradient(circle at 35% 35%, #4ecdc4, #44a08d),
-        repeating-conic-gradient(from 0deg, transparent, transparent 10deg, rgba(255,255,255,0.1) 10deg, rgba(255,255,255,0.1) 20deg);
-    animation-delay: -5s;
-}
-
-/* 🎮 استكشاف الكوكب */
-.planet-exploration {
-    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 500px;
+}
+
+#portal h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#portal p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+/* الكواكب */
+.planets-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.planet {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.planet-content {
+    text-align: center;
+}
+
+.planet h3 {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.planet p {
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+/* كوكب العقل */
+#mindPlanet {
+    background: radial-gradient(circle at 30% 30%, #667eea, #764ba2);
+    box-shadow: 0 0 30px #667eea;
+}
+
+#mindPlanet:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px #667eea;
+}
+
+/* كوكب القلب */
+#heartPlanet {
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #ffa726);
+    box-shadow: 0 0 30px #ff6b6b;
+}
+
+#heartPlanet:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px #ff6b6b;
+}
+
+/* كوكب الروح */
+#soulPlanet {
+    background: radial-gradient(circle at 30% 30%, #4ecdc4, #44a08d);
+    box-shadow: 0 0 30px #4ecdc4;
+}
+
+#soulPlanet:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px #4ecdc4;
+}
+
+/* زر البدء */
+#startBtn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
     border-radius: 25px;
-    padding: 30px;
-    max-width: 500px;
-    width: 90%;
-    z-index: 1000;
-    animation: explorationAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-@keyframes explorationAppear {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
+#startBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
 }
 
-.exploration-animation {
-    width: 100%;
-    height: 100px;
-    background: 
-        radial-gradient(circle, transparent 20%, currentColor 70%);
-    animation: pulseGlow 2s ease-in-out infinite;
-    margin: 20px 0;
+/* محادثة الذكاء الاصطناعي */
+#aiChat {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@keyframes pulseGlow {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 0.7; transform: scale(1.1); }
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.ai-message {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.user-input {
+    display: flex;
+    gap: 10px;
+}
+
+#userMessage {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1em;
+}
+
+#userMessage::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.user-input button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* الخفاء */
+.hidden {
+    display: none !important;
+}
+
+/* التأكد من أن كل شيء مرئي */
+.show {
+    display: block !important;
 }
