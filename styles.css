@@ -1,31 +1,161 @@
-:root{
-  --bg:#0f1724;
-  --card:#0b1220;
-  --accent:#7dd3fc;
-  --muted:#94a3b8;
-  --glass: rgba(255,255,255,0.03);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-*{box-sizing:border-box;font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif}
-html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#08101a 70%);color:#e6eef6}
-header{padding:28px 20px;text-align:center}
-h1{margin:0;font-size:1.6rem}
-.subtitle{margin:6px 0 0;color:var(--muted)}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0a0a15;
+    color: #e8e8e8;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
 
-main{max-width:980px;margin:18px auto;padding:16px}
-.card{background:var(--card);border-radius:12px;padding:14px;margin:12px 0;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
-.hidden{display:none}
+/* الحاوية الثلاثية الأبعاد */
+#threejs-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
 
-label,input,textarea,button{font-size:1rem}
-input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit;resize:vertical}
-.controls{display:flex;gap:8px;margin-top:10px}
-button{background:linear-gradient(90deg,var(--accent),#60a5fa);border:none;padding:10px 12px;border-radius:8px;color:#012;cursor:pointer}
-button:active{transform:translateY(1px)}
-#threeArea{height:380px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#071422,#02111a)}
-.analysis{margin-top:10px;padding:10px;background:rgba(255,255,255,0.02);border-radius:8px;color:var(--muted)}
-#promptsContainer{display:flex;flex-direction:column;gap:8px;margin:8px 0}
-.prompt{padding:8px;background:rgba(255,255,255,0.02);border-radius:6px}
-#notesList{list-style:none;padding:0;margin:0}
-#notesList li{padding:8px;border-bottom:1px dashed rgba(255,255,255,0.03)}
-.hint{color:var(--muted);font-size:0.9rem;margin-top:6px}
-footer{text-align:center;padding:18px;color:var(--muted)}
+/* واجهة التحليل العاطفي */
+#emotional-interface {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    background: rgba(10, 10, 25, 0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    z-index: 1000;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mind-mirror h3 {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* مؤشر الحالة المزاجية */
+.emotional-state {
+    margin-bottom: 25px;
+}
+
+.state-indicator {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    text-align: center;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    transition: all 0.5s ease;
+}
+
+/* خريطة المشاعر */
+.emotional-map {
+    width: 100%;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+#emotionCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+/* الحوار العميق */
+.deep-dialogue {
+    margin-top: 25px;
+}
+
+.ai-guide-message {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border-right: 3px solid #4ecdc4;
+}
+
+.ai-guide-message p {
+    font-style: italic;
+    line-height: 1.6;
+    color: #a8d8ea;
+}
+
+.user-expression {
+    margin-bottom: 20px;
+}
+
+#heartMessage {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    color: white;
+    font-size: 1em;
+    resize: vertical;
+    min-height: 100px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+#heartMessage:focus {
+    outline: none;
+    border-color: #4ecdc4;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#expressBtn {
+    width: 100%;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#expressBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* استجابة الذكاء الاصطناعي */
+.ai-response {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 3px solid #ff6b6b;
+    margin-top: 20px;
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* حالات مزاجية مختلفة */
+.state-happy { background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; }
+.state-sad { background: rgba(33, 150, 243, 0.2); border: 1px solid #2196f3; }
+.state-anxious { background: rgba(255, 152, 0, 0.2); border: 1px solid #ff9800; }
+.state-peaceful { background: rgba(156, 39, 176, 0.2); border: 1px solid #9c27b0; }
