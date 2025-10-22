@@ -6,99 +6,249 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    color: white;
+    background: #000;
+    color: #fff;
     height: 100vh;
+    overflow: hidden;
+    cursor: none;
+}
+
+#universeScene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: 
+        radial-gradient(ellipse at center, #0f0c29 0%, #302b63 50%, #24243e 100%);
     overflow: hidden;
 }
 
-.universe-bg {
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: stars 20s linear infinite;
+/* النجوم المتحركة */
+.stars, .stars2, .stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
 }
 
-@keyframes stars {
-    0% { background-position: 0 0; }
-    100% { background-position: 1000px 1000px; }
+.stars:after, .stars2:after, .stars3:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+        radial-gradient(1px 1px at 90px 40px, #ddd, transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: starsMove 50s linear infinite;
 }
 
-.portal {
+.stars2:after {
+    animation-duration: 100s;
+    background-size: 300px 300px;
+}
+
+.stars3:after {
+    animation-duration: 150s;
+    background-size: 400px 400px;
+}
+
+@keyframes starsMove {
+    from { transform: translateX(0) translateY(0); }
+    to { transform: translateX(-200px) translateY(-200px); }
+}
+
+/* الكواكب */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    animation: float 6s ease-in-out infinite;
+}
+
+.planet:hover {
+    transform: scale(1.2);
+    filter: brightness(1.5);
+}
+
+.mind-planet {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+    left: 20%;
+    background: radial-gradient(circle at 30% 30%, #667eea, #764ba2);
+    box-shadow: 0 0 50px #667eea;
+}
+
+.heart-planet {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    left: 70%;
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #ffa726);
+    box-shadow: 0 0 50px #ff6b6b;
+    animation-delay: -2s;
+}
+
+.soul-planet {
+    width: 100px;
+    height: 100px;
+    top: 40%;
+    left: 50%;
+    background: radial-gradient(circle at 30% 30%, #4ecdc4, #44a08d);
+    box-shadow: 0 0 50px #4ecdc4;
+    animation-delay: -4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+.planet-info {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 40px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
-    max-width: 600px;
-    width: 90%;
+    padding: 10px 20px;
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
 }
 
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+.planet:hover .planet-info {
+    opacity: 1;
+}
+
+/* البوابة الوجودية */
+#existentialPortal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 50px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.portal-title {
+    font-size: 3em;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d, #4ecdc4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: titleGlow 3s ease-in-out infinite;
 }
 
-.subtitle {
-    font-size: 1.2em;
-    margin-bottom: 40px;
-    opacity: 0.8;
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+    50% { text-shadow: 0 0 30px rgba(78, 205, 196, 0.8); }
 }
 
-.question {
+.consciousness-levels {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
     margin: 30px 0;
 }
 
-.question h3 {
-    margin-bottom: 20px;
-    font-size: 1.3em;
-}
-
-.options, .emotions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.option-btn, .emotion-btn {
+.level-btn {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 12px 20px;
-    border-radius: 25px;
+    padding: 15px 25px;
+    border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1em;
 }
 
-.option-btn:hover, .emotion-btn:hover {
+.level-btn:hover {
     background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
 }
 
-.start-btn {
-    background: linear-gradient(45deg, #667eea, #764ba2);
+.quantum-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2, #ff6b6b);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
     color: white;
     border: none;
-    padding: 15px 40px;
+    padding: 20px 50px;
     border-radius: 30px;
-    font-size: 1.2em;
+    font-size: 1.3em;
     cursor: pointer;
-    margin-top: 30px;
     transition: all 0.3s ease;
 }
 
-.start-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.quantum-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+}
+
+/* الذكاء الوجودي */
+#existentialAI {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 400px;
+}
+
+.ai-dialog {
+    text-align: center;
+}
+
+.ai-message {
+    font-style: italic;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+.question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.deep-question {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.deep-question:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(10px);
+}
+
+.hidden {
+    display: none;
 }
